@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       colors: {
         'mygray': '#edf1f7',
+        'mydarkgray-500': '#2D2D2D',
         'mydarkblue-500': '#2d3f51',
         'mydarkblue-300': '#3c546b',
         'mydarkblue-200': '#45617c',
@@ -14,6 +15,7 @@ module.exports = {
         'myblue': "#0095ff"
       },
       fontFamily: {
+        sans: ['Jost', 'sans-serif'],
         display: ['Jost', 'sans-serif']
       }
     },

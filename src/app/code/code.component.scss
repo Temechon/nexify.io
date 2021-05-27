@@ -1,0 +1,18 @@
+pre {
+    @apply my-0;
+}
+
+.tab {
+    @apply h-full;
+    @apply flex items-center;
+    @apply px-4;
+    @apply cursor-pointer;
+    @apply font-display;
+
+    &:hover,
+    &.active {
+        @apply bg-mydarkgray-500;
+        @apply text-gray-200;
+        @apply border-b-2 border-mygreen;
+    }
+}

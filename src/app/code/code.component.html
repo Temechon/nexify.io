@@ -1,0 +1,19 @@
+<div #codeWrapper>
+    <div class="mb-2 border-mygray border rounded-md shadow-sm"
+        *ngIf="codes.length > 0">
+        <div class="flex flex-row items-center h-10" *ngIf="codes[0]?.name">
+
+            <div class="tab" [ngClass]="{'active':index===0}"
+                *ngFor="let tab of codes; let index=index"
+                (click)="openTab($event, tab.id)">
+                {{tab.name}}
+            </div>
+        </div>
+        <ng-container *ngFor="let tab of codes; let index=index">
+            <div [id]="tab.id" class="code-content"
+                [ngClass]="{'hidden':index!==0}">
+                <pre><code [ngClass]='tab.classname' class="hljs">{{tab.code}}</code></pre>
+            </div>
+        </ng-container>
+    </div>
+</div>
