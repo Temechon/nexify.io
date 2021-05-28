@@ -1,0 +1,33 @@
+pre {
+    @apply my-0;
+}
+
+.tab {
+    @apply h-full;
+    @apply flex items-center;
+    @apply px-4;
+    @apply cursor-pointer;
+    @apply font-display;
+
+    // Input used to rename tabs
+    .tab-input {
+        &:focus {
+            @apply outline-none;
+        }
+    }
+
+    &:hover,
+    &.active {
+        @apply bg-mydarkgray-500;
+        @apply text-gray-200;
+        @apply border-b-2 border-mygreen;
+
+        .tab-input {
+            @apply text-white bg-mydarkgray-500 outline-none;
+        }
+    }
+}
+
+textarea {
+    min-height: 128px;
+}

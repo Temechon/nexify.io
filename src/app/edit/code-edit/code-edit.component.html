@@ -1,0 +1,51 @@
+<div #codeWrapper>
+    <div class="mb-2 border-mygray border rounded-md shadow-sm"
+        *ngIf="codes.length > 0">
+
+        <!-- Tab bar -->
+        <div class="flex flex-row items-center h-10" *ngIf="codes[0]?.name">
+
+            <!-- Display each tab -->
+            <div class="tab" [ngClass]="{'active':index===0}"
+                *ngFor="let tab of codes; let index=index"
+                (click)="openTab($event, tab.id)">
+                <input type="text" [ngModel]="tab.name" class="tab-input"
+                    placeholder="New tab...">
+            </div>
+
+            <!-- Add a new tab -->
+            <div class="tab text-gray-400" (click)="addTab()">
+                <i class="fas fa-plus-circle mr-2"></i> tab
+            </div>
+        </div>
+
+        <!-- For each tab, display its code -->
+        <ng-container *ngFor="let tab of codes; let index=index">
+            <div [id]="tab.id" class="code-content relative"
+                [ngClass]="{'hidden':index!==0}">
+                <textarea autosize [ngClass]='tab.classname'
+                    placeholder="Your code here..."
+                    class="w-full h-full bg-mydarkgray-500 text-white p-2 focus:outline-none">{{tab.code}}</textarea>
+
+                <!-- Save/remove tab button -->
+                <div
+                    class="flex flex-col items-center absolute right-2 bottom-3 sized">
+                    <div (click)="saveTab(tab.id, index)"
+                        class="btn-container cursor-pointer mb-2">
+                        <div class="btn accent small sized">
+                            <i class="fas fa-save mr-2"></i>
+                            Save tab
+                        </div>
+                    </div>
+                    <div (click)="removeTab(index)"
+                        class="btn-container cursor-pointer">
+                        <div class="btn delete small sized">
+                            <i class="fas fa-times mr-2"></i>
+                            Delete tab
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

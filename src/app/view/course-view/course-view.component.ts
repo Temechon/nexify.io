@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Task } from '../model/task.model';
+import { Task } from '../../model/task.model';
 
 @Component({
   selector: 'app-course-view',
@@ -35,6 +35,7 @@ export class CourseViewComponent implements OnInit {
       new Task(
         "Install angular globally",
         [
+          { type: "action", value: 'Install angular CLI' },
           [
             {
               id: 'code1',

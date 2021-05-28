@@ -1,0 +1,23 @@
+<div class="my-6 shadow-sm bg-white task">
+    <div (click)="hideTask()"
+        class="font-semibold shadow-sm text-2xl mb-6 cursor-pointer hover:bg-gray-100 p-3">
+        {{task.title}}
+    </div>
+
+    <div #taskContent class="pl-6 pb-3">
+
+        <!-- Content -->
+        <ul *ngIf="task.content">
+            <ng-container *ngFor="let content of task.content">
+                <li *ngIf="isString(content)" [ngClass]="getType(content)"
+                    [innerHTML]="getValue(content)">
+                </li>
+
+                <div *ngIf="isCode(content)">
+                    <app-code [codes]="$any(content)">
+                    </app-code>
+                </div>
+            </ng-container>
+        </ul>
+    </div>
+</div>

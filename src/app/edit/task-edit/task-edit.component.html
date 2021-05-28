@@ -1,0 +1,37 @@
+<div class="my-6 shadow-sm bg-white task">
+    <input type="text" [(ngModel)]="task.title" placeholder="Task title..."
+        class="w-full font-semibold shadow-sm text-2xl mb-6 p-3 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-300">
+
+    <div class="pl-6 pb-3">
+
+        <div *ngIf="task.content">
+            <ng-container *ngFor="let content of task.content; let index=index">
+                <input placeholder="New explanation..."
+                    class="font-light text-lg py-1 w-full pl-4 mb-1 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-300 "
+                    type="text" *ngIf="isString(content)"
+                    [value]="getValue(content)"
+                    (input)="save($event.target, index)"
+                    [ngClass]="getType(content)">
+
+                <div *ngIf="isCode(content)">
+                    <code-edit [codes]="$any(content)">
+                    </code-edit>
+                </div>
+            </ng-container>
+        </div>
+
+        <div class="btn-container">
+            <button class="btn dark small mr-3" (click)="addAction()">
+                <i class="fas fa-plus-circle mr-2"></i>action</button>
+
+            <button class="btn bg-mydarkgray-500 small mr-3"
+                (click)="addExplanation()">
+                <i class="fas fa-plus-circle mr-2"></i>
+                explanation
+            </button>
+            <button class="btn accent small mr-3">
+                <i class="fas fa-plus-circle mr-2"></i>code</button>
+        </div>
+    </div>
+
+</div>

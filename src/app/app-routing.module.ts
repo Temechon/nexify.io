@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CourseViewComponent } from './course-view/course-view.component';
+import { CourseEditComponent } from './edit/course-edit/course-edit.component';
+import { CourseViewComponent } from './view/course-view/course-view.component';
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [{
@@ -31,8 +32,8 @@ const routes: Routes = [{
           // }
         },
         {
-          path: ':stepid',
-          component: CourseViewComponent
+          path: 'editor',
+          component: CourseEditComponent
         }
       ],
     },

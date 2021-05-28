@@ -16,6 +16,7 @@ section {
     @apply m-auto;
     @apply max-w-4xl;
     @apply mt-12;
+    @apply relative;
 }
 
 h1 {
@@ -42,13 +43,12 @@ p {
     @apply flex;
     @apply items-center;
     @apply justify-center;
-    @apply mb-10;
 
     .btn {
         @apply bg-mygreen;
         @apply text-white;
         @apply font-semibold;
-        @apply text-2xl;
+        @apply text-xl;
         @apply py-2;
         @apply px-4;
         @apply rounded-md;
@@ -60,6 +60,35 @@ p {
         &:hover {
             @apply bg-green-600;
             @apply shadow-md;
+        }
+
+        &.small {
+            @apply text-sm;
+            @apply font-light;
+        }
+        &.dark {
+            @apply bg-mydarkblue-500;
+
+            &:hover {
+                @apply bg-mydarkblue-200;
+            }
+        }
+        &.accent {
+            @apply bg-myblue;
+
+            &:hover {
+                @apply bg-blue-800;
+            }
+        }
+        &.delete {
+            @apply bg-myred;
+
+            &:hover {
+                @apply bg-red-700;
+            }
+        }
+        &.sized {
+            width: 135px;
         }
     }
 }

@@ -1,12 +1,12 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, ViewChildren } from '@angular/core';
-import { HighlightService } from '../services/Highlight.service';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { HighlightService } from '../../services/Highlight.service';
 
 @Component({
   selector: 'app-code',
-  templateUrl: './code.component.html',
-  styleUrls: ['./code.component.scss']
+  templateUrl: './code-view.component.html',
+  styleUrls: ['./code-view.component.scss']
 })
-export class CodeComponent implements OnInit {
+export class CodeViewComponent implements OnInit {
 
   @ViewChild('codeWrapper', { static: true })
   codeWrapper: ElementRef
