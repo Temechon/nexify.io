@@ -8,13 +8,12 @@
             <ng-container *ngFor="let content of task.content; let index=index">
                 <input placeholder="New explanation..."
                     class="font-light text-lg py-1 w-full pl-4 mb-1 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-300 "
-                    type="text" *ngIf="isString(content)"
-                    [value]="getValue(content)"
+                    type="text" *ngIf="!isCode(content)" [value]="content.value"
                     (input)="save($event.target, index)"
-                    [ngClass]="getType(content)">
+                    [ngClass]="content.type">
 
                 <div *ngIf="isCode(content)">
-                    <code-edit [codes]="$any(content)"
+                    <code-edit [codes]="getCode(content)"
                         (onTabSaved)="saveCode($event, index)">
                     </code-edit>
                 </div>

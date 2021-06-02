@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { Helpers } from 'src/app/helpers/Helpers';
-import { Code, TabCode, Task } from 'src/app/model/task.model';
+import { Code, TabCode, Task, TaskContent } from 'src/app/model/task.model';
+import * as _ from 'underscore';
 
 @Component({
   selector: 'task-edit',
@@ -30,21 +30,9 @@ export class TaskEditComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  isString(test: any) {
-    return !!test?.type;
-  }
-
-  getValue(str: any) {
-    return str.value;
-  }
-
-  getType(str: any) {
-    return str.type;
-  }
 
   isCode(test: any) {
-    const testAsCode = test[0] as TabCode;
-    return !!testAsCode?.id;
+    return test.type === "code";
   }
 
   save(t: any, index: number) {
@@ -65,6 +53,12 @@ export class TaskEditComponent implements OnInit {
       value: ''
     });
     this.sub.next();
+  }
+
+  getCode(taskContent: TaskContent) {
+    return _.find(this.task.codes, (code: Code) => {
+      return code.id === taskContent.value
+    })
   }
 
   addCode() {

@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { TabCode } from 'src/app/model/task.model';
+import { Code, TabCode } from 'src/app/model/task.model';
 
 @Component({
   selector: 'code-edit',
@@ -18,12 +18,7 @@ export class CodeEditComponent implements OnInit {
   private onTabSaved = new EventEmitter();
 
   @Input()
-  codes: Array<{
-    id: string,
-    name: string,
-    classname: string,
-    code: string
-  }> = [];
+  codes: Code;
 
 
 
@@ -54,7 +49,7 @@ export class CodeEditComponent implements OnInit {
   }
 
   addTab() {
-    this.codes.push(TabCode.createNew())
+    this.codes.content.push(TabCode.createNew())
   }
 
 
@@ -69,25 +64,25 @@ export class CodeEditComponent implements OnInit {
     const regex = /\/\/\/(.*)/im;
     let m = regex.exec(codeContent);
     if (m && m[1]) {
-      this.codes[index].classname = m[1].trim();
+      this.codes.content[index].classname = m[1].trim();
     }
 
-    this.codes[index].code = codeContent;
+    this.codes.content[index].code = codeContent;
 
     // Emit as output the full code element
     this.onTabSaved.emit(this.codes);
   }
 
   removeTab(index: number) {
-    this.codes.splice(index, 1);
+    this.codes.content.splice(index, 1);
     const codeWrapper = this.codeWrapper.nativeElement as HTMLDivElement;
 
     // Set the first tab active
     const allTabs = codeWrapper.querySelectorAll('.tab');
     (allTabs.item(0) as HTMLDivElement).classList.add('active');
 
-    if (this.codes.length > 0) {
-      const tabToActive = this.codes[0].id;
+    if (this.codes.content.length > 0) {
+      const tabToActive = this.codes.content[0].id;
       const codeContent = codeWrapper.querySelector(`#${tabToActive}`) as HTMLDivElement;
       codeContent.classList.remove('hidden');
     }

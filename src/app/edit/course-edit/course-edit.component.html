@@ -1,9 +1,9 @@
-<section class="bg-white pb-4">
+<section class="bg-white pb-4" *ngIf="course">
 
-    <input type="text" value="Install and setup environment"
+    <input type="text" [(ngModel)]="course.title"
         class="w-full font-extrabold text-5xl mb-12 p-2 text-center font-display focus:outline-none focus:ring border focus:border-blue-300 border-indigo-300">
 
-    <task-edit *ngFor="let task of tasks" [task]="task"
+    <task-edit *ngFor="let task of course.tasks" [task]="task"
         (onUpdate)="saveCourse()"></task-edit>
 
     <div class="btn-container">

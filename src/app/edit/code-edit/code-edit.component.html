@@ -7,7 +7,7 @@
 
             <!-- Display each tab -->
             <div class="tab" [ngClass]="{'active':index===0}"
-                *ngFor="let tab of codes; let index=index"
+                *ngFor="let tab of codes.content; let index=index"
                 (click)="openTab($event, tab.id)">
                 <input type="text" [ngModel]="tab.name" class="tab-input"
                     placeholder="New tab...">
@@ -20,7 +20,7 @@
         </div>
 
         <!-- For each tab, display its code -->
-        <ng-container *ngFor="let tab of codes; let index=index">
+        <ng-container *ngFor="let tab of codes.content; let index=index">
             <div [id]="tab.id" class="code-content relative"
                 [ngClass]="{'hidden':index!==0}">
                 <textarea autosize [ngClass]='tab.classname'

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Course } from 'src/app/model/course.model';
+import { CourseService } from 'src/app/services/course.service';
 import { Task } from '../../model/task.model';
 
 @Component({
@@ -8,16 +10,21 @@ import { Task } from '../../model/task.model';
 })
 export class CourseEditComponent implements OnInit {
 
-  tasks: Task[] = [];
+  course: Course;
 
-  constructor() { }
+  constructor(private courseService: CourseService) { }
 
   ngOnInit(): void {
+
+    this.courseService.get('angular-firebase').subscribe((data: any) => {
+      this.course = data;
+      console.log("course - edition:", data);
+    });
   }
 
   addTask() {
 
-    this.tasks.push(new Task({
+    this.course.tasks.push(new Task({
       id: '',
       title: '',
       content: []
@@ -26,7 +33,7 @@ export class CourseEditComponent implements OnInit {
 
   saveCourse() {
     // TODO save course in database
-    console.log("saving course", this.tasks);
+    console.log("saving course", this.course);
 
   }
 

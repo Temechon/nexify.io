@@ -18,8 +18,7 @@ export class CourseViewComponent implements OnInit {
 
     this.courseService.get('angular-firebase').subscribe((data: any) => {
       this.tasks = data.tasks;
-      console.log("coucou", data);
-
+      console.log("course:", data);
     });
 
 
