@@ -1,4 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Code } from 'src/app/model/task.model';
 import { HighlightService } from '../../services/Highlight.service';
 
 @Component({
@@ -12,12 +13,7 @@ export class CodeViewComponent implements OnInit {
   codeWrapper: ElementRef
 
   @Input()
-  codes: Array<{
-    id: string,
-    name: string,
-    classname: string,
-    code: string
-  }> = [];
+  codes: Code;
 
   constructor(private highlightService: HighlightService) { }
 

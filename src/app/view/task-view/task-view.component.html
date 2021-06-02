@@ -9,12 +9,12 @@
         <!-- Content -->
         <ul *ngIf="task.content">
             <ng-container *ngFor="let content of task.content">
-                <li *ngIf="isString(content)" [ngClass]="getType(content)"
-                    [innerHTML]="getValue(content)">
+                <li *ngIf="!isCode(content)" [ngClass]="content.type"
+                    [innerHTML]="content.value">
                 </li>
 
                 <div *ngIf="isCode(content)">
-                    <app-code [codes]="$any(content)">
+                    <app-code [codes]="getCode(content)">
                     </app-code>
                 </div>
             </ng-container>

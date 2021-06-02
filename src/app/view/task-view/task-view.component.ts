@@ -1,5 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { TabCode, Task } from '../../model/task.model';
+import * as _ from 'underscore';
+import { Code, TabCode, Task, TaskContent } from '../../model/task.model';
 
 @Component({
   selector: 'app-task',
@@ -19,21 +20,15 @@ export class TaskViewComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  isString(test: any) {
-    return !!test?.type;
+  getCode(taskContent: TaskContent) {
+    return _.find(this.task.codes, (code: Code) => {
+      return code.id === taskContent.value
+    })
   }
 
-  getValue(str: any) {
-    return str.value;
-  }
 
-  getType(str: any) {
-    return str.type;
-  }
-
-  isCode(test: any) {
-    const testAsCode = test[0] as TabCode;
-    return !!testAsCode?.id;
+  isCode(test: TaskContent) {
+    return test.type === "code";
   }
 
   hideTask() {
