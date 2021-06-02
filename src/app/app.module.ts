@@ -13,6 +13,8 @@ import { TaskEditComponent } from './edit/task-edit/task-edit.component';
 import { FormsModule } from '@angular/forms';
 import { CodeEditComponent } from './edit/code-edit/code-edit.component';
 import { AutosizeModule } from 'ngx-autosize';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { AutosizeModule } from 'ngx-autosize';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    AutosizeModule
+    AutosizeModule,
+    AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [],
   bootstrap: [AppComponent]

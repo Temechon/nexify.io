@@ -14,22 +14,23 @@
                     [ngClass]="getType(content)">
 
                 <div *ngIf="isCode(content)">
-                    <code-edit [codes]="$any(content)">
+                    <code-edit [codes]="$any(content)"
+                        (onTabSaved)="saveCode($event, index)">
                     </code-edit>
                 </div>
             </ng-container>
         </div>
 
         <div class="btn-container">
-            <button class="btn dark small mr-3" (click)="addAction()">
+            <button class="btn dark small mr-3" (click)="add('action')">
                 <i class="fas fa-plus-circle mr-2"></i>action</button>
 
             <button class="btn bg-mydarkgray-500 small mr-3"
-                (click)="addExplanation()">
+                (click)="add('explanation')">
                 <i class="fas fa-plus-circle mr-2"></i>
                 explanation
             </button>
-            <button class="btn accent small mr-3">
+            <button class="btn accent small mr-3" (click)="addCode()">
                 <i class="fas fa-plus-circle mr-2"></i>code</button>
         </div>
     </div>

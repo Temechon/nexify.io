@@ -31,3 +31,12 @@ pre {
 textarea {
     min-height: 128px;
 }
+
+.option {
+    @apply text-gray-900 cursor-pointer select-none relative py-1 pl-3 pr-9;
+
+    &:hover {
+        @apply text-indigo-400;
+        @apply bg-blue-50;
+    }
+}

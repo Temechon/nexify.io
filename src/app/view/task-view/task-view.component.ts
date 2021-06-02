@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { Code, Task } from '../../model/task.model';
+import { TabCode, Task } from '../../model/task.model';
 
 @Component({
   selector: 'app-task',
@@ -32,7 +32,7 @@ export class TaskViewComponent implements OnInit {
   }
 
   isCode(test: any) {
-    const testAsCode = test[0] as Code;
+    const testAsCode = test[0] as TabCode;
     return !!testAsCode?.id;
   }
 

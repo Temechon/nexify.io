@@ -1,6 +1,5 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { fromEvent, Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { TabCode } from 'src/app/model/task.model';
 
 @Component({
   selector: 'code-edit',
@@ -15,8 +14,8 @@ export class CodeEditComponent implements OnInit {
   @ViewChild('codeEditor', { static: true })
   codeEditor: ElementRef;
 
-  codeEditorUpdated = new Subject<string>();
-
+  @Output()
+  private onTabSaved = new EventEmitter();
 
   @Input()
   codes: Array<{
@@ -26,9 +25,12 @@ export class CodeEditComponent implements OnInit {
     code: string
   }> = [];
 
+
+
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
   openTab($event: MouseEvent, tabid: string) {
@@ -52,29 +54,47 @@ export class CodeEditComponent implements OnInit {
   }
 
   addTab() {
-    this.codes.push({
-      id: "rtzer",
-      name: "",
-      classname: "language-typescript",
-      code: ''
-    })
+    this.codes.push(TabCode.createNew())
   }
 
 
   saveTab(tabid: string, index: number) {
+
+    // Get code content
     const codeWrapper = this.codeWrapper.nativeElement as HTMLDivElement;
     const codeTextarea = codeWrapper.querySelector(`#${tabid} > textarea`) as HTMLTextAreaElement;
     const codeContent = codeTextarea.value;
+
+    // Get the language for this code
+    const regex = /\/\/\/(.*)/im;
+    let m = regex.exec(codeContent);
+    if (m && m[1]) {
+      this.codes[index].classname = m[1].trim();
+    }
+
     this.codes[index].code = codeContent;
 
-    // TODO Emit as output the full code element
+    // Emit as output the full code element
+    this.onTabSaved.emit(this.codes);
   }
 
   removeTab(index: number) {
-    console.log("remove tab to do");
+    this.codes.splice(index, 1);
+    const codeWrapper = this.codeWrapper.nativeElement as HTMLDivElement;
+
+    // Set the first tab active
+    const allTabs = codeWrapper.querySelectorAll('.tab');
+    (allTabs.item(0) as HTMLDivElement).classList.add('active');
+
+    if (this.codes.length > 0) {
+      const tabToActive = this.codes[0].id;
+      const codeContent = codeWrapper.querySelector(`#${tabToActive}`) as HTMLDivElement;
+      codeContent.classList.remove('hidden');
+    }
+
+    // Emit as output the full code element
+    this.onTabSaved.emit(this.codes);
 
   }
-
-
 
 }

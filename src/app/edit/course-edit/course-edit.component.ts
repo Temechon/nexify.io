@@ -17,29 +17,17 @@ export class CourseEditComponent implements OnInit {
 
   addTask() {
 
-    const codes = [
-      {
-        id: "aze",
-        name: "HTML",
-        classname: 'language-scss',
-        code: `@import "tailwindcss/base";`
-      },
-      {
-        id: "wxc",
-        name: "code.component.ts",
-        classname: 'language-typescript',
-        code:
-          `constructor(private highlightService: HighlightService) { }`
-      }
-    ]
+    this.tasks.push(new Task({
+      id: '',
+      title: '',
+      content: []
+    }))
+  }
 
-    this.tasks.push(new Task(
-      "",
-      [
-        { type: 'explanation', value: 'explanation' },
-        codes
-      ]
-    ))
+  saveCourse() {
+    // TODO save course in database
+    console.log("saving course", this.tasks);
+
   }
 
 }

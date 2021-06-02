@@ -3,7 +3,8 @@
     <input type="text" value="Install and setup environment"
         class="w-full font-extrabold text-5xl mb-12 p-2 text-center font-display focus:outline-none focus:ring border focus:border-blue-300 border-indigo-300">
 
-    <task-edit *ngFor="let task of tasks" [task]="task"></task-edit>
+    <task-edit *ngFor="let task of tasks" [task]="task"
+        (onUpdate)="saveCourse()"></task-edit>
 
     <div class="btn-container">
         <button class="btn" (click)="addTask()">Add a task</button>

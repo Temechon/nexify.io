@@ -1,5 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Code, Task } from 'src/app/model/task.model';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+import { Helpers } from 'src/app/helpers/Helpers';
+import { Code, TabCode, Task } from 'src/app/model/task.model';
 
 @Component({
   selector: 'task-edit',
@@ -11,7 +14,18 @@ export class TaskEditComponent implements OnInit {
   @Input()
   task: Task;
 
-  constructor() { }
+  @Output()
+  onUpdate = new EventEmitter();
+
+  sub = new Subject();
+
+  constructor() {
+
+    this.sub.pipe(debounceTime(500)).subscribe(() => {
+      this.onUpdate.emit(this.task);
+    })
+
+  }
 
   ngOnInit(): void {
   }
@@ -29,27 +43,38 @@ export class TaskEditComponent implements OnInit {
   }
 
   isCode(test: any) {
-    const testAsCode = test[0] as Code;
+    const testAsCode = test[0] as TabCode;
     return !!testAsCode?.id;
   }
 
   save(t: any, index: number) {
-    console.log(t.value)
     const content = this.task.content[index] as { type: string, value: string };
     content.value = t.value;
+    this.sub.next();
   }
 
-  addExplanation() {
-    this.task.content.push({
-      type: 'explanation',
-      value: ''
-    })
+  saveCode(t: any, index: number) {
+    console.log("save code", t)
+    this.task.content[index] = t;
+    this.sub.next();
   }
-  addAction() {
+
+  add(type: string) {
     this.task.content.push({
-      type: 'action',
+      type,
       value: ''
+    });
+    this.sub.next();
+  }
+
+  addCode() {
+    const newCode = new Code({
+      id: '',
+      taskid: this.task.id,
+      content: [TabCode.createNew()]
     })
+    this.task.codes.push(newCode);
+    this.task.content.push({ type: 'code', value: newCode.id });
   }
 
 }
