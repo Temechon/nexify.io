@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, of, throwError } from 'rxjs';
-import { map, mergeMap, switchMap, tap } from 'rxjs/operators';
+import { forkJoin, from, Observable, of, throwError } from 'rxjs';
+import { concatMap, map, mergeMap, switchMap, take, tap, toArray } from 'rxjs/operators';
 import { Course } from '../model/course.model';
+import { CodeDb, TaskDb, Task, Code, CourseDb } from '../model/task.model';
 
 @Injectable({
     providedIn: 'root'
@@ -12,21 +13,29 @@ export class CourseService {
     constructor(private db: AngularFirestore) {
     }
 
-    get(nId: string): Observable<Course> {
+    get(nId: string): Observable<any> {
 
         return this.db.collection<Course>('courses').doc(nId).valueChanges().pipe(
-            switchMap(data => {
-                if (data) {
-                    const b = new Course(data);
-                    b.id = nId;
-                    return of(b);
-                } else {
-                    return throwError(new Error(`Course ${nId} not found in database`));
-                }
+            map((coursedb: CourseDb) => {
+                const course = new Course(coursedb);
+                course.id = nId;
+                return course;
             }),
-            mergeMap(
+            mergeMap((course: Course) => {
 
-            )
+                const allCodesForTask = course.tasks.map((task: Task) => {
+                    return this.getCodesByTaskid(task.id).pipe(
+                        take(1),
+                        map((allCodesForTask: Code[]) => {
+                            task.codes = allCodesForTask;
+                            return allCodesForTask;
+                        })
+                    )
+                });
+                return forkJoin(allCodesForTask).pipe(
+                    map((allCodes: Array<any>) => course)
+                )
+            })
         )
     }
 
@@ -49,6 +58,12 @@ export class CourseService {
         return this.db.collection<any>('codes').doc(codeid).valueChanges();
     }
 
+    getCodesByTaskid(taskid: string): Observable<Code[]> {
+        return this.db.collection<CodeDb>('codes', ref => ref.where('taskid', '==', taskid)).snapshotChanges()
+            .pipe(map(
+                codes => codes.map(c => (new Code({ id: c.payload.doc.id, ...c.payload.doc.data() })))
+            ));
+    }
 
     create(): Promise<void> {
         const course = new Course({});
