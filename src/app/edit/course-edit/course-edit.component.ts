@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { Course } from 'src/app/model/course.model';
 import { CourseService } from 'src/app/services/course.service';
 import { Task } from '../../model/task.model';
@@ -12,7 +14,17 @@ export class CourseEditComponent implements OnInit {
 
   course: Course;
 
-  constructor(private courseService: CourseService) { }
+  saveSub = new Subject();
+
+
+
+  constructor(private courseService: CourseService) {
+
+    this.saveSub.pipe(debounceTime(500)).subscribe(() => {
+      this._saveCourse();
+    })
+
+  }
 
   ngOnInit(): void {
 
@@ -32,9 +44,11 @@ export class CourseEditComponent implements OnInit {
   }
 
   saveCourse() {
-    // TODO save course in database
-    console.log("saving course", this.course);
+    this.saveSub.next();
+  }
 
+  private _saveCourse() {
+    this.courseService.save(this.course);
   }
 
 }

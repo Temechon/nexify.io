@@ -86,6 +86,18 @@ export class Code {
             }
         }
     }
+
+    toObject(): any {
+        // Remove undefined properties from object, otherwise it cannot be saved
+        let res: any = _.pick(this, (value: any) => {
+            return !_.isUndefined(value);
+        });
+
+        res.content = res.content.map((tabcode: TabCode) => tabcode.toObject())
+
+        delete res.id;
+        return res;
+    }
 }
 
 export class Task {
@@ -113,7 +125,6 @@ export class Task {
         });
 
         delete res.codes;
-        delete res.id;
 
         return res;
     }

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CourseEditComponent } from './edit/course-edit/course-edit.component';
 import { CourseViewComponent } from './view/course-view/course-view.component';
 import { HomeComponent } from './home/home.component';
+import { CourseResolver } from './resolvers/course.resolver';
 
 const routes: Routes = [{
   path: '',
@@ -27,9 +28,9 @@ const routes: Routes = [{
         {
           path: '',
           component: CourseViewComponent,
-          // resolve: {
-          //   note: CourseResolver, 
-          // }
+          resolve: {
+            course: CourseResolver,
+          }
         },
         {
           path: 'editor',

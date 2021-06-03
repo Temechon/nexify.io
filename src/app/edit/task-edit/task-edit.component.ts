@@ -17,11 +17,11 @@ export class TaskEditComponent implements OnInit {
   @Output()
   onUpdate = new EventEmitter();
 
-  sub = new Subject();
+  saveSub = new Subject();
 
   constructor() {
 
-    this.sub.pipe(debounceTime(500)).subscribe(() => {
+    this.saveSub.pipe(debounceTime(500)).subscribe(() => {
       this.onUpdate.emit(this.task);
     })
 
@@ -38,13 +38,14 @@ export class TaskEditComponent implements OnInit {
   save(t: any, index: number) {
     const content = this.task.content[index] as { type: string, value: string };
     content.value = t.value;
-    this.sub.next();
+    this.saveSub.next();
   }
 
-  saveCode(t: any, index: number) {
-    console.log("save code", t)
-    this.task.content[index] = t;
-    this.sub.next();
+  saveCode() {
+    this.saveSub.next();
+  }
+  saveTitle() {
+    this.saveSub.next();
   }
 
   add(type: string) {
@@ -52,7 +53,7 @@ export class TaskEditComponent implements OnInit {
       type,
       value: ''
     });
-    this.sub.next();
+    this.saveSub.next();
   }
 
   getCode(taskContent: TaskContent) {

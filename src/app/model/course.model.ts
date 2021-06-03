@@ -1,4 +1,4 @@
-import { Task } from "./task.model";
+import { Code, Task } from "./task.model";
 import * as _ from 'underscore';
 
 export class Course {
@@ -26,8 +26,20 @@ export class Course {
             return !_.isUndefined(value);
         });
 
+        res.tasks = res.tasks.map((t: Task) => t.toObject());
+
         delete res.id;
 
+        return res;
+    }
+
+    getCodes(): Array<Code> {
+        let res = []
+        for (let task of this.tasks) {
+            for (let code of task.codes) {
+                res.push(code);
+            }
+        }
         return res;
     }
 

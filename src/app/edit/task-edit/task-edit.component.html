@@ -1,5 +1,6 @@
 <div class="my-6 shadow-sm bg-white task">
     <input type="text" [(ngModel)]="task.title" placeholder="Task title..."
+        (input)="saveTitle()"
         class="w-full font-semibold shadow-sm text-2xl mb-6 p-3 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-300">
 
     <div class="pl-6 pb-3">
@@ -14,7 +15,7 @@
 
                 <div *ngIf="isCode(content)">
                     <code-edit [codes]="getCode(content)"
-                        (onTabSaved)="saveCode($event, index)">
+                        (onTabSaved)="saveCode()">
                     </code-edit>
                 </div>
             </ng-container>

@@ -71,7 +71,14 @@ export class CourseService {
     }
 
     save(course: Course): Promise<void> {
-        return this.db.collection('courses').doc(course.id).set(course.toObject())
+        const saveCoursePromise = this.db.collection('courses').doc(course.id).set(course.toObject());
+
+        const allCodes = course.getCodes();
+
+        for (let code of allCodes) {
+            this.db.collection('codes').doc(code.id).set(code.toObject());
+        }
+        return saveCoursePromise;
     }
 
     delete(Courseid: string): Promise<void> {
