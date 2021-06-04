@@ -13,7 +13,7 @@
         <ng-container *ngFor="let tab of codes.content; let index=index">
             <div [id]="tab.id" class="code-content"
                 [ngClass]="{'hidden':index!==0}">
-                <pre><code [ngClass]='tab.classname' class="hljs">{{tab.code}}</code></pre>
+                <pre><code [ngClass]='tab.classname' class="hljs">{{tab.code | removeRegexp}}</code></pre>
             </div>
         </ng-container>
     </div>

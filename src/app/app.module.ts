@@ -16,6 +16,7 @@ import { AutosizeModule } from 'ngx-autosize';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { RemoveRegexp } from './helpers/Pipe';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     TaskViewComponent,
     CourseEditComponent,
     TaskEditComponent,
-    CodeEditComponent
+    CodeEditComponent,
+    RemoveRegexp
   ],
   imports: [
     BrowserModule,
