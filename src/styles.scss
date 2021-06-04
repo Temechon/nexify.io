@@ -39,56 +39,23 @@ p {
     @apply m-auto;
 }
 
-.btn-container {
-    @apply flex;
-    @apply items-center;
-    @apply justify-center;
-
-    .btn {
-        @apply bg-mygreen;
-        @apply text-white;
-        @apply font-semibold;
-        @apply text-xl;
-        @apply py-2;
-        @apply px-4;
-        @apply rounded-md;
-        @apply tracking-wider;
-        @apply shadow-sm;
-        @apply transition-colors;
-        @apply ease-out;
-        @apply duration-200;
-        &:hover {
-            @apply bg-green-600;
-            @apply shadow-md;
-        }
-
-        &.small {
-            @apply text-sm;
-            @apply font-light;
-        }
-        &.dark {
-            @apply bg-mydarkblue-500;
-
-            &:hover {
-                @apply bg-mydarkblue-200;
-            }
-        }
-        &.accent {
-            @apply bg-myblue;
-
-            &:hover {
-                @apply bg-blue-800;
-            }
-        }
-        &.delete {
-            @apply bg-myred;
-
-            &:hover {
-                @apply bg-red-700;
-            }
-        }
-        &.sized {
-            width: 135px;
-        }
-    }
+.darkblue-grad {
+    background-image: linear-gradient(to right, #45617c, #2d3f51);
+    color: #fff !important;
+}
+.blue-grad {
+    background-image: linear-gradient(to right, #42aaff, #0095ff);
+    color: #fff !important;
+}
+.green-grad {
+    background-image: linear-gradient(to right, #2ce69b, #00d68f);
+    color: #fff !important;
+}
+.orange-grad {
+    background-image: linear-gradient(to right, #ffc94d, #ffaa00);
+    color: #fff !important;
+}
+.red-grad {
+    background-image: linear-gradient(to right, #ff708d, #ff3d71);
+    color: #fff !important;
 }

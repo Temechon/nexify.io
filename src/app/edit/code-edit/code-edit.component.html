@@ -1,5 +1,5 @@
 <div #codeWrapper>
-    <div class="mb-2 border-mygray border rounded-md shadow-sm">
+    <div class="mb-2 w-full border-mygray border rounded-md shadow-sm">
 
         <!-- Tab bar -->
         <div
@@ -28,21 +28,22 @@
                     class="w-full h-full bg-mydarkgray-500 text-white p-2 focus:outline-none">{{tab.code}}</textarea>
 
                 <!-- Save/remove/edit tab button -->
+
+
                 <div
                     class="flex flex-col items-center absolute right-2 bottom-3">
                     <!-- Save  -->
-                    <div (click)="saveTab(tab.id, index)"
-                        class="btn-container cursor-pointer mb-2">
-                        <div
-                            class="btn accent small w-11 flex items-center justify-center">
+                    <div class="flex items-center justify-center w-10 h-10">
+                        <div (click)="saveTab(tab.id, index)"
+                            class="w-8 h-8 flex items-center justify-center blue-grad rounded-lg cursor-pointer text-sm">
                             <i class="fas fa-save"></i>
                         </div>
                     </div>
+
                     <!-- Delete -->
-                    <div (click)="removeTab(index)"
-                        class="btn-container cursor-pointer">
-                        <div
-                            class="btn delete small w-11 flex items-center justify-center">
+                    <div class="flex items-center justify-center w-10 h-10">
+                        <div (click)="removeTab(index)"
+                            class="w-8 h-8 flex items-center justify-center red-grad rounded-lg cursor-pointer text-sm">
                             <i class="fas fa-times"></i>
                         </div>
                     </div>

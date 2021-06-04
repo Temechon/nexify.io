@@ -1,36 +1,62 @@
 <div class="my-6 shadow-sm bg-white task">
     <input type="text" [(ngModel)]="task.title" placeholder="Task title..."
-        (input)="saveTitle()"
-        class="w-full font-semibold shadow-sm text-2xl mb-6 p-3 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-300">
+        (input)="save()"
+        class="w-full font-semibold shadow-sm text-2xl mb-6 p-3 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50">
 
     <div class="pl-6 pb-3">
 
-        <div *ngIf="task.content">
+        <div *ngIf="task.content" cdkDropList
+            (cdkDropListDropped)="reorder($event)">
             <ng-container *ngFor="let content of task.content; let index=index">
-                <input placeholder="New explanation..."
-                    class="font-light text-lg py-1 w-full pl-4 mb-1 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-300 "
-                    type="text" *ngIf="!isCode(content)" [value]="content.value"
-                    (input)="save($event.target, index)"
-                    [ngClass]="content.type">
 
-                <div *ngIf="isCode(content)">
-                    <code-edit [codes]="getCode(content)"
-                        (onTabSaved)="saveCode()">
-                    </code-edit>
+                <div class="flex flex-row items-center  rounded-md my-4 relative"
+                    cdkDrag>
+                    <div class="w-4 h-full absolute bg-gray-50 text-gray-400 flex items-center justify-center cursor-move"
+                        cdkDragHandle>
+                        <i class="fas fa-ellipsis-v"></i>
+                    </div>
+                    <div class="w-full flex items-center bg-white ml-5">
+
+                        <input placeholder="New explanation..."
+                            class="font-light text-lg py-1 w-full pl-4 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50"
+                            type="text" *ngIf="!isCode(content)"
+                            [value]="content.value"
+                            (input)="saveText($event.target, index)"
+                            [ngClass]="content.type">
+
+                        <div *ngIf="isCode(content)" class="w-full">
+                            <code-edit [codes]="getCode(content)"
+                                (onTabSaved)="save()">
+                            </code-edit>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center w-10 h-10">
+                        <div (click)="deleteContent(index)"
+                            class="w-6 h-6 flex items-center justify-center red-grad rounded-lg cursor-pointer text-xs">
+                            <i class="fas fa-times"></i>
+                        </div>
+                    </div>
                 </div>
+
+
             </ng-container>
         </div>
 
-        <div class="btn-container">
-            <button class="btn dark small mr-3" (click)="add('action')">
+        <div class="flex items-center justify-center ">
+            <button
+                class="darkblue-grad px-4 py-2 flex items-center shadow-sm rounded-lg cursor-pointer mr-3"
+                (click)="add('action')">
                 <i class="fas fa-plus-circle mr-2"></i>action</button>
 
-            <button class="btn bg-mydarkgray-500 small mr-3"
+            <button
+                class="green-grad px-4 py-2 flex items-center shadow-sm rounded-lg cursor-pointer mr-3"
                 (click)="add('explanation')">
                 <i class="fas fa-plus-circle mr-2"></i>
                 explanation
             </button>
-            <button class="btn accent small mr-3" (click)="addCode()">
+            <button
+                class="blue-grad px-4 py-2 flex items-center shadow-sm rounded-lg cursor-pointer mr-3"
+                (click)="addCode()">
                 <i class="fas fa-plus-circle mr-2"></i>code</button>
         </div>
     </div>

@@ -15,6 +15,8 @@ import { CodeEditComponent } from './edit/code-edit/code-edit.component';
 import { AutosizeModule } from 'ngx-autosize';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import { environment } from 'src/environments/environment';
     AppRoutingModule,
     FormsModule,
     AutosizeModule,
+    DragDropModule,
     AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [],

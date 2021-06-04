@@ -1,13 +1,15 @@
 <section class="bg-white pb-4" *ngIf="course">
 
     <input type="text" [(ngModel)]="course.title" (keyup)="saveCourse()"
-        class="w-full font-extrabold text-5xl mb-12 p-2 text-center font-display focus:outline-none focus:ring border focus:border-blue-300 border-indigo-300">
+        class="w-full font-extrabold text-5xl mb-12 p-2 text-center font-display focus:outline-none cursor-text focus:ring border focus:border-blue-300 border-indigo-50">
 
     <task-edit *ngFor="let task of course.tasks" [task]="task"
         (onUpdate)="saveCourse()"></task-edit>
 
-    <div class="btn-container">
-        <button class="btn" (click)="addTask()">Add a task</button>
+    <div class="flex items-center justify-center">
+        <button
+            class="px-4 py-3 green-grad flex items-center justify-center shadow-md rounded-lg cursor-pointer text-lg"
+            (click)="addTask()">Add a task</button>
     </div>
 
 

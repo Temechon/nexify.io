@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -30,22 +31,32 @@ export class TaskEditComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
+  /**
+   * Returns true if the given content is a code element
+   */
   isCode(test: any) {
     return test.type === "code";
   }
 
-  save(t: any, index: number) {
+  /**
+   * Update the given string content in database 
+   */
+  saveText(t: any, index: number) {
     const content = this.task.content[index] as { type: string, value: string };
     content.value = t.value;
     this.saveSub.next();
   }
 
-  saveCode() {
+  /**
+   * Save this task in database
+   */
+  save() {
     this.saveSub.next();
   }
-  saveTitle() {
-    this.saveSub.next();
+
+  reorder(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.task.content, event.previousIndex, event.currentIndex);
+    this.save();
   }
 
   add(type: string) {
@@ -70,6 +81,14 @@ export class TaskEditComponent implements OnInit {
     })
     this.task.codes.push(newCode);
     this.task.content.push({ type: 'code', value: newCode.id });
+  }
+
+  /**
+   * Removes the content at the given index from the task content
+   */
+  deleteContent(index: number) {
+    this.task.content.splice(index, 1);
+    this.save();
   }
 
 }

@@ -1,13 +1,7 @@
-.explanation:last-child {
-    @apply mb-3;
-}
+// .explanation:last-child {
+// }
 
 .action {
     @apply font-normal;
     @apply text-xl;
-    @apply mt-4 mb-2;
-
-    &:not(first-child) {
-        @apply mt-8;
-    }
 }
