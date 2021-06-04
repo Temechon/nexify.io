@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, take } from 'rxjs/operators';
 import { Course } from 'src/app/model/course.model';
 import { CourseService } from 'src/app/services/course.service';
 import { Task } from '../../model/task.model';
@@ -28,7 +28,7 @@ export class CourseEditComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.courseService.get('angular-firebase').subscribe((data: any) => {
+    this.courseService.get('angular-firebase').pipe(take(1)).subscribe((data: any) => {
       this.course = data;
       console.log("course - edition:", data);
     });
@@ -50,5 +50,10 @@ export class CourseEditComponent implements OnInit {
   private _saveCourse() {
     this.courseService.save(this.course);
   }
+
+  // ngOnDestroy() {
+  //   console.log("removing savesubject on cours eedit");
+  //   this.saveSub.complete();
+  // }
 
 }

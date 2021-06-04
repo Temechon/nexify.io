@@ -28,7 +28,7 @@ export class CodeEditComponent implements OnInit {
 
   }
 
-  openTab($event: MouseEvent, tabid: string) {
+  openTab(tabid: string) {
     const codeWrapper = this.codeWrapper.nativeElement as HTMLDivElement;
 
     // Hide all code divs
@@ -44,12 +44,18 @@ export class CodeEditComponent implements OnInit {
     codeContent.classList.remove('hidden');
 
     // Set the selected tab as active
-    const tabDiv = $event.currentTarget as HTMLDivElement;
+    const tabDiv = codeWrapper.querySelector(`#header${tabid}`) as HTMLDivElement
     tabDiv.classList.add('active');
   }
 
   addTab() {
-    this.codes.content.push(TabCode.createNew())
+    const newtab = TabCode.createNew();
+    this.codes.content.push(newtab)
+
+    setTimeout(() => {
+      this.openTab(newtab.id)
+
+    }, 50)
   }
 
 

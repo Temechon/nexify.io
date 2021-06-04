@@ -7,8 +7,9 @@
 
             <!-- Display each tab -->
             <div class="tab" [ngClass]="{'active':index===0}"
+                [id]="'header'+tab.id"
                 *ngFor="let tab of codes?.content; let index=index"
-                (click)="openTab($event, tab.id)">
+                (click)="openTab(tab.id)">
                 <input type="text" [(ngModel)]="tab.name" class="tab-input"
                     placeholder="New tab...">
             </div>
