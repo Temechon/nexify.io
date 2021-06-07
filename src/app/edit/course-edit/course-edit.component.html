@@ -8,8 +8,15 @@
 
     <div class="flex items-center justify-center">
         <button
-            class="px-4 py-3 green-grad flex items-center justify-center shadow-md rounded-lg cursor-pointer text-lg"
-            (click)="addTask()">Add a task</button>
+            class="px-4 py-2 blue-grad flex items-center justify-center shadow-md rounded-lg cursor-pointer text-lg mr-4"
+            (click)="addTask()">
+            <i class="fas fa-plus mr-3"></i>
+            Task</button>
+        <button
+            class="px-4 py-2 red-grad flex items-center justify-center shadow-md rounded-lg cursor-pointer text-lg"
+            [routerLink]="['../']">
+            <i class=" fas fa-times mr-3"></i>
+            Close editor</button>
     </div>
 
 
