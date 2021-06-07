@@ -17,6 +17,7 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { RemoveRegexp } from './helpers/Pipe';
+import { LinkEditComponent } from './edit/link-edit/link-edit.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { RemoveRegexp } from './helpers/Pipe';
     CourseEditComponent,
     TaskEditComponent,
     CodeEditComponent,
-    RemoveRegexp
+    RemoveRegexp,
+    LinkEditComponent
   ],
   imports: [
     BrowserModule,

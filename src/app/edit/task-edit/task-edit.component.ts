@@ -39,6 +39,26 @@ export class TaskEditComponent implements OnInit {
   }
 
   /**
+   * Returns true if the given content is a explanation element
+   */
+  isExplanation(test: any) {
+    return test.type === "explanation";
+  }
+  /**
+   * Returns true if the given content is an action element
+   */
+  isAction(test: any) {
+    return test.type === "action";
+  }
+
+  /**
+   * Returns true if the given content is a link element
+   */
+  isLink(test: any) {
+    return test.type === "link";
+  }
+
+  /**
    * Update the given string content in database 
    */
   saveText(t: any, index: number) {
@@ -81,6 +101,10 @@ export class TaskEditComponent implements OnInit {
     })
     this.task.codes.push(newCode);
     this.task.content.push({ type: 'code', value: newCode.id });
+  }
+
+  addLink() {
+
   }
 
   /**
