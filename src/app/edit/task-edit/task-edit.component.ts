@@ -104,6 +104,10 @@ export class TaskEditComponent implements OnInit {
   }
 
   addLink() {
+    this.task.content.push({
+      type: 'link',
+      value: []
+    })
 
   }
 

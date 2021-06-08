@@ -1,4 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Code, TabCode } from 'src/app/model/task.model';
 
 @Component({
@@ -20,9 +22,20 @@ export class CodeEditComponent implements OnInit {
   @Input()
   codes: Code;
 
+  saveSub = new Subject<{ tabid: string, index: number }>();
 
 
-  constructor() { }
+
+  constructor() {
+
+    this.saveSub.pipe(
+      debounceTime(500)
+    ).subscribe((tabinfo: { tabid: string, index: number }) => {
+      console.log("saving here", tabinfo);
+      this._saveTab(tabinfo.tabid, tabinfo.index);
+    })
+
+  }
 
   ngOnInit(): void {
 
@@ -53,13 +66,15 @@ export class CodeEditComponent implements OnInit {
     this.codes.content.push(newtab)
 
     setTimeout(() => {
-      this.openTab(newtab.id)
-
+      this.openTab(newtab.id);
     }, 50)
   }
 
-
   saveTab(tabid: string, index: number) {
+    this.saveSub.next({ tabid, index });
+  }
+
+  _saveTab(tabid: string, index: number) {
 
     // Get code content
     const codeWrapper = this.codeWrapper.nativeElement as HTMLDivElement;

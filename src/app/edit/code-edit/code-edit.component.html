@@ -6,12 +6,26 @@
             class="flex flex-row items-center h-10 overflow-x-auto overflow-y-hidden">
 
             <!-- Display each tab -->
-            <div class="tab" [ngClass]="{'active':index===0}"
+            <div class="tab relative" [ngClass]="{'active':index===0}"
                 [id]="'header'+tab.id"
                 *ngFor="let tab of codes?.content; let index=index"
                 (click)="openTab(tab.id)">
-                <input type="text" [(ngModel)]="tab.name" class="tab-input"
+
+                <!-- Tab name -->
+                <input type="text" [(ngModel)]="tab.name" class="tab-input pr-7"
                     placeholder="New tab...">
+
+                <!-- remove tab button -->
+                <div
+                    class="flex flex-col items-center absolute right-2 transform top-1/2 -translate-y-1/2">
+                    <!-- Delete -->
+                    <div class="flex items-center justify-center w-8 h-8">
+                        <div (click)="removeTab(index)"
+                            class="w-4 h-4 flex items-center justify-center red-grad rounded-lg cursor-pointer text-xs">
+                            <i class="fas fa-times"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Add a new tab -->
@@ -22,33 +36,12 @@
 
         <!-- For each tab, display its code -->
         <ng-container *ngFor="let tab of codes?.content; let index=index">
-            <div [id]="tab.id" class="code-content relative"
+            <div [id]="tab.id" class="code-content"
                 [ngClass]="{'hidden':index!==0}">
                 <textarea autosize [ngClass]='tab.classname'
+                    (input)="saveTab(tab.id, index)"
                     placeholder="Your code here..."
                     class="w-full h-full bg-mydarkgray-500 text-white p-2 focus:outline-none">{{tab.code}}</textarea>
-
-                <!-- Save/remove/edit tab button -->
-
-
-                <div
-                    class="flex flex-col items-center absolute right-2 bottom-3">
-                    <!-- Save  -->
-                    <div class="flex items-center justify-center w-10 h-10">
-                        <div (click)="saveTab(tab.id, index)"
-                            class="w-8 h-8 flex items-center justify-center blue-grad rounded-lg cursor-pointer text-sm">
-                            <i class="fas fa-save"></i>
-                        </div>
-                    </div>
-
-                    <!-- Delete -->
-                    <div class="flex items-center justify-center w-10 h-10">
-                        <div (click)="removeTab(index)"
-                            class="w-8 h-8 flex items-center justify-center red-grad rounded-lg cursor-pointer text-sm">
-                            <i class="fas fa-times"></i>
-                        </div>
-                    </div>
-                </div>
             </div>
         </ng-container>
     </div>

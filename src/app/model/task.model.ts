@@ -5,7 +5,7 @@ import { Helpers } from "../helpers/Helpers";
 
 export interface TaskContent {
     type: string
-    value: string
+    value: any
 }
 
 /***** Database objects */

@@ -1,1 +1,19 @@
-<p>link-edit works!</p>
+<div class="flex flex-col w-full">
+    <input type="text" [(ngModel)]="link[0]"
+        class="mb-2 w-full p-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50"
+        placeholder="Description">
+
+    <div class="flex  w-full mb-2">
+        <div class="w-24 p-2 pl-4">Text</div>
+        <input type="text" [(ngModel)]="link[0]"
+            class="w-full p-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50"
+            placeholder="Link text">
+    </div>
+    <div class="flex w-full">
+        <div class="w-24 p-2 pl-4">URL</div>
+        <input type="text" [(ngModel)]="link[1]"
+            class="w-full p-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50"
+            placeholder="Link URL">
+    </div>
+
+</div>

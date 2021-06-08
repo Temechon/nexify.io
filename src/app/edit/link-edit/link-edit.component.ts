@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'link-edit',
@@ -7,7 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LinkEditComponent implements OnInit {
 
-  constructor() { }
+  @Output()
+  private onUpdate = new EventEmitter();
+
+  saveSub = new Subject();
+
+  @Input()
+  link: Array<string>;
+
+  constructor() {
+    this.saveSub.pipe(
+      debounceTime(500)
+    ).subscribe(() => {
+      this.onUpdate.emit(this.link);
+    })
+  }
 
   ngOnInit(): void {
   }

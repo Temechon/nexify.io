@@ -17,6 +17,7 @@
                     </div>
                     <div class="w-full flex items-center bg-white ml-5">
 
+                        <!-- Action or explanation -->
                         <input placeholder="New explanation..."
                             class="font-light text-lg py-1 w-full pl-4 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50"
                             type="text"
@@ -25,11 +26,20 @@
                             (input)="saveText($event.target, index)"
                             [ngClass]="content.type">
 
+                        <!-- Code -->
                         <div *ngIf="isCode(content)" class="w-full">
                             <code-edit [codes]="getCode(content)"
                                 (onTabSaved)="save()">
                             </code-edit>
                         </div>
+
+                        <!-- Link -->
+                        <div *ngIf="isLink(content)" class="w-full">
+                            <link-edit [link]="content.value"
+                                (onUpdate)="save()">
+                            </link-edit>
+                        </div>
+
                     </div>
                     <div class="flex items-center justify-center w-10 h-10">
                         <div (click)="deleteContent(index)"
