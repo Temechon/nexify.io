@@ -9,13 +9,17 @@
         <!-- Content -->
         <ul *ngIf="task.content">
             <ng-container *ngFor="let content of task.content">
-                <li *ngIf="!isCode(content)" [ngClass]="content.type"
-                    [innerHTML]="content.value">
+                <li *ngIf="isExplanation(content) ||isAction(content)"
+                    [ngClass]="content.type" [innerHTML]="content.value">
                 </li>
 
+                <div *ngIf="isLink(content)">
+                    <link-view [link]="content.value"></link-view>
+                </div>
+
                 <div *ngIf="isCode(content)">
-                    <app-code [codes]="getCode(content)">
-                    </app-code>
+                    <code-view [codes]="getCode(content)">
+                    </code-view>
                 </div>
             </ng-container>
         </ul>

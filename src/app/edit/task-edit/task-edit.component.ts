@@ -71,6 +71,7 @@ export class TaskEditComponent implements OnInit {
    * Save this task in database
    */
   save() {
+    console.log(this.task)
     this.saveSub.next();
   }
 

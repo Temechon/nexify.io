@@ -3,7 +3,7 @@ import { Code } from 'src/app/model/task.model';
 import { HighlightService } from '../../services/Highlight.service';
 
 @Component({
-  selector: 'app-code',
+  selector: 'code-view',
   templateUrl: './code-view.component.html',
   styleUrls: ['./code-view.component.scss']
 })

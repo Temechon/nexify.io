@@ -18,6 +18,7 @@ import { environment } from 'src/environments/environment';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { RemoveRegexp } from './helpers/Pipe';
 import { LinkEditComponent } from './edit/link-edit/link-edit.component';
+import { LinkViewComponent } from './view/link-view/link-view.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { LinkEditComponent } from './edit/link-edit/link-edit.component';
     TaskEditComponent,
     CodeEditComponent,
     RemoveRegexp,
-    LinkEditComponent
+    LinkEditComponent,
+    LinkViewComponent
   ],
   imports: [
     BrowserModule,

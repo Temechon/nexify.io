@@ -27,9 +27,33 @@ export class TaskViewComponent implements OnInit {
   }
 
 
-  isCode(test: TaskContent) {
+  /**
+   * Returns true if the given content is a code element
+   */
+  isCode(test: any) {
     return test.type === "code";
   }
+
+  /**
+   * Returns true if the given content is a explanation element
+   */
+  isExplanation(test: any) {
+    return test.type === "explanation";
+  }
+  /**
+   * Returns true if the given content is an action element
+   */
+  isAction(test: any) {
+    return test.type === "action";
+  }
+
+  /**
+   * Returns true if the given content is a link element
+   */
+  isLink(test: any) {
+    return test.type === "link";
+  }
+
 
   hideTask() {
     const taskContentDiv = this.taskContent.nativeElement as HTMLDivElement;

@@ -28,4 +28,8 @@ export class LinkEditComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  save() {
+    this.saveSub.next();
+  }
+
 }
