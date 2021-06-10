@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Course } from 'src/app/model/course.model';
+import { Step } from 'src/app/model/course.model';
 
 @Component({
   selector: 'app-course-view',
@@ -13,12 +13,14 @@ export class CourseViewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute) { }
 
-  course: Course;
+  course: Step;
 
   ngOnInit(): void {
 
 
     this.route.data.subscribe((data: any) => {
+      console.log("DATA HERE", data);
+
       if (data && data.course) {
         this.course = data.course;
         console.log("course:", data);

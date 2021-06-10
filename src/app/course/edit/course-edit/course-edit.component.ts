@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime, take } from 'rxjs/operators';
-import { Course } from 'src/app/model/course.model';
+import { Step } from 'src/app/model/course.model';
 import { CourseService } from 'src/app/services/course.service';
-import { Task } from '../../model/task.model';
+import { Task } from '../../../model/task.model';
 
 @Component({
   selector: 'app-course-edit',
@@ -12,13 +13,14 @@ import { Task } from '../../model/task.model';
 })
 export class CourseEditComponent implements OnInit {
 
-  course: Course;
+  course: Step;
 
   saveSub = new Subject();
 
 
 
-  constructor(private courseService: CourseService) {
+  constructor(private courseService: CourseService,
+    private route: ActivatedRoute) {
 
     this.saveSub.pipe(debounceTime(500)).subscribe(() => {
       this._saveCourse();
@@ -28,9 +30,11 @@ export class CourseEditComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.courseService.get('angular-firebase').pipe(take(1)).subscribe((data: any) => {
-      this.course = data;
-      console.log("course - edition:", data);
+    this.route.data.subscribe((data: any) => {
+      if (data && data.course) {
+        this.course = data.course;
+        console.log("course:", data);
+      }
     });
   }
 

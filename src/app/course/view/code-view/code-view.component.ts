@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Code } from 'src/app/model/task.model';
-import { HighlightService } from '../../services/Highlight.service';
+import { HighlightService } from '../../../services/Highlight.service';
 
 @Component({
   selector: 'code-view',

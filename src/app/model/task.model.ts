@@ -15,11 +15,6 @@ export interface TaskDb {
     content: Array<TaskContent>
 }
 
-export interface CourseDb {
-    id: string,
-    tasks: Array<TaskDb>
-}
-
 export interface TabCodeDb {
     id: string,
     name: string,

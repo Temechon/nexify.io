@@ -2,6 +2,18 @@ import { Code, Task } from "./task.model";
 import * as _ from 'underscore';
 
 export class Course {
+    id: string;
+    title: string;
+    home: string;
+
+    constructor(params: any) {
+        this.id = params.id;
+        this.title = params.title;
+        this.home = params.home;
+    }
+}
+
+export class Step {
 
     id: string;
     tasks: Array<Task> = [];

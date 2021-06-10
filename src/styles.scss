@@ -11,6 +11,11 @@
 @import "~prismjs/plugins/toolbar/prism-toolbar.css";
 @import "~prismjs/themes/prism-tomorrow";
 
+html,
+body {
+    @apply w-full m-0 p-0;
+}
+
 section {
     @apply w-2/3;
     @apply m-auto;

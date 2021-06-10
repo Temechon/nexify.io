@@ -4,26 +4,29 @@ import { EMPTY, Observable } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
 import { Step } from '../model/course.model';
 import { CourseService } from '../services/course.service';
+import { StepService } from '../services/step.service';
 
 @Injectable({
     providedIn: 'root',
 })
-export class CourseResolver {
+export class StepResolver {
 
     constructor(
-        private courseService: CourseService,
+        private stepService: StepService,
         private router: Router
     ) { }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Step> {
 
         // Check if the note id is in the curent route
-        let id = route.paramMap.get('id');
+        let stepid = route.paramMap.get('step');
+        let courseid = route.paramMap.get('id');
+        console.log('STEPID', stepid, 'courseid', courseid)
 
         // Check if the project is the same as the previous one
-        if (id) {
+        if (stepid && courseid) {
             // Otherwise, retrieve it from database
-            return this.courseService.getCourse(id).pipe(
+            return this.stepService.get(courseid, stepid).pipe(
                 take(1),
                 catchError(
                     err => {
