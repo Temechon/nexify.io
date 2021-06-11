@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CourseResolver } from '../resolvers/course.resolver';
 import { StepResolver } from '../resolvers/step.resolver';
 import { CourseHomeComponent } from './course-home/course-home.component';
+import { CourseComponent } from './course/course.component';
 import { StepEditComponent } from './edit/course-edit/step-edit.component';
 import { StepViewComponent } from './view/course-view/step-view.component';
 
@@ -18,27 +19,35 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                component: CourseHomeComponent,
+                component: CourseComponent,
                 resolve: {
                     course: CourseResolver,
-                }
-            },
-            {
-                path: ':step',
-                resolve: {
-                    step: StepResolver,
                 },
                 children: [
                     {
                         path: '',
-                        component: StepViewComponent
+                        component: CourseHomeComponent
                     },
                     {
-                        path: 'editor',
-                        component: StepEditComponent,
+                        path: ':step',
+                        resolve: {
+                            step: StepResolver,
+                        },
+                        children: [
+                            {
+                                path: '',
+                                component: StepViewComponent
+                            },
+                            {
+                                path: 'editor',
+                                component: StepEditComponent,
+                            }
+                        ]
                     }
                 ]
-            }
+
+            },
+
         ]
     }
 ];

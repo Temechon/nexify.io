@@ -15,6 +15,7 @@ import { CodeViewComponent } from "./view/code-view/code-view.component";
 import { StepViewComponent } from "./view/course-view/step-view.component";
 import { LinkViewComponent } from "./view/link-view/link-view.component";
 import { TaskViewComponent } from "./view/task-view/task-view.component";
+import { CourseComponent } from './course/course.component';
 
 @NgModule({
     declarations: [
@@ -29,7 +30,8 @@ import { TaskViewComponent } from "./view/task-view/task-view.component";
         CodeEditComponent,
         RemoveRegexp,
         LinkEditComponent,
-        LinkViewComponent
+        LinkViewComponent,
+        CourseComponent
     ],
     imports: [
         FormsModule,
