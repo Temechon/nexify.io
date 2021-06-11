@@ -3,17 +3,17 @@ import { ActivatedRoute } from '@angular/router';
 import { Step } from 'src/app/model/course.model';
 
 @Component({
-  selector: 'app-course-view',
-  templateUrl: './course-view.component.html',
-  styleUrls: ['./course-view.component.scss']
+  selector: 'step-view',
+  templateUrl: './step-view.component.html',
+  styleUrls: ['./step-view.component.scss']
 })
-export class CourseViewComponent implements OnInit {
+export class StepViewComponent implements OnInit {
 
 
   constructor(
     private route: ActivatedRoute) { }
 
-  course: Step;
+  step: Step;
 
   ngOnInit(): void {
 
@@ -21,8 +21,8 @@ export class CourseViewComponent implements OnInit {
     this.route.data.subscribe((data: any) => {
       console.log("DATA HERE", data);
 
-      if (data && data.course) {
-        this.course = data.course;
+      if (data && data.step) {
+        this.step = data.step;
         console.log("course:", data);
       }
     });

@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import * as _ from 'underscore';
-import { Code, TabCode, Task, TaskContent } from '../../../model/task.model';
+import { Code, Task, TaskContent } from '../../../model/task.model';
 
 @Component({
   selector: 'app-task',

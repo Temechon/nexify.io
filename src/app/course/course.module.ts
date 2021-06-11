@@ -6,13 +6,14 @@ import { AutosizeModule } from "ngx-autosize";
 import { RemoveRegexp } from "../helpers/Pipe";
 import { CourseHomeComponent } from "./course-home/course-home.component";
 import { CourseRoutingModule } from "./course-routing.module";
+import { CourseComponent } from "./course.component";
 import { CodeEditComponent } from "./edit/code-edit/code-edit.component";
-import { CourseEditComponent } from "./edit/course-edit/course-edit.component";
+import { StepEditComponent } from "./edit/course-edit/step-edit.component";
 import { LinkEditComponent } from "./edit/link-edit/link-edit.component";
 import { TaskEditComponent } from "./edit/task-edit/task-edit.component";
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { CodeViewComponent } from "./view/code-view/code-view.component";
-import { CourseViewComponent } from "./view/course-view/course-view.component";
+import { StepViewComponent } from "./view/course-view/step-view.component";
 import { LinkViewComponent } from "./view/link-view/link-view.component";
 import { TaskViewComponent } from "./view/task-view/task-view.component";
 
@@ -21,15 +22,16 @@ import { TaskViewComponent } from "./view/task-view/task-view.component";
 
         SidebarComponent,
         CourseHomeComponent,
-        CourseViewComponent,
+        StepViewComponent,
         CodeViewComponent,
         TaskViewComponent,
-        CourseEditComponent,
+        StepEditComponent,
         TaskEditComponent,
         CodeEditComponent,
         RemoveRegexp,
         LinkEditComponent,
         LinkViewComponent,
+        CourseComponent
     ],
     imports: [
         FormsModule,

@@ -3,8 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { CourseResolver } from '../resolvers/course.resolver';
 import { StepResolver } from '../resolvers/step.resolver';
 import { CourseHomeComponent } from './course-home/course-home.component';
-import { CourseEditComponent } from './edit/course-edit/course-edit.component';
-import { CourseViewComponent } from './view/course-view/course-view.component';
+import { CourseComponent } from './course.component';
+import { StepEditComponent } from './edit/course-edit/step-edit.component';
+import { StepViewComponent } from './view/course-view/step-view.component';
 
 const routes: Routes = [
 
@@ -15,33 +16,45 @@ const routes: Routes = [
     },
     {
         path: ':id',
+        component: CourseComponent,
         children: [
             {
                 path: '',
-                redirectTo: 'home',
-                pathMatch: 'full'
-            },
-            {
-                path: 'home',
                 component: CourseHomeComponent,
+                outlet: 'course-outlet',
                 resolve: {
                     course: CourseResolver,
                 }
             },
             {
                 path: ':step',
-                component: CourseViewComponent,
                 resolve: {
-                    course: StepResolver,
-                }
+                    step: StepResolver,
+                },
+                children: [
+                    {
+                        path: '',
+                        component: StepViewComponent,
+                        outlet: 'course-outlet'
+                    },
+                    {
+                        path: 'editor',
+                        children: [{
+                            path: '',
+                            component: StepEditComponent,
+                            outlet: 'course-outlet'
+
+                        }]
+                    }
+                ]
             },
-            {
-                path: 'editor',
-                component: CourseEditComponent,
-                resolve: {
-                    course: CourseResolver,
-                }
-            }
+            // {
+            //     path: 'editor',
+            //     component: StepEditComponent,
+            //     resolve: {
+            //         step: CourseResolver,
+            //     }
+            // }
         ],
     },
 ];

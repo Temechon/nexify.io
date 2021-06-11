@@ -4,8 +4,8 @@
         <button class="btn" [routerLink]="'editor'">Edit</button>
     </div>
 
-    <h1>Install and setup environment</h1>
-    <app-task *ngFor="let task of course.tasks" [task]="task"></app-task>
+    <h1>{{step.title}}</h1>
+    <app-task *ngFor="let task of step.tasks" [task]="task"></app-task>
 
 
     <!-- <div class="task">

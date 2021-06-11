@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime, take } from 'rxjs/operators';
 import { Step } from 'src/app/model/course.model';
@@ -7,11 +7,11 @@ import { CourseService } from 'src/app/services/course.service';
 import { Task } from '../../../model/task.model';
 
 @Component({
-  selector: 'app-course-edit',
-  templateUrl: './course-edit.component.html',
-  styleUrls: ['./course-edit.component.scss']
+  selector: 'step-edit',
+  templateUrl: './step-edit.component.html',
+  styleUrls: ['./step-edit.component.scss']
 })
-export class CourseEditComponent implements OnInit {
+export class StepEditComponent implements OnInit {
 
   course: Step;
 
@@ -20,7 +20,8 @@ export class CourseEditComponent implements OnInit {
 
 
   constructor(private courseService: CourseService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private router: Router) {
 
     this.saveSub.pipe(debounceTime(500)).subscribe(() => {
       this._saveCourse();
@@ -31,8 +32,8 @@ export class CourseEditComponent implements OnInit {
   ngOnInit(): void {
 
     this.route.data.subscribe((data: any) => {
-      if (data && data.course) {
-        this.course = data.course;
+      if (data && data.step) {
+        this.course = data.step;
         console.log("course:", data);
       }
     });
@@ -49,6 +50,14 @@ export class CourseEditComponent implements OnInit {
 
   saveCourse() {
     this.saveSub.next();
+  }
+
+  goToStep() {
+    // Get course id in url
+    // const courseid = this.route.parent.paramMap.get('id');
+    console.log(this.route.parent.paramMap);
+
+    // this.router.navigate(['course', this]);
   }
 
   private _saveCourse() {

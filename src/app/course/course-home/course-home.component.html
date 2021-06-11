@@ -1,32 +1,21 @@
-<div class="flex h-full min-h-screen">
-    <div id="sidebar" class="max-w-1/6 min-w-12 bg-mydarkblue-500 text-white">
-        <app-sidebar></app-sidebar>
+<section>
+    <h1>
+        {{course.title}}
+    </h1>
+
+    {{course.home}}
+
+    <ul>
+        <li *ngFor="let step of steps">
+            <button [routerLink]="[step.id]" class="btn">{{step.title}}
+            </button>
+
+        </li>
+    </ul>
+
+    <div class="btn-container">
+        <button [routerLink]="'/course/angular-firebase2'"
+            class="btn">NOW!</button>
     </div>
 
-    <div id="content" class="bg-gray-50 w-full">
-        <section>
-            <h1>
-                {{course.title}}
-            </h1>
-
-            {{course.home}}
-
-            <ul>
-                <li *ngFor="let step of steps">
-                    <button [routerLink]="['../'+step.id]"
-                        class="btn">{{step.title}}
-                    </button>
-
-                </li>
-            </ul>
-
-            <div class="btn-container">
-                <button [routerLink]="'/course/angular-firebase'"
-                    class="btn">NOW!</button>
-            </div>
-
-        </section>
-
-    </div>
-
-</div>
+</section>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { map, mergeMap, take } from 'rxjs/operators';
 import { Course, Step } from '../model/course.model';
 import { Code, CodeDb, Task } from '../model/task.model';
@@ -30,14 +30,22 @@ export class StepService {
                     return this.getCodesByTaskid(task.id).pipe(
                         take(1),
                         map((allCodesForTask: Code[]) => {
+                            console.log("la !");
                             task.codes = allCodesForTask;
                             return allCodesForTask;
                         })
                     )
                 });
-                return forkJoin(allCodesForTask).pipe(
-                    map((allCodes: Array<any>) => step)
-                )
+                if (allCodesForTask.length > 0) {
+                    return forkJoin(allCodesForTask).pipe(
+                        map((allCodes: Array<any>) => {
+                            console.log("ici !", step);
+                            return step
+                        })
+                    )
+                } else {
+                    return of(step);
+                }
             })
         )
     }
