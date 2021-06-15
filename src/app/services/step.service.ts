@@ -58,11 +58,11 @@ export class StepService {
     }
 
     /**
-     * Returns all step for a given course
+     * Returns all step for a given course, sorted by order asc
      */
     getAll(courseid: string): Observable<Step[]> {
 
-        return this.db.collection<Step[]>('courses').doc(courseid).collection('steps')
+        return this.db.collection<Step[]>('courses').doc(courseid).collection('steps', ref => ref.orderBy('order'))
             .snapshotChanges()
             .pipe(map(
                 changes =>

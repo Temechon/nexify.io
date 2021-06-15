@@ -79,6 +79,11 @@ export class CourseService {
             ));
     }
 
+
+    save(course: Course) {
+        this.db.collection('courses').doc(course.id).set(course.toObject());
+    }
+
     // create(): Promise<void> {
     //     const course = new Step({});
     //     return this.save(course);

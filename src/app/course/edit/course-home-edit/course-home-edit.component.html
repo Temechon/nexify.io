@@ -1,8 +1,14 @@
 <section *ngIf="course">
     <input type="text" [(ngModel)]="course.title" placeholder="Task title..."
         (input)="save()"
-        class="w-full font-semibold shadow-sm text-2xl mb-6 p-3 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50">
+        class="w-full font-extrabold shadow-sm text-3xl mb-12 font-display p-4 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50">
 
+
+    <div cdkDropList (cdkDropListDropped)="reorder($event)">
+        <div *ngFor="let step of steps" cdkDrag>
+            {{step.title}}
+        </div>
+    </div>
 
     <div class="flex items-center justify-center select-none">
         <button

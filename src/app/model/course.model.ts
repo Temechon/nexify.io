@@ -11,6 +11,19 @@ export class Course {
         this.title = params.title;
         this.home = new Task(params.home);
     }
+
+    toObject() {
+        // Remove undefined properties from object, otherwise it cannot be saved
+        let res: any = _.pick(this, (value: any) => {
+            return !_.isUndefined(value);
+        });
+
+        res.home = this.home.toObject();
+
+        delete res.id;
+
+        return res;
+    }
 }
 
 export class Step {
@@ -18,11 +31,13 @@ export class Step {
     id: string;
     tasks: Array<Task> = [];
     title: string;
+    order: number;
 
     constructor(params: any) {
 
         this.id = params.id;
         this.title = params.title;
+        this.order = params.order;
 
         if (params.tasks) {
             for (let task of params.tasks) {
