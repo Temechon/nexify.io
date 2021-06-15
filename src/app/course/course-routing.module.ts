@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CourseResolver } from '../resolvers/course.resolver';
 import { StepResolver } from '../resolvers/step.resolver';
-import { CourseHomeComponent } from './course-home/course-home.component';
+import { CourseHomeViewComponent } from './view/course-home-view/course-home-view.component';
 import { CourseComponent } from './course/course.component';
-import { StepEditComponent } from './edit/course-edit/step-edit.component';
-import { StepViewComponent } from './view/course-view/step-view.component';
+import { CourseHomeEditComponent } from './edit/course-home-edit/course-home-edit.component';
+import { StepEditComponent } from './edit/step-edit/step-edit.component';
+import { StepViewComponent } from './view/step-view/step-view.component';
 
 const routes: Routes = [
 
@@ -26,7 +27,11 @@ const routes: Routes = [
                 children: [
                     {
                         path: '',
-                        component: CourseHomeComponent
+                        component: CourseHomeViewComponent
+                    },
+                    {
+                        path: 'editor',
+                        component: CourseHomeEditComponent,
                     },
                     {
                         path: ':step',

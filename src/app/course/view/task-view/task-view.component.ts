@@ -3,7 +3,7 @@ import * as _ from 'underscore';
 import { Code, Task, TaskContent } from '../../../model/task.model';
 
 @Component({
-  selector: 'app-task',
+  selector: 'task-view',
   templateUrl: './task-view.component.html',
   styleUrls: ['./task-view.component.scss']
 })

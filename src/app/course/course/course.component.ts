@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Course, Step } from 'src/app/model/course.model';
 import { StepService } from 'src/app/services/step.service';
 
@@ -11,7 +12,7 @@ import { StepService } from 'src/app/services/step.service';
 export class CourseComponent implements OnInit {
 
   course: Course;
-  steps: Step[];
+  steps: Observable<Step[]>;
 
   constructor(
     private route: ActivatedRoute,
@@ -19,17 +20,10 @@ export class CourseComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.route.data.subscribe((data: any) => {
-      if (data && data.course) {
-        this.course = data.course;
-        console.log("course:", this.course);
+    this.course = this.route.snapshot.data.course
+    console.log("SIDEBAR --- Course:", this.course);
 
-        // get all steps for this course
-        this.stepService.getAll(this.course.id).subscribe((data) => {
-          this.steps = data;
-        })
-      }
-    });
+    // get all steps for this course
+    this.steps = this.stepService.getAll(this.course.id)
   }
-
 }

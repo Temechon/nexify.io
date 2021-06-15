@@ -1,0 +1,24 @@
+<section class="relative">
+
+    <div
+        class="absolute right-0 top-0 flex items-center justify-center select-none">
+        <button
+            class="bg-white text-myblue hover:bg-gray-100 px-4 py-2 flex items-center shadow-sm rounded-lg text-xs cursor-pointer mr-3 focus:outline-none"
+            routerLink="editor">
+            <i class="fas fa-pen mr-2"></i>Edit</button>
+    </div>
+
+    <h1>
+        {{course.title}}
+    </h1>
+
+    <task-view [task]="course.home"></task-view>
+
+    <div class="flex items-center justify-center select-none" *ngIf="firstStep">
+        <button
+            class="bg-white text-myred hover:bg-gray-100 px-8 py-2 flex items-center shadow-md rounded-lg text-lg cursor-pointer mr-3 focus:outline-none"
+            (click)="startCourse()">
+            <i class="fas fa-bolt mr-2"></i>Start !</button>
+    </div>
+
+</section>

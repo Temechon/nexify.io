@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Course, Step } from 'src/app/model/course.model';
 
 @Component({
@@ -18,13 +19,13 @@ export class SidebarComponent implements OnInit {
   course: Course;
 
   @Input()
-  steps: Step[];
+  steps: Observable<Step[]>;
 
   ngOnInit(): void {
+  }
 
-    // Get active step
-    let stepid = this.route.snapshot.paramMap.get('step');
-
+  goToCourse() {
+    console.log(this.course);
 
   }
 

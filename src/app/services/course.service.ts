@@ -79,21 +79,21 @@ export class CourseService {
             ));
     }
 
-    create(): Promise<void> {
-        const course = new Step({});
-        return this.save(course);
-    }
+    // create(): Promise<void> {
+    //     const course = new Step({});
+    //     return this.save(course);
+    // }
 
-    save(course: Step): Promise<void> {
-        const saveCoursePromise = this.db.collection('courses').doc(course.id).set(course.toObject());
+    // save(course: Step): Promise<void> {
+    //     const saveCoursePromise = this.db.collection('courses').doc(course.id).set(course.toObject());
 
-        const allCodes = course.getCodes();
+    //     const allCodes = course.getCodes();
 
-        for (let code of allCodes) {
-            this.db.collection('codes').doc(code.id).set(code.toObject());
-        }
-        return saveCoursePromise;
-    }
+    //     for (let code of allCodes) {
+    //         this.db.collection('codes').doc(code.id).set(code.toObject());
+    //     }
+    //     return saveCoursePromise;
+    // }
 
     delete(Courseid: string): Promise<void> {
         return this.db.collection('courses').doc(Courseid).delete();

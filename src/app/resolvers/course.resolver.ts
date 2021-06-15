@@ -19,6 +19,7 @@ export class CourseResolver {
 
         // Check if the note id is in the curent route
         let id = route.paramMap.get('id');
+        console.log("COURSE ID", id)
 
         // Check if the project is the same as the previous one
         if (id) {

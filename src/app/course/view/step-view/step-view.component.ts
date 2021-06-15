@@ -16,16 +16,7 @@ export class StepViewComponent implements OnInit {
   step: Step;
 
   ngOnInit(): void {
-
-
-    this.route.data.subscribe((data: any) => {
-      console.log("DATA HERE", data);
-
-      if (data && data.step) {
-        this.step = data.step;
-        console.log("course:", data);
-      }
-    });
+    this.step = this.route.snapshot.data.step;
   }
 
 }

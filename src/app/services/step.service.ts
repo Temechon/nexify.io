@@ -75,16 +75,20 @@ export class StepService {
     //     return this.save(course);
     // }
 
-    // save(course: Step): Promise<void> {
-    //     const saveCoursePromise = this.db.collection('courses').doc(course.id).set(course.toObject());
+    /**
+     * Save this step and all codes relatives to its subtasks in database.
+     * @returns 
+     */
+    save(courseid: string, step: Step): Promise<void> {
+        const saveCoursePromise = this.db.collection('courses').doc(courseid).collection('steps').doc(step.id).set(step.toObject());
 
-    //     const allCodes = course.getCodes();
+        const allCodes = step.getCodes();
 
-    //     for (let code of allCodes) {
-    //         this.db.collection('codes').doc(code.id).set(code.toObject());
-    //     }
-    //     return saveCoursePromise;
-    // }
+        for (let code of allCodes) {
+            this.db.collection('codes').doc(code.id).set(code.toObject());
+        }
+        return saveCoursePromise;
+    }
 
     // delete(Courseid: string): Promise<void> {
     //     return this.db.collection('courses').doc(Courseid).delete();

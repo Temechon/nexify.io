@@ -1,11 +1,14 @@
-<section>
-
-    <div class="btn-container absolute right-0">
-        <button class="btn" [routerLink]="'editor'">Edit</button>
+<section class="relative">
+    <div
+        class="absolute right-0 top-0 flex items-center justify-center select-none">
+        <button
+            class="bg-white text-myblue hover:bg-gray-100 px-4 py-2 flex items-center shadow-sm rounded-lg text-xs cursor-pointer mr-3 focus:outline-none"
+            routerLink="editor">
+            <i class="fas fa-pen mr-2"></i>Edit</button>
     </div>
 
     <h1>{{step.title}}</h1>
-    <app-task *ngFor="let task of step.tasks" [task]="task"></app-task>
+    <task-view *ngFor="let task of step.tasks" [task]="task"></task-view>
 
 
     <!-- <div class="task">

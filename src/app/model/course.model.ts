@@ -4,12 +4,12 @@ import * as _ from 'underscore';
 export class Course {
     id: string;
     title: string;
-    home: string;
+    home: Task;
 
     constructor(params: any) {
         this.id = params.id;
         this.title = params.title;
-        this.home = params.home;
+        this.home = new Task(params.home);
     }
 }
 
@@ -20,6 +20,7 @@ export class Step {
     title: string;
 
     constructor(params: any) {
+
         this.id = params.id;
         this.title = params.title;
 

@@ -1,0 +1,13 @@
+<section *ngIf="course">
+    <input type="text" [(ngModel)]="course.title" placeholder="Task title..."
+        (input)="save()"
+        class="w-full font-semibold shadow-sm text-2xl mb-6 p-3 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50">
+
+
+    <div class="flex items-center justify-center select-none">
+        <button
+            class="bg-white text-myred hover:bg-gray-100 px-8 py-2 flex items-center shadow-md rounded-lg text-lg cursor-pointer mr-3 focus:outline-none"
+            [routerLink]="['../']">
+            <i class="fas fa-times mr-2"></i>Close</button>
+    </div>
+</section>

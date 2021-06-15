@@ -4,24 +4,25 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { AutosizeModule } from "ngx-autosize";
 import { RemoveRegexp } from "../helpers/Pipe";
-import { CourseHomeComponent } from "./course-home/course-home.component";
+import { CourseHomeViewComponent } from "./view/course-home-view/course-home-view.component";
 import { CourseRoutingModule } from "./course-routing.module";
 import { CodeEditComponent } from "./edit/code-edit/code-edit.component";
-import { StepEditComponent } from "./edit/course-edit/step-edit.component";
+import { StepEditComponent } from "./edit/step-edit/step-edit.component";
 import { LinkEditComponent } from "./edit/link-edit/link-edit.component";
 import { TaskEditComponent } from "./edit/task-edit/task-edit.component";
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { CodeViewComponent } from "./view/code-view/code-view.component";
-import { StepViewComponent } from "./view/course-view/step-view.component";
+import { StepViewComponent } from "./view/step-view/step-view.component";
 import { LinkViewComponent } from "./view/link-view/link-view.component";
 import { TaskViewComponent } from "./view/task-view/task-view.component";
 import { CourseComponent } from './course/course.component';
+import { CourseHomeEditComponent } from './edit/course-home-edit/course-home-edit.component';
 
 @NgModule({
     declarations: [
 
         SidebarComponent,
-        CourseHomeComponent,
+        CourseHomeViewComponent,
         StepViewComponent,
         CodeViewComponent,
         TaskViewComponent,
@@ -31,7 +32,8 @@ import { CourseComponent } from './course/course.component';
         RemoveRegexp,
         LinkEditComponent,
         LinkViewComponent,
-        CourseComponent
+        CourseComponent,
+        CourseHomeEditComponent
     ],
     imports: [
         FormsModule,
