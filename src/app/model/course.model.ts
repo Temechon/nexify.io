@@ -1,5 +1,6 @@
 import { Code, Task } from "./task.model";
 import * as _ from 'underscore';
+import { Helpers } from "../helpers/Helpers";
 
 export class Course {
     id: string;
@@ -33,9 +34,9 @@ export class Step {
     title: string;
     order: number;
 
-    constructor(params: any) {
+    constructor(params: any = {}) {
 
-        this.id = params.id;
+        this.id = params.id || Helpers.guid();
         this.title = params.title;
         this.order = params.order;
 

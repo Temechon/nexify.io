@@ -1,0 +1,39 @@
+.button {
+    @apply mt-3;
+    @apply w-full;
+    @apply inline-flex;
+    @apply justify-center;
+    @apply rounded-md;
+    @apply border;
+    @apply border-gray-300;
+    @apply shadow-sm;
+    @apply px-4;
+    @apply py-2;
+    @apply text-myblue;
+    @apply text-base;
+    @apply font-medium;
+
+    &:hover {
+        @apply bg-mydarkblue-300;
+        @apply text-white;
+    }
+
+    &:focus {
+        @apply outline-none;
+        @apply ring-2;
+        @apply ring-offset-2;
+    }
+    @apply sm:mt-0;
+    @apply sm:ml-3;
+    @apply sm:w-auto;
+    @apply sm:text-sm;
+
+    &.cancel {
+        @apply bg-myred;
+        @apply text-white;
+
+        &:hover {
+            @apply bg-red-400;
+        }
+    }
+}

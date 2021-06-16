@@ -1,0 +1,27 @@
+<div class="absolute inset-0 flex items-center justify-center">
+
+    <div class="bg-white w-96 border border-gray-200 rounded-lg z-10">
+
+        <h3 class="text-lg leading-6 font-semibold bg-gray-100 text-gray-900 p-4 flex items-center"
+            id="modal-title">
+            {{data.title}}
+        </h3>
+        <p class="p-4" [innerHTML]="data.content">
+        </p>
+
+        <div class="bg-gray-50 px-4 py-3 rounded-lg flex flex-row-reverse">
+
+            <button type="button" class="button"
+                [class.cancel]="!!data.button1.type"
+                (click)="close(data.button1.param)">
+                {{data.button1.text}}
+            </button>
+            <button type="button" class="button"
+                [class.cancel]="!!data.button2.type"
+                (click)="close(data.button2.param)">
+                {{data.button2.text}}
+            </button>
+        </div>
+    </div>
+
+</div>

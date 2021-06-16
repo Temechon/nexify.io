@@ -1,16 +1,47 @@
 <section *ngIf="course">
+
+    <div class="my-2 text-lg font-semibold">Course title</div>
     <input type="text" [(ngModel)]="course.title" placeholder="Task title..."
         (input)="save()"
         class="w-full font-extrabold shadow-sm text-3xl mb-12 font-display p-4 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50">
 
 
+    <div class="my-2 text-lg font-semibold">Chapters</div>
     <div cdkDropList (cdkDropListDropped)="reorder($event)">
-        <div *ngFor="let step of steps" cdkDrag>
-            {{step.title}}
-        </div>
-    </div>
 
-    <div class="flex items-center justify-center select-none">
+        <ng-container *ngFor="let step of steps; let index=index">
+
+            <div class="flex flex-row items-center rounded-md my-2 relative bg-white border border-gray-100"
+                cdkDrag>
+                <div class="w-4 h-full absolute left-0 rounded-l-md bg-gray-100 text-gray-400 flex items-center justify-center cursor-move"
+                    cdkDragHandle>
+                    <i class="fas fa-ellipsis-v"></i>
+                </div>
+                <div class="w-full flex items-center bg-white ml-5">
+                    <input type="text" [(ngModel)]="step.title"
+                        [id]="'step-'+step.id" (input)="saveChapter(index)"
+                        (keydown.enter)="addChapter()"
+                        class="p-4 w-full rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50">
+                </div>
+
+                <div class="flex items-center justify-center w-10 h-10">
+                    <div (click)="deleteChapter(index)"
+                        class="w-6 h-6 flex items-center justify-center red-grad rounded-lg cursor-pointer text-xs">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <button
+        class="bg-white text-myblue hover:bg-gray-100 px-4 mt-4 mb-12 py-2 flex items-center shadow-sm rounded-lg cursor-pointer mr-3"
+        (click)="addChapter()">
+        <i class="fas fa-plus mr-2"></i>chapter</button>
+
+    <div class="my-2 text-lg font-semibold">Homepage</div>
+    <task-edit [task]="course.home"></task-edit>
+
+    <div class="flex items-center justify-center select-none mt-12">
         <button
             class="bg-white text-myred hover:bg-gray-100 px-8 py-2 flex items-center shadow-md rounded-lg text-lg cursor-pointer mr-3 focus:outline-none"
             [routerLink]="['../']">

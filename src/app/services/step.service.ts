@@ -90,7 +90,16 @@ export class StepService {
         return saveCoursePromise;
     }
 
-    // delete(Courseid: string): Promise<void> {
-    //     return this.db.collection('courses').doc(Courseid).delete();
-    // }
+    delete(courseid: string, step: Step): Promise<void> {
+        // Delete all codes relative to all tasks of this step  
+        for (let task of step.tasks) {
+            this.deleteCodesForTask(task.id);
+        }
+
+        return this.db.collection('courses').doc(courseid).collection('steps').doc(step.id).delete();
+    }
+
+    deleteCodesForTask(taskid: string) {
+        this.db.collection('codes', ref => ref.where('taskid', '==', taskid)).snapshotChanges().forEach(doc => doc.map(d => d.payload.doc.ref.delete()))
+    }
 }
