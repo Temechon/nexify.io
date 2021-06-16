@@ -1,21 +1,24 @@
-<section class="bg-white pb-4 mb-20" *ngIf="step">
+<section *ngIf="step">
+    <div class="my-2 text-lg font-semibold">Chapter title</div>
+    <input type="text" [(ngModel)]="step.title" placeholder="Chapter title"
+        (input)="saveCourse()"
+        class="w-full font-extrabold shadow-sm text-3xl mb-12 font-display p-4 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50">
 
-    <input type="text" [(ngModel)]="step.title" (keyup)="saveCourse()"
-        class="w-full font-extrabold text-5xl mb-12 p-2 text-center font-display focus:outline-none cursor-text focus:ring border focus:border-blue-300 border-indigo-50">
 
+    <div class="my-2 text-lg font-semibold">Tasks</div>
     <task-edit *ngFor="let task of step.tasks" [task]="task"
         (onUpdate)="saveCourse()"></task-edit>
 
     <div class="flex items-center justify-center">
-        <button
-            class="bg-white text-myblue hover:bg-gray-100 px-8 py-2 flex items-center shadow-md rounded-lg text-lg cursor-pointer mr-3 focus:outline-none"
-            (click)="addTask()">
-            <i class="fas fa-plus mr-2"></i>Task</button>
 
-        <button
-            class="bg-white text-myred hover:bg-gray-100 px-8 py-2 flex items-center shadow-md rounded-lg text-lg cursor-pointer mr-3 focus:outline-none"
-            [routerLink]="['../']">
-            <i class="fas fa-times mr-2"></i>Close</button>
+        <action-button text="Task" (click)="addTask()" icon="fa-plus" size="big"
+            color="blue">
+        </action-button>
+
+        <action-button text="Close" route="../" icon="fa-times" size="big"
+            color="red">
+        </action-button>
+
     </div>
 
 

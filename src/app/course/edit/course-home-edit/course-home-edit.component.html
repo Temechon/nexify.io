@@ -33,18 +33,19 @@
             </div>
         </ng-container>
     </div>
-    <button
-        class="bg-white text-myblue hover:bg-gray-100 px-4 mt-4 mb-12 py-2 flex items-center shadow-sm rounded-lg cursor-pointer mr-3"
-        (click)="addChapter()">
-        <i class="fas fa-plus mr-2"></i>chapter</button>
+    <div class="mb-12">
+        <action-button text="chapter" (click)="addChapter()" icon="fa-plus"
+            color="blue">
+        </action-button>
+    </div>
 
     <div class="my-2 text-lg font-semibold">Homepage</div>
     <task-edit [task]="course.home"></task-edit>
 
     <div class="flex items-center justify-center select-none mt-12">
-        <button
-            class="bg-white text-myred hover:bg-gray-100 px-8 py-2 flex items-center shadow-md rounded-lg text-lg cursor-pointer mr-3 focus:outline-none"
-            [routerLink]="['../']">
-            <i class="fas fa-times mr-2"></i>Close</button>
+
+        <action-button text="Close" route="../" icon="fa-times" color="red"
+            size="big">
+        </action-button>
     </div>
 </section>

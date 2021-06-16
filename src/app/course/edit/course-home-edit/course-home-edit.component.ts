@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, first } from 'rxjs/operators';
-import { ConfirmDialogComponent } from 'src/app/dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from 'src/app/gui/dialog/confirm-dialog.component';
 import { Course, Step } from 'src/app/model/course.model';
 import { CourseService } from 'src/app/services/course.service';
 import { DialogService } from 'src/app/services/dialog.service';

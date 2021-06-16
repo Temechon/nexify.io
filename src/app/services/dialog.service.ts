@@ -1,5 +1,5 @@
 import { ApplicationRef, ComponentFactoryResolver, EmbeddedViewRef, Injectable, Injector, Type } from '@angular/core';
-import { DialogComponent } from '../dialog/dialog.component';
+import { DialogComponent } from '../gui/dialog/dialog.component';
 import { DialogRef } from '../model/DialogRef';
 
 @Injectable({

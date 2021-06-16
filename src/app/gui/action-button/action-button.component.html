@@ -1,0 +1,24 @@
+<ng-container *ngIf="route">
+
+    <button [ngClass]="{
+        'small': size==='small',
+        'normal':size==='normal',
+        'big':size==='big',
+        'text-myblue':color==='blue', 
+        'text-myred':color==='red'}" [routerLink]="route"
+        class="bg-white hover:bg-gray-100 py-2 flex items-center shadow-md rounded-lg text-lg cursor-pointer mr-3 focus:outline-none"
+        (click)="emit()">
+        <i class="fas mr-2" [ngClass]="icon"></i>{{text}}</button>
+</ng-container>
+
+<ng-container *ngIf="!route">
+    <button [ngClass]="{
+        'small': size==='small',
+        'normal':size==='normal',
+        'big':size==='big',
+        'text-myblue':color==='blue', 
+        'text-myred':color==='red'}"
+        class="bg-white hover:bg-gray-100 py-2 flex items-center shadow-md rounded-lg text-lg cursor-pointer mr-3 focus:outline-none"
+        (click)="emit()">
+        <i class="fas mr-2" [ngClass]="icon"></i>{{text}}</button>
+</ng-container>

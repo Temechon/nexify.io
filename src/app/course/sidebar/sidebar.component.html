@@ -1,21 +1,21 @@
 <div
     class="h-full flex flex-col w-80 border-mydarkblue-300 text-white select-none">
 
-    <div class="text-white font-bold text-xl text-center py-6 mb-4">
-        <button class="focus:outline-none" [routerLink]="['/course', course.id]"
-            (click)="goToCourse()">{{course.title}}</button>
+    <div class="text-white font-semibold text-xl text-center py-6 px-4 mb-4">
+        <a class="focus:outline-none" [routerLink]="['/course', course.id]"
+            (click)="goToCourse()">{{course.title}}</a>
     </div>
 
     <div class="ml-4 text-sm text-gray-400 h-8 leading-8 pt-2 mb-4">
         Chapters
     </div>
-    <div *ngFor="let step of steps | async">
-        <button [routerLink]="['/course', course.id, step.id]"
-            routerLinkActive="bg-mygreen text-green-900" class="py-2 px-4 text-left transition-colors duration-150 truncate w-full cursor-pointer hover:bg-mygreen hover:text-green-900
+    <div *ngFor="let step of steps | async" class="w-full">
+        <a [routerLink]="['/course', course.id, step.id]"
+            routerLinkActive="bg-mygreen text-green-900" class="block my-0.5 py-2 px-4 text-left transition-colors duration-150 truncate w-full cursor-pointer hover:bg-mygreen hover:text-green-900
                 focus:outline-none
             ">
 
-            {{step.title}}</button>
+            {{step.title}}</a>
     </div>
 
 </div>

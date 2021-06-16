@@ -17,6 +17,7 @@ import { LinkViewComponent } from "./view/link-view/link-view.component";
 import { TaskViewComponent } from "./view/task-view/task-view.component";
 import { CourseComponent } from './course/course.component';
 import { CourseHomeEditComponent } from './edit/course-home-edit/course-home-edit.component';
+import { GuiModule } from "../gui/gui.module";
 
 @NgModule({
     declarations: [
@@ -33,7 +34,7 @@ import { CourseHomeEditComponent } from './edit/course-home-edit/course-home-edi
         LinkEditComponent,
         LinkViewComponent,
         CourseComponent,
-        CourseHomeEditComponent
+        CourseHomeEditComponent,
     ],
     imports: [
         FormsModule,
@@ -42,6 +43,7 @@ import { CourseHomeEditComponent } from './edit/course-home-edit/course-home-edi
         FormsModule,
         CourseRoutingModule,
         CommonModule,
+        GuiModule
 
     ],
     entryComponents: []

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { DialogRef } from '../model/DialogRef';
+import { DialogRef } from '../../model/DialogRef';
 
 @Component({
   template: '',

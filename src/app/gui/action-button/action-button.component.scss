@@ -1,0 +1,15 @@
+.small {
+    @apply px-4;
+    @apply text-sm;
+    @apply shadow-sm;
+}
+
+.normal {
+    @apply px-4;
+    @apply text-base;
+    @apply shadow-sm;
+}
+
+.big {
+    @apply px-8;
+}

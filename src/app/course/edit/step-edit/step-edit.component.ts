@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { Course, Step } from 'src/app/model/course.model';
@@ -22,8 +22,7 @@ export class StepEditComponent implements OnInit {
 
 
   constructor(private stepService: StepService,
-    private route: ActivatedRoute,
-    private router: Router) {
+    private route: ActivatedRoute) {
 
     this.saveSub.pipe(debounceTime(500)).subscribe(() => {
       this._saveCourse();
@@ -32,17 +31,20 @@ export class StepEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.step = this.route.snapshot.data.step;
+
+    this.route.data.subscribe((data) => {
+      this.step = data.step;
+    })
     this.course = this.route.parent.parent.snapshot.data.course;
   }
 
   addTask() {
-
     this.step.tasks.push(new Task({
       id: '',
       title: '',
       content: []
     }))
+
   }
 
   saveCourse() {

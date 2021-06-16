@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { GuiModule } from './gui/gui.module';
 import { HomeComponent } from './home/home.component';
 
 
@@ -16,6 +17,7 @@ import { HomeComponent } from './home/home.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    GuiModule,
     AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [],
