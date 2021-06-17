@@ -110,7 +110,11 @@ export class CodeEditComponent implements OnInit {
 
     // Emit as output the full code element
     this.onTabSaved.emit(this.codes);
+  }
 
+  ngOnDestroy() {
+    this.saveSub.complete();
+    this.saveSub.unsubscribe();
   }
 
 }

@@ -18,6 +18,10 @@ export class LinkEditComponent implements OnInit {
   link: Array<string>;
 
   constructor() {
+  }
+
+  ngOnInit(): void {
+
     this.saveSub.pipe(
       debounceTime(500)
     ).subscribe(() => {
@@ -25,11 +29,13 @@ export class LinkEditComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
-  }
-
   save() {
     this.saveSub.next();
+  }
+
+  ngOnDestroy() {
+    this.saveSub.complete();
+    this.saveSub.unsubscribe();
   }
 
 }

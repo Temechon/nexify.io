@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { Chapter } from 'src/app/model/chapter.model';
 import { Course } from 'src/app/model/course.model';
@@ -20,22 +20,29 @@ export class ChapterEditComponent implements OnInit {
 
   saveSub = new Subject();
 
+  private toDestroy: Array<Subscription> = [];
+
 
 
   constructor(private chapterService: ChapterService,
     private route: ActivatedRoute) {
 
-    this.saveSub.pipe(debounceTime(500)).subscribe(() => {
-      this._saveChapter();
-    })
 
   }
 
   ngOnInit(): void {
 
-    this.route.data.subscribe((data) => {
-      this.chapter = data.chapter;
-    })
+    this.toDestroy.push(
+      this.saveSub.pipe(debounceTime(500)).subscribe(() => {
+        this._saveChapter();
+      })
+    )
+
+    this.toDestroy.push(
+      this.route.data.subscribe((data) => {
+        this.chapter = data.chapter;
+      })
+    )
     this.course = this.route.parent.parent.snapshot.data.course;
   }
 
@@ -61,8 +68,8 @@ export class ChapterEditComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    console.log("removing savesubject on cours eedit");
-    this.saveSub.complete();
+    this.toDestroy.map(sub => sub.unsubscribe());
+    this.toDestroy = [];
   }
 
 }

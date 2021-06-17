@@ -1,7 +1,7 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, first } from 'rxjs/operators';
 import { ConfirmDialogComponent } from 'src/app/gui/dialog/confirm-dialog.component';
 import { Chapter } from 'src/app/model/chapter.model';
@@ -22,6 +22,7 @@ export class CourseHomeEditComponent implements OnInit {
 
   saveCourseSub = new Subject();
   saveChapterSub = new Subject<number>();
+  toDestroy: Array<Subscription> = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -29,21 +30,26 @@ export class CourseHomeEditComponent implements OnInit {
     private chapterService: ChapterService,
     private dialogService: DialogService
   ) {
-    console.log("constructor course home edit");
 
-    this.saveCourseSub.pipe(debounceTime(500)).subscribe(() => {
-      this._save()
-    })
-
-    this.saveChapterSub.pipe(debounceTime(500)).subscribe((chapterIndex: number) => {
-
-      this.chapters.map((chap: Chapter, index: number) => chap.order = index);
-      console.log("Saving chapter", chapterIndex);
-      this._saveChapter(chapterIndex);
-    })
   }
 
   ngOnInit(): void {
+
+    this.toDestroy.push(
+      this.saveCourseSub.pipe(debounceTime(500)).subscribe(() => {
+        this._save()
+      })
+    )
+
+    this.toDestroy.push(
+      this.saveChapterSub.pipe(debounceTime(500)).subscribe((chapterIndex: number) => {
+
+        this.chapters.map((chap: Chapter, index: number) => chap.order = index);
+        console.log("Saving chapter", chapterIndex);
+        this._saveChapter(chapterIndex);
+      })
+    );
+
     this.course = this.route.parent.snapshot.data.course;
     console.log("HOME EDIT --- Course:", this.course)
     // get all chapters for this course
@@ -133,6 +139,11 @@ export class CourseHomeEditComponent implements OnInit {
     setTimeout(() => {
       (document.querySelector('#chapter-' + newChap.id) as HTMLInputElement).focus();
     }, 50)
+  }
+
+  ngOnDestroy() {
+    this.toDestroy.map(sub => sub.unsubscribe());
+    this.toDestroy = [];
   }
 
 }

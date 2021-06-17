@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Chapter } from 'src/app/model/chapter.model';
 
 @Component({
@@ -15,11 +16,13 @@ export class ChapterViewComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   chapter: Chapter;
+  private toDestroy: Array<Subscription> = [];
 
   ngOnInit(): void {
-    this.route.data.subscribe((data) => {
+    this.toDestroy.push(this.route.data.subscribe((data) => {
       this.chapter = data.chapter;
     })
+    )
   }
 
   goToNextChapter() {
@@ -29,6 +32,11 @@ export class ChapterViewComponent implements OnInit {
   goToPreviousChapter() {
     const courseid = this.route.parent.parent.snapshot.data.course.id;
     this.router.navigate(['/course', courseid, this.chapter.previousChapterId]);
+  }
+
+  ngOnDestroy() {
+    this.toDestroy.map(sub => sub.unsubscribe());
+    this.toDestroy = [];
   }
 
 }

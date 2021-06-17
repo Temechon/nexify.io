@@ -77,7 +77,6 @@ export class TaskEditComponent implements OnInit {
    * Save this task in database
    */
   save() {
-    console.log(this.task)
     this.saveSub.next();
   }
 
@@ -151,6 +150,11 @@ export class TaskEditComponent implements OnInit {
         this.onDelete.emit();
       }
     })
+  }
+
+  ngOnDestroy() {
+    this.saveSub.complete();
+    this.saveSub.unsubscribe();
   }
 
 }

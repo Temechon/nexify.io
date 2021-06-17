@@ -1,5 +1,12 @@
 <div
-    class="h-full flex flex-col w-80 border-mydarkblue-300 text-white select-none">
+    class="h-full flex flex-col w-80 border-mydarkblue-300 text-white select-none relative">
+
+
+    <div [routerLink]="['/home']"
+        class="text-white text-2xl font-display font-light p-4 border-b border-gray-500 flex items-center cursor-pointer">
+        <img src="http://placekitten.com/50/50" alt="logo nexify" class="mr-4">
+        Nexify
+    </div>
 
     <div class="text-white font-semibold text-xl text-center py-6 px-4 mb-4">
         <a class="focus:outline-none" [routerLink]="['/course', course.id]"
@@ -16,6 +23,11 @@
             ">
 
             {{chapter.title}}</a>
+    </div>
+
+    <div
+        class="absolute text-gray-300 right-5 bottom-5 text-2xl cursor-pointer hover:text-white">
+        <i class="fas fa-chevron-left"></i>
     </div>
 
 </div>

@@ -31,8 +31,6 @@ export class ActionButtonComponent implements OnInit {
   }
 
   emit() {
-    console.log("emit click here");
-
     this.onClick.emit();
   }
 

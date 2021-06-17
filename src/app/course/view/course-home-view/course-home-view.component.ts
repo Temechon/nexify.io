@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Chapter } from 'src/app/model/chapter.model';
 import { Course } from 'src/app/model/course.model';
 import { ChapterService } from 'src/app/services/chapter.service';
@@ -17,6 +17,7 @@ export class CourseHomeViewComponent implements OnInit {
   chapters: Observable<Chapter[]>;
   firstChapter: Chapter;
 
+  private toDestroy: Array<Subscription> = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -30,16 +31,21 @@ export class CourseHomeViewComponent implements OnInit {
     // get all chapters for this course
     this.chapters = this.chapterService.getAll(this.course.id);
 
-    this.chapters.subscribe(chaps => {
+    this.toDestroy.push(this.chapters.subscribe(chaps => {
       console.log("COURSE HOME VIEW --- First chapter:", chaps[0]);
       this.firstChapter = chaps[0];
-    });
+    }));
   }
 
   startCourse() {
     if (this.firstChapter) {
       this.router.navigate(['course', this.course.id, this.firstChapter.id])
     }
+  }
+
+  ngOnDestroy() {
+    this.toDestroy.map(sub => sub.unsubscribe());
+    this.toDestroy = [];
   }
 
 }
