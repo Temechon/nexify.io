@@ -8,7 +8,7 @@ import { Code, CodeDb, Task } from '../model/task.model';
 @Injectable({
     providedIn: 'root'
 })
-export class StepService {
+export class ChapterService {
 
     constructor(private db: AngularFirestore) {
     }

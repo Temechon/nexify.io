@@ -3,15 +3,15 @@ import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/ro
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, take } from 'rxjs/operators';
 import { Chapter } from '../model/chapter.model';
-import { StepService } from '../services/step.service';
+import { ChapterService } from '../services/chapter.service';
 
 @Injectable({
     providedIn: 'root',
 })
-export class StepResolver {
+export class ChapterResolver {
 
     constructor(
-        private stepService: StepService,
+        private stepService: ChapterService,
         private router: Router
     ) { }
 

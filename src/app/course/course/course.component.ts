@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Chapter } from 'src/app/model/chapter.model';
 import { Course } from 'src/app/model/course.model';
-import { StepService } from 'src/app/services/step.service';
+import { ChapterService } from 'src/app/services/chapter.service';
 
 @Component({
   selector: 'app-course',
@@ -17,7 +17,7 @@ export class CourseComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private stepService: StepService) { }
+    private stepService: ChapterService) { }
 
   ngOnInit(): void {
 

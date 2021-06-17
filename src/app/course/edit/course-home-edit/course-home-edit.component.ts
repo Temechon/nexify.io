@@ -8,7 +8,7 @@ import { Chapter } from 'src/app/model/chapter.model';
 import { Course } from 'src/app/model/course.model';
 import { CourseService } from 'src/app/services/course.service';
 import { DialogService } from 'src/app/services/dialog.service';
-import { StepService } from 'src/app/services/step.service';
+import { ChapterService } from 'src/app/services/chapter.service';
 
 @Component({
   selector: 'course-home-edit',
@@ -26,7 +26,7 @@ export class CourseHomeEditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private courseService: CourseService,
-    private stepService: StepService,
+    private stepService: ChapterService,
     private dialogService: DialogService
   ) {
     console.log("constructor course home edit");

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Chapter } from 'src/app/model/chapter.model';
 import { Course } from 'src/app/model/course.model';
-import { StepService } from 'src/app/services/step.service';
+import { ChapterService } from 'src/app/services/chapter.service';
 
 @Component({
   selector: 'course-home-view',
@@ -22,7 +22,7 @@ export class CourseHomeViewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private stepService: StepService
+    private stepService: ChapterService
   ) { }
 
   ngOnInit(): void {

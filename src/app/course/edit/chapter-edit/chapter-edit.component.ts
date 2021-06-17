@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { Chapter } from 'src/app/model/chapter.model';
 import { Course } from 'src/app/model/course.model';
-import { StepService } from 'src/app/services/step.service';
+import { ChapterService } from 'src/app/services/chapter.service';
 import { Task } from '../../../model/task.model';
 
 @Component({
@@ -22,7 +22,7 @@ export class ChapterEditComponent implements OnInit {
 
 
 
-  constructor(private stepService: StepService,
+  constructor(private stepService: ChapterService,
     private route: ActivatedRoute) {
 
     this.saveSub.pipe(debounceTime(500)).subscribe(() => {

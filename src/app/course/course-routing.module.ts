@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CourseResolver } from '../resolvers/course.resolver';
-import { StepResolver } from '../resolvers/step.resolver';
+import { ChapterResolver } from '../resolvers/chapter.resolver';
 import { CourseHomeViewComponent } from './view/course-home-view/course-home-view.component';
 import { CourseComponent } from './course/course.component';
 import { CourseHomeEditComponent } from './edit/course-home-edit/course-home-edit.component';
@@ -36,7 +36,7 @@ const routes: Routes = [
                     {
                         path: ':step',
                         resolve: {
-                            step: StepResolver,
+                            step: ChapterResolver,
                         },
                         children: [
                             {
