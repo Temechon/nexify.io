@@ -4,7 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, first } from 'rxjs/operators';
 import { ConfirmDialogComponent } from 'src/app/gui/dialog/confirm-dialog.component';
-import { Course, Step } from 'src/app/model/course.model';
+import { Chapter } from 'src/app/model/chapter.model';
+import { Course } from 'src/app/model/course.model';
 import { CourseService } from 'src/app/services/course.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import { StepService } from 'src/app/services/step.service';
@@ -17,7 +18,7 @@ import { StepService } from 'src/app/services/step.service';
 export class CourseHomeEditComponent implements OnInit {
 
   course: Course;
-  steps: Step[];
+  steps: Chapter[];
 
   saveCourseSub = new Subject();
   saveChapterSub = new Subject<number>();
@@ -36,7 +37,7 @@ export class CourseHomeEditComponent implements OnInit {
 
     this.saveChapterSub.pipe(debounceTime(500)).subscribe((chapterIndex: number) => {
 
-      this.steps.map((step: Step, index: number) => step.order = index);
+      this.steps.map((step: Chapter, index: number) => step.order = index);
       console.log("Saving chapter", chapterIndex);
       this._saveChapter(chapterIndex);
     })
@@ -61,8 +62,8 @@ export class CourseHomeEditComponent implements OnInit {
    * Save directly all chapters in database
    */
   _saveChapters() {
-    this.steps.map((step: Step, index: number) => step.order = index);
-    this.steps.map((step: Step) => this.stepService.save(this.course.id, step));
+    this.steps.map((step: Chapter, index: number) => step.order = index);
+    this.steps.map((step: Chapter) => this.stepService.save(this.course.id, step));
   }
 
   /**
@@ -113,7 +114,7 @@ export class CourseHomeEditComponent implements OnInit {
   }
 
   addChapter() {
-    const newStep = new Step();
+    const newStep = new Chapter();
     this.steps.push(newStep)
     this._saveChapter(this.steps.length - 1);
     setTimeout(() => {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
-import { Step } from '../model/course.model';
+import { Chapter } from '../model/chapter.model';
 import { CourseService } from '../services/course.service';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class CourseResolver {
         private router: Router
     ) { }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Step> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Chapter> {
 
         // Check if the note id is in the curent route
         let id = route.paramMap.get('id');

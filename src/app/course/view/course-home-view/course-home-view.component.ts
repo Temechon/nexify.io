@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Course, Step } from 'src/app/model/course.model';
+import { Chapter } from 'src/app/model/chapter.model';
+import { Course } from 'src/app/model/course.model';
 import { StepService } from 'src/app/services/step.service';
 
 @Component({
@@ -15,8 +15,8 @@ export class CourseHomeViewComponent implements OnInit {
 
   course: Course;
   // steps: Step[];
-  steps: Observable<Step[]>;
-  firstStep: Step;
+  steps: Observable<Chapter[]>;
+  firstStep: Chapter;
 
 
   constructor(

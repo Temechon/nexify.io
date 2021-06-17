@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { forkJoin, Observable } from 'rxjs';
 import { map, mergeMap, take } from 'rxjs/operators';
-import { Course, Step } from '../model/course.model';
+import { Chapter } from '../model/chapter.model';
+import { Course } from '../model/course.model';
 import { Code, CodeDb, Task } from '../model/task.model';
 
 @Injectable({
@@ -15,7 +16,7 @@ export class CourseService {
 
     getCourse(courseid: string): Observable<any> {
 
-        return this.db.collection<Step>('courses').doc(courseid).valueChanges().pipe(
+        return this.db.collection<Chapter>('courses').doc(courseid).valueChanges().pipe(
             map((courseDb: any) => {
                 const course = new Course(courseDb);
                 course.id = courseid;
@@ -29,13 +30,13 @@ export class CourseService {
      */
     getStep(courseid: string, stepid: string): Observable<any> {
 
-        return this.db.collection<Step>('courses').doc(courseid).collection('steps').doc(stepid).valueChanges().pipe(
+        return this.db.collection<Chapter>('courses').doc(courseid).collection('steps').doc(stepid).valueChanges().pipe(
             map((stepDb: any) => {
-                const step = new Step(stepDb);
+                const step = new Chapter(stepDb);
                 step.id = courseid;
                 return step;
             }),
-            mergeMap((step: Step) => {
+            mergeMap((step: Chapter) => {
 
                 const allCodesForTask = step.tasks.map((task: Task) => {
                     return this.getCodesByTaskid(task.id).pipe(
@@ -56,15 +57,15 @@ export class CourseService {
     /**
      * Returns all Courses
      */
-    getAll(): Observable<Step[]> {
+    getAll(): Observable<Chapter[]> {
 
-        return this.db.collection<Step[]>(
+        return this.db.collection<Chapter[]>(
             'courses'
         )
             .snapshotChanges()
             .pipe(map(
                 changes =>
-                    changes.map(c => (new Step({ id: c.payload.doc.id, ...c.payload.doc.data() })))
+                    changes.map(c => (new Chapter({ id: c.payload.doc.id, ...c.payload.doc.data() })))
             ));
     }
 

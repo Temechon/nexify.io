@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { Course, Step } from 'src/app/model/course.model';
+import { Chapter } from 'src/app/model/chapter.model';
+import { Course } from 'src/app/model/course.model';
 import { StepService } from 'src/app/services/step.service';
 import { Task } from '../../../model/task.model';
 
@@ -13,7 +14,7 @@ import { Task } from '../../../model/task.model';
 })
 export class ChapterEditComponent implements OnInit {
 
-  step: Step;
+  step: Chapter;
 
   course: Course;
 

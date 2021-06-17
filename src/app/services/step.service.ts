@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, mergeMap, take } from 'rxjs/operators';
-import { Course, Step } from '../model/course.model';
+import { Chapter } from '../model/chapter.model';
 import { Code, CodeDb, Task } from '../model/task.model';
 
 @Injectable({
@@ -18,13 +18,13 @@ export class StepService {
      */
     get(courseid: string, stepid: string): Observable<any> {
 
-        return this.db.collection<Step>('courses').doc(courseid).collection('steps').doc(stepid).valueChanges().pipe(
+        return this.db.collection<Chapter>('courses').doc(courseid).collection('steps').doc(stepid).valueChanges().pipe(
             map((stepDb: any) => {
-                const step = new Step(stepDb);
+                const step = new Chapter(stepDb);
                 step.id = stepid;
                 return step;
             }),
-            mergeMap((step: Step) => {
+            mergeMap((step: Chapter) => {
 
                 const allCodesForTask = step.tasks.map((task: Task) => {
                     return this.getCodesByTaskid(task.id).pipe(
@@ -60,13 +60,13 @@ export class StepService {
     /**
      * Returns all step for a given course, sorted by order asc
      */
-    getAll(courseid: string): Observable<Step[]> {
+    getAll(courseid: string): Observable<Chapter[]> {
 
-        return this.db.collection<Step[]>('courses').doc(courseid).collection('steps', ref => ref.orderBy('order'))
+        return this.db.collection<Chapter[]>('courses').doc(courseid).collection('steps', ref => ref.orderBy('order'))
             .snapshotChanges()
             .pipe(map(
                 changes =>
-                    changes.map(c => (new Step({ id: c.payload.doc.id, ...c.payload.doc.data() })))
+                    changes.map(c => (new Chapter({ id: c.payload.doc.id, ...c.payload.doc.data() })))
             ));
     }
 
@@ -79,7 +79,7 @@ export class StepService {
      * Save this step and all codes relatives to its subtasks in database.
      * @returns 
      */
-    save(courseid: string, step: Step): Promise<void> {
+    save(courseid: string, step: Chapter): Promise<void> {
         const saveCoursePromise = this.db.collection('courses').doc(courseid).collection('steps').doc(step.id).set(step.toObject());
 
         const allCodes = step.getCodes();
@@ -90,7 +90,7 @@ export class StepService {
         return saveCoursePromise;
     }
 
-    delete(courseid: string, step: Step): Promise<void> {
+    delete(courseid: string, step: Chapter): Promise<void> {
         // Delete all codes relative to all tasks of this step  
         for (let task of step.tasks) {
             this.deleteCodesForTask(task.id);

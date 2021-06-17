@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Step } from 'src/app/model/course.model';
+import { Chapter } from 'src/app/model/chapter.model';
 
 @Component({
   selector: 'chapter-view',
@@ -13,7 +13,7 @@ export class ChapterViewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute) { }
 
-  step: Step;
+  step: Chapter;
 
   ngOnInit(): void {
     this.route.data.subscribe((data) => {

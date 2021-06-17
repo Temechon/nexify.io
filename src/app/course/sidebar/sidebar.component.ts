@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Course, Step } from 'src/app/model/course.model';
+import { Chapter } from 'src/app/model/chapter.model';
+import { Course } from 'src/app/model/course.model';
 
 @Component({
   selector: 'sidebar',
@@ -19,7 +20,7 @@ export class SidebarComponent implements OnInit {
   course: Course;
 
   @Input()
-  steps: Observable<Step[]>;
+  steps: Observable<Chapter[]>;
 
   ngOnInit(): void {
   }
