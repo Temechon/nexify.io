@@ -17,7 +17,7 @@ export class ActionButtonComponent implements OnInit {
   size: 'small' | 'normal' | 'big' = 'normal';
 
   @Input()
-  color: 'red' | 'blue' = 'blue';
+  color: 'red' | 'blue' | 'green' = 'blue';
 
   @Input()
   route: string = "";

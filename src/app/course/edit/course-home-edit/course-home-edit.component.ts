@@ -62,7 +62,20 @@ export class CourseHomeEditComponent implements OnInit {
    * Save directly all chapters in database
    */
   _saveChapters() {
-    this.chapters.map((chap: Chapter, index: number) => chap.order = index);
+    // Set order index in chapters and next/previous chapters ids
+    this.chapters.map((chap: Chapter, index: number) => {
+
+      chap.order = index
+
+      const previous = this.chapters[index - 1];
+      const next = this.chapters[index + 1];
+      if (previous) {
+        chap.previousChapterId = previous.id;
+      }
+      if (next) {
+        chap.nextChapterId = next.id;
+      }
+    });
     this.chapters.map((chap: Chapter) => this.chapterService.save(this.course.id, chap));
   }
 

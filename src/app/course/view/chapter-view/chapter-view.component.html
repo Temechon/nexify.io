@@ -12,18 +12,16 @@
     <task-view *ngFor="let task of chapter.tasks" [task]="task"></task-view>
 
 
-    <!-- <div class="task">
-        <div class="font-semibold">Install angular globally</div>
-        <div class="pl-6">
-            <ul>
-                <li>Angular CLI : Command Line Interface</li>
-                <li>Used to create projects, generate application and library
-                    code,
-                    and perform a variety of ongoing development tasks such as
-                    testing, bundling, and deployment.</li>
-            </ul>
-            <app-code [codes]="codes"></app-code>
 
-        </div>
-    </div> -->
+    <div class="flex items-center justify-center select-none my-12">
+
+        <action-button text="Previous" (onClick)="goToPreviousChapter()"
+            *ngIf="chapter.previousChapterId" icon="fa-angle-left" size="big">
+        </action-button>
+
+        <action-button text="Next !" (onClick)="goToNextChapter()"
+            *ngIf="chapter.nextChapterId" icon="fa-angle-right" size="big">
+        </action-button>
+    </div>
+
 </section>

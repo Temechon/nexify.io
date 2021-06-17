@@ -9,12 +9,17 @@ export class Chapter {
     tasks: Array<Task> = [];
     title: string;
     order: number;
+    nextChapterId: string;
+    previousChapterId: string;
 
     constructor(params: any = {}) {
 
         this.id = params.id || Helpers.guid();
         this.title = params.title;
         this.order = params.order;
+
+        this.nextChapterId = params.nextChapterId;
+        this.previousChapterId = params.previousChapterId;
 
         if (params.tasks) {
             for (let task of params.tasks) {
