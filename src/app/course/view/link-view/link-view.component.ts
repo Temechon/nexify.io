@@ -18,7 +18,7 @@ export class LinkViewComponent implements OnInit {
 
   getUrl() {
     const url = this.link[1];
-    if (url.includes('http')) {
+    if (url?.includes('http')) {
       return url;
     } else {
       return 'http://' + url;

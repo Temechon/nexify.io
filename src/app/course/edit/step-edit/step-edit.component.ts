@@ -25,7 +25,7 @@ export class StepEditComponent implements OnInit {
     private route: ActivatedRoute) {
 
     this.saveSub.pipe(debounceTime(500)).subscribe(() => {
-      this._saveCourse();
+      this._saveStep();
     })
 
   }
@@ -44,14 +44,18 @@ export class StepEditComponent implements OnInit {
       title: '',
       content: []
     }))
-
   }
 
-  saveCourse() {
+  deleteTask(index: number) {
+    this.step.tasks.splice(index, 1);
+    this._saveStep();
+  }
+
+  saveStep() {
     this.saveSub.next();
   }
 
-  private _saveCourse() {
+  private _saveStep() {
     this.stepService.save(this.course.id, this.step);
   }
 

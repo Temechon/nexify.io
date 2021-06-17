@@ -2,7 +2,9 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { ConfirmDialogComponent } from 'src/app/gui/dialog/confirm-dialog.component';
 import { Code, TabCode, Task, TaskContent } from 'src/app/model/task.model';
+import { DialogService } from 'src/app/services/dialog.service';
 import * as _ from 'underscore';
 
 @Component({
@@ -18,9 +20,13 @@ export class TaskEditComponent implements OnInit {
   @Output()
   onUpdate = new EventEmitter();
 
+  @Output()
+  onDelete = new EventEmitter();
+
   saveSub = new Subject();
 
-  constructor() {
+  constructor(
+    private dialogService: DialogService) {
 
     this.saveSub.pipe(debounceTime(500)).subscribe(() => {
       this.onUpdate.emit(this.task);
@@ -118,6 +124,33 @@ export class TaskEditComponent implements OnInit {
   deleteContent(index: number) {
     this.task.content.splice(index, 1);
     this.save();
+  }
+
+  deleteTask() {
+    // Display modal "are you sure ?"
+    const dialogref = this.dialogService.openDialog(
+      ConfirmDialogComponent,
+      {
+        title: "Are you sure?",
+        content: "<span class='font-semibold'>Are you sure you want to delete this task?</span><br><br> All content linked to this task will be deleted as well.",
+        button1: {
+          text: 'Delete',
+          param: 'delete'
+        },
+        button2: {
+          text: 'Cancel',
+          param: 'cancel',
+          type: 'cancel'
+        }
+      }
+    );
+
+    dialogref.onClose.subscribe((data: string) => {
+      if (data === "delete") {
+        console.log("DELETE task", this.task)
+        this.onDelete.emit();
+      }
+    })
   }
 
 }
