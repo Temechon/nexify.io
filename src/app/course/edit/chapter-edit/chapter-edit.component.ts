@@ -14,7 +14,7 @@ import { Task } from '../../../model/task.model';
 })
 export class ChapterEditComponent implements OnInit {
 
-  step: Chapter;
+  chapter: Chapter;
 
   course: Course;
 
@@ -22,11 +22,11 @@ export class ChapterEditComponent implements OnInit {
 
 
 
-  constructor(private stepService: ChapterService,
+  constructor(private chapterService: ChapterService,
     private route: ActivatedRoute) {
 
     this.saveSub.pipe(debounceTime(500)).subscribe(() => {
-      this._saveStep();
+      this._saveChapter();
     })
 
   }
@@ -34,13 +34,13 @@ export class ChapterEditComponent implements OnInit {
   ngOnInit(): void {
 
     this.route.data.subscribe((data) => {
-      this.step = data.step;
+      this.chapter = data.chapter;
     })
     this.course = this.route.parent.parent.snapshot.data.course;
   }
 
   addTask() {
-    this.step.tasks.push(new Task({
+    this.chapter.tasks.push(new Task({
       id: '',
       title: '',
       content: []
@@ -48,16 +48,16 @@ export class ChapterEditComponent implements OnInit {
   }
 
   deleteTask(index: number) {
-    this.step.tasks.splice(index, 1);
-    this._saveStep();
+    this.chapter.tasks.splice(index, 1);
+    this._saveChapter();
   }
 
-  saveStep() {
+  saveChapter() {
     this.saveSub.next();
   }
 
-  private _saveStep() {
-    this.stepService.save(this.course.id, this.step);
+  private _saveChapter() {
+    this.chapterService.save(this.course.id, this.chapter);
   }
 
   ngOnDestroy() {

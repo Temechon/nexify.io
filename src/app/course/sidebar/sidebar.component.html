@@ -9,13 +9,13 @@
     <div class="ml-4 text-sm text-gray-400 h-8 leading-8 pt-2 mb-4">
         Chapters
     </div>
-    <div *ngFor="let step of steps | async" class="w-full">
-        <a [routerLink]="['/course', course.id, step.id]"
+    <div *ngFor="let chapter of chapters | async" class="w-full">
+        <a [routerLink]="['/course', course.id, chapter.id]"
             routerLinkActive="bg-mygreen text-green-900" class="block my-0.5 py-2 px-4 text-left transition-colors duration-150 truncate w-full cursor-pointer hover:bg-mygreen hover:text-green-900
                 focus:outline-none
             ">
 
-            {{step.title}}</a>
+            {{chapter.title}}</a>
     </div>
 
 </div>

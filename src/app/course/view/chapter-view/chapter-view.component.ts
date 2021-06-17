@@ -13,11 +13,11 @@ export class ChapterViewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute) { }
 
-  step: Chapter;
+  chapter: Chapter;
 
   ngOnInit(): void {
     this.route.data.subscribe((data) => {
-      this.step = data.step;
+      this.chapter = data.chapter;
     })
   }
 

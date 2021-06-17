@@ -1,13 +1,13 @@
-<section *ngIf="step">
+<section *ngIf="chapter">
     <div class="my-2 text-lg font-semibold">Chapter title</div>
-    <input type="text" [(ngModel)]="step.title" placeholder="Chapter title"
-        (input)="saveStep()"
+    <input type="text" [(ngModel)]="chapter.title" placeholder="Chapter title"
+        (input)="saveChapter()"
         class="w-full font-extrabold shadow-sm text-3xl mb-12 font-display p-4 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50">
 
 
     <div class="my-2 text-lg font-semibold">Tasks</div>
-    <task-edit *ngFor="let task of step.tasks; let index=index" [task]="task"
-        (onUpdate)="saveStep()" (onDelete)="deleteTask(index)"></task-edit>
+    <task-edit *ngFor="let task of chapter.tasks; let index=index" [task]="task"
+        (onUpdate)="saveChapter()" (onDelete)="deleteTask(index)"></task-edit>
 
     <div class="flex items-center justify-center">
 

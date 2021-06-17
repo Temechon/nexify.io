@@ -34,9 +34,9 @@ const routes: Routes = [
                         component: CourseHomeEditComponent,
                     },
                     {
-                        path: ':step',
+                        path: ':chapter',
                         resolve: {
-                            step: ChapterResolver,
+                            chapter: ChapterResolver,
                         },
                         children: [
                             {

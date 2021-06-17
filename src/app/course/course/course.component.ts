@@ -13,18 +13,18 @@ import { ChapterService } from 'src/app/services/chapter.service';
 export class CourseComponent implements OnInit {
 
   course: Course;
-  steps: Observable<Chapter[]>;
+  chapters: Observable<Chapter[]>;
 
   constructor(
     private route: ActivatedRoute,
-    private stepService: ChapterService) { }
+    private chapterService: ChapterService) { }
 
   ngOnInit(): void {
 
     this.course = this.route.snapshot.data.course
     console.log("SIDEBAR --- Course:", this.course);
 
-    // get all steps for this course
-    this.steps = this.stepService.getAll(this.course.id)
+    // get all chapters for this course
+    this.chapters = this.chapterService.getAll(this.course.id)
   }
 }

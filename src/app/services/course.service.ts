@@ -26,35 +26,6 @@ export class CourseService {
     }
 
     /**
-     * Get step with all its tasks
-     */
-    getStep(courseid: string, stepid: string): Observable<any> {
-
-        return this.db.collection<Chapter>('courses').doc(courseid).collection('steps').doc(stepid).valueChanges().pipe(
-            map((stepDb: any) => {
-                const step = new Chapter(stepDb);
-                step.id = courseid;
-                return step;
-            }),
-            mergeMap((step: Chapter) => {
-
-                const allCodesForTask = step.tasks.map((task: Task) => {
-                    return this.getCodesByTaskid(task.id).pipe(
-                        take(1),
-                        map((allCodesForTask: Code[]) => {
-                            task.codes = allCodesForTask;
-                            return allCodesForTask;
-                        })
-                    )
-                });
-                return forkJoin(allCodesForTask).pipe(
-                    map((allCodes: Array<any>) => step)
-                )
-            })
-        )
-    }
-
-    /**
      * Returns all Courses
      */
     getAll(): Observable<Chapter[]> {

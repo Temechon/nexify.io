@@ -14,19 +14,19 @@ export class ChapterService {
     }
 
     /**
-     * Get step with all its tasks
+     * Get a chapter with all its tasks, and all codes linked in its tasks
      */
-    get(courseid: string, stepid: string): Observable<any> {
+    get(courseid: string, chapterid: string): Observable<any> {
 
-        return this.db.collection<Chapter>('courses').doc(courseid).collection('steps').doc(stepid).valueChanges().pipe(
-            map((stepDb: any) => {
-                const step = new Chapter(stepDb);
-                step.id = stepid;
-                return step;
+        return this.db.collection<Chapter>('courses').doc(courseid).collection('steps').doc(chapterid).valueChanges().pipe(
+            map((chapDb: any) => {
+                const chapter = new Chapter(chapDb);
+                chapter.id = chapterid;
+                return chapter;
             }),
-            mergeMap((step: Chapter) => {
+            mergeMap((chapter: Chapter) => {
 
-                const allCodesForTask = step.tasks.map((task: Task) => {
+                const allCodesForTask = chapter.tasks.map((task: Task) => {
                     return this.getCodesByTaskid(task.id).pipe(
                         take(1),
                         map((allCodesForTask: Code[]) => {
@@ -39,12 +39,12 @@ export class ChapterService {
                 if (allCodesForTask.length > 0) {
                     return forkJoin(allCodesForTask).pipe(
                         map((allCodes: Array<any>) => {
-                            console.log("ici !", step);
-                            return step
+                            console.log("ici !", chapter);
+                            return chapter
                         })
                     )
                 } else {
-                    return of(step);
+                    return of(chapter);
                 }
             })
         )
@@ -58,7 +58,7 @@ export class ChapterService {
     }
 
     /**
-     * Returns all step for a given course, sorted by order asc
+     * Returns all chapters for a given course, sorted by order asc
      */
     getAll(courseid: string): Observable<Chapter[]> {
 
@@ -70,19 +70,15 @@ export class ChapterService {
             ));
     }
 
-    // create(): Promise<void> {
-    //     const course = new Step({});
-    //     return this.save(course);
-    // }
 
     /**
-     * Save this step and all codes relatives to its subtasks in database.
+     * Save this chapter and all codes relatives to its subtasks in database.
      * @returns 
      */
-    save(courseid: string, step: Chapter): Promise<void> {
-        const saveCoursePromise = this.db.collection('courses').doc(courseid).collection('steps').doc(step.id).set(step.toObject());
+    save(courseid: string, chapter: Chapter): Promise<void> {
+        const saveCoursePromise = this.db.collection('courses').doc(courseid).collection('steps').doc(chapter.id).set(chapter.toObject());
 
-        const allCodes = step.getCodes();
+        const allCodes = chapter.getCodes();
 
         for (let code of allCodes) {
             this.db.collection('codes').doc(code.id).set(code.toObject());
@@ -90,13 +86,13 @@ export class ChapterService {
         return saveCoursePromise;
     }
 
-    delete(courseid: string, step: Chapter): Promise<void> {
-        // Delete all codes relative to all tasks of this step  
-        for (let task of step.tasks) {
+    delete(courseid: string, chapter: Chapter): Promise<void> {
+        // Delete all codes relative to all tasks of this chapter  
+        for (let task of chapter.tasks) {
             this.deleteCodesForTask(task.id);
         }
 
-        return this.db.collection('courses').doc(courseid).collection('steps').doc(step.id).delete();
+        return this.db.collection('courses').doc(courseid).collection('steps').doc(chapter.id).delete();
     }
 
     deleteCodesForTask(taskid: string) {

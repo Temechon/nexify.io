@@ -20,7 +20,7 @@ export class SidebarComponent implements OnInit {
   course: Course;
 
   @Input()
-  steps: Observable<Chapter[]>;
+  chapters: Observable<Chapter[]>;
 
   ngOnInit(): void {
   }

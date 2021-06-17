@@ -11,26 +11,21 @@ import { ChapterService } from '../services/chapter.service';
 export class ChapterResolver {
 
     constructor(
-        private stepService: ChapterService,
+        private chapterService: ChapterService,
         private router: Router
     ) { }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Chapter> {
 
         // Check if the note id is in the curent route
-        let stepid = route.paramMap.get('step');
+        let chapid = route.paramMap.get('chapter');
         let courseid = route.parent.paramMap.get('id');
-        console.log('STEPID', stepid, 'courseid', courseid)
-        // if (!stepid || !courseid) {
-        //     stepid = route.parent.paramMap.get('step');
-        //     courseid = route.parent.paramMap.get('id');
-        //     console.log('STEPID', stepid, 'courseid', courseid)
-        // }
+        console.log('chapterid', chapid, 'courseid', courseid)
 
         // Check if the project is the same as the previous one
-        if (stepid && courseid) {
+        if (chapid && courseid) {
             // Otherwise, retrieve it from database
-            return this.stepService.get(courseid, stepid).pipe(
+            return this.chapterService.get(courseid, chapid).pipe(
                 take(1),
                 catchError(
                     err => {

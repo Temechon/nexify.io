@@ -18,7 +18,7 @@ import { ChapterService } from 'src/app/services/chapter.service';
 export class CourseHomeEditComponent implements OnInit {
 
   course: Course;
-  steps: Chapter[];
+  chapters: Chapter[];
 
   saveCourseSub = new Subject();
   saveChapterSub = new Subject<number>();
@@ -26,7 +26,7 @@ export class CourseHomeEditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private courseService: CourseService,
-    private stepService: ChapterService,
+    private chapterService: ChapterService,
     private dialogService: DialogService
   ) {
     console.log("constructor course home edit");
@@ -37,7 +37,7 @@ export class CourseHomeEditComponent implements OnInit {
 
     this.saveChapterSub.pipe(debounceTime(500)).subscribe((chapterIndex: number) => {
 
-      this.steps.map((step: Chapter, index: number) => step.order = index);
+      this.chapters.map((chap: Chapter, index: number) => chap.order = index);
       console.log("Saving chapter", chapterIndex);
       this._saveChapter(chapterIndex);
     })
@@ -46,8 +46,8 @@ export class CourseHomeEditComponent implements OnInit {
   ngOnInit(): void {
     this.course = this.route.parent.snapshot.data.course;
     console.log("HOME EDIT --- Course:", this.course)
-    // get all steps for this course
-    this.stepService.getAll(this.course.id).pipe(first()).subscribe(steps => this.steps = steps);
+    // get all chapters for this course
+    this.chapterService.getAll(this.course.id).pipe(first()).subscribe(chaps => this.chapters = chaps);
   }
 
   save() {
@@ -62,15 +62,15 @@ export class CourseHomeEditComponent implements OnInit {
    * Save directly all chapters in database
    */
   _saveChapters() {
-    this.steps.map((step: Chapter, index: number) => step.order = index);
-    this.steps.map((step: Chapter) => this.stepService.save(this.course.id, step));
+    this.chapters.map((chap: Chapter, index: number) => chap.order = index);
+    this.chapters.map((chap: Chapter) => this.chapterService.save(this.course.id, chap));
   }
 
   /**
    * Save directly the given chapter in database
    */
   _saveChapter(index: number) {
-    this.stepService.save(this.course.id, this.steps[index]);
+    this.chapterService.save(this.course.id, this.chapters[index]);
   }
 
   /**
@@ -81,7 +81,7 @@ export class CourseHomeEditComponent implements OnInit {
   }
 
   reorder(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.steps, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.chapters, event.previousIndex, event.currentIndex);
     this._saveChapters();
   }
 
@@ -107,18 +107,18 @@ export class CourseHomeEditComponent implements OnInit {
     dialogref.onClose.subscribe((data: string) => {
       if (data === "delete") {
         console.log("DELETE CHAPTER", index)
-        this.stepService.delete(this.course.id, this.steps[index])
-        this.steps.splice(index, 1);
+        this.chapterService.delete(this.course.id, this.chapters[index])
+        this.chapters.splice(index, 1);
       }
     })
   }
 
   addChapter() {
-    const newStep = new Chapter();
-    this.steps.push(newStep)
-    this._saveChapter(this.steps.length - 1);
+    const newChap = new Chapter();
+    this.chapters.push(newChap)
+    this._saveChapter(this.chapters.length - 1);
     setTimeout(() => {
-      (document.querySelector('#step-' + newStep.id) as HTMLInputElement).focus();
+      (document.querySelector('#chapter-' + newChap.id) as HTMLInputElement).focus();
     }, 50)
   }
 

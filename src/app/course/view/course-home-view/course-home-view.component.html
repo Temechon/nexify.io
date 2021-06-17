@@ -15,7 +15,8 @@
 
     <task-view [task]="course.home"></task-view>
 
-    <div class="flex items-center justify-center select-none" *ngIf="firstStep">
+    <div class="flex items-center justify-center select-none"
+        *ngIf="firstChapter">
         <action-button text="Start !" (click)="startCourse()" icon="fa-bolt"
             size="big" color="red">
         </action-button>

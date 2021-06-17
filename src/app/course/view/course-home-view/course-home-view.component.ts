@@ -14,32 +14,31 @@ export class CourseHomeViewComponent implements OnInit {
 
 
   course: Course;
-  // steps: Step[];
-  steps: Observable<Chapter[]>;
-  firstStep: Chapter;
+  chapters: Observable<Chapter[]>;
+  firstChapter: Chapter;
 
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private stepService: ChapterService
+    private chapterService: ChapterService
   ) { }
 
   ngOnInit(): void {
 
     this.course = this.route.snapshot.data.course;
-    // get all steps for this course
-    this.steps = this.stepService.getAll(this.course.id);
+    // get all chapters for this course
+    this.chapters = this.chapterService.getAll(this.course.id);
 
-    this.steps.subscribe(steps => {
-      console.log("COURSE HOME VIEW --- First step:", steps[0]);
-      this.firstStep = steps[0];
+    this.chapters.subscribe(chaps => {
+      console.log("COURSE HOME VIEW --- First chapter:", chaps[0]);
+      this.firstChapter = chaps[0];
     });
   }
 
   startCourse() {
-    if (this.firstStep) {
-      this.router.navigate(['course', this.course.id, this.firstStep.id])
+    if (this.firstChapter) {
+      this.router.navigate(['course', this.course.id, this.firstChapter.id])
     }
   }
 
