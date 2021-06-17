@@ -7,11 +7,11 @@ import { StepService } from 'src/app/services/step.service';
 import { Task } from '../../../model/task.model';
 
 @Component({
-  selector: 'step-edit',
-  templateUrl: './step-edit.component.html',
-  styleUrls: ['./step-edit.component.scss']
+  selector: 'chapter-edit',
+  templateUrl: './chapter-edit.component.html',
+  styleUrls: ['./chapter-edit.component.scss']
 })
-export class StepEditComponent implements OnInit {
+export class ChapterEditComponent implements OnInit {
 
   step: Step;
 

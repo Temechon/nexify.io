@@ -5,8 +5,8 @@ import { StepResolver } from '../resolvers/step.resolver';
 import { CourseHomeViewComponent } from './view/course-home-view/course-home-view.component';
 import { CourseComponent } from './course/course.component';
 import { CourseHomeEditComponent } from './edit/course-home-edit/course-home-edit.component';
-import { StepEditComponent } from './edit/step-edit/step-edit.component';
-import { StepViewComponent } from './view/step-view/step-view.component';
+import { ChapterEditComponent } from './edit/chapter-edit/chapter-edit.component';
+import { ChapterViewComponent } from './view/chapter-view/chapter-view.component';
 
 const routes: Routes = [
 
@@ -41,11 +41,11 @@ const routes: Routes = [
                         children: [
                             {
                                 path: '',
-                                component: StepViewComponent
+                                component: ChapterViewComponent
                             },
                             {
                                 path: 'editor',
-                                component: StepEditComponent,
+                                component: ChapterEditComponent,
                             }
                         ]
                     }

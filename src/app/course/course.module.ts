@@ -7,12 +7,12 @@ import { RemoveRegexp } from "../helpers/Pipe";
 import { CourseHomeViewComponent } from "./view/course-home-view/course-home-view.component";
 import { CourseRoutingModule } from "./course-routing.module";
 import { CodeEditComponent } from "./edit/code-edit/code-edit.component";
-import { StepEditComponent } from "./edit/step-edit/step-edit.component";
+import { ChapterEditComponent } from "./edit/chapter-edit/chapter-edit.component";
 import { LinkEditComponent } from "./edit/link-edit/link-edit.component";
 import { TaskEditComponent } from "./edit/task-edit/task-edit.component";
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { CodeViewComponent } from "./view/code-view/code-view.component";
-import { StepViewComponent } from "./view/step-view/step-view.component";
+import { ChapterViewComponent } from "./view/chapter-view/chapter-view.component";
 import { LinkViewComponent } from "./view/link-view/link-view.component";
 import { TaskViewComponent } from "./view/task-view/task-view.component";
 import { CourseComponent } from './course/course.component';
@@ -24,10 +24,10 @@ import { GuiModule } from "../gui/gui.module";
 
         SidebarComponent,
         CourseHomeViewComponent,
-        StepViewComponent,
+        ChapterViewComponent,
         CodeViewComponent,
         TaskViewComponent,
-        StepEditComponent,
+        ChapterEditComponent,
         TaskEditComponent,
         CodeEditComponent,
         RemoveRegexp,

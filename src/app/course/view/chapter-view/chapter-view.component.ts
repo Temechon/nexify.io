@@ -3,11 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { Step } from 'src/app/model/course.model';
 
 @Component({
-  selector: 'step-view',
-  templateUrl: './step-view.component.html',
-  styleUrls: ['./step-view.component.scss']
+  selector: 'chapter-view',
+  templateUrl: './chapter-view.component.html',
+  styleUrls: ['./chapter-view.component.scss']
 })
-export class StepViewComponent implements OnInit {
+export class ChapterViewComponent implements OnInit {
 
 
   constructor(
