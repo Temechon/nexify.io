@@ -18,7 +18,7 @@ export class ChapterService {
      */
     get(courseid: string, chapterid: string): Observable<any> {
 
-        return this.db.collection<Chapter>('courses').doc(courseid).collection('steps').doc(chapterid).valueChanges().pipe(
+        return this.db.collection<Chapter>('courses').doc(courseid).collection('chapters').doc(chapterid).valueChanges().pipe(
             map((chapDb: any) => {
                 const chapter = new Chapter(chapDb);
                 chapter.id = chapterid;
@@ -62,7 +62,7 @@ export class ChapterService {
      */
     getAll(courseid: string): Observable<Chapter[]> {
 
-        return this.db.collection<Chapter[]>('courses').doc(courseid).collection('steps', ref => ref.orderBy('order'))
+        return this.db.collection<Chapter[]>('courses').doc(courseid).collection('chapters', ref => ref.orderBy('order'))
             .snapshotChanges()
             .pipe(map(
                 changes =>
@@ -76,7 +76,7 @@ export class ChapterService {
      * @returns 
      */
     save(courseid: string, chapter: Chapter): Promise<void> {
-        const saveCoursePromise = this.db.collection('courses').doc(courseid).collection('steps').doc(chapter.id).set(chapter.toObject());
+        const saveCoursePromise = this.db.collection('courses').doc(courseid).collection('chapters').doc(chapter.id).set(chapter.toObject());
 
         const allCodes = chapter.getCodes();
 
@@ -92,7 +92,7 @@ export class ChapterService {
             this.deleteCodesForTask(task.id);
         }
 
-        return this.db.collection('courses').doc(courseid).collection('steps').doc(chapter.id).delete();
+        return this.db.collection('courses').doc(courseid).collection('chapters').doc(chapter.id).delete();
     }
 
     deleteCodesForTask(taskid: string) {
