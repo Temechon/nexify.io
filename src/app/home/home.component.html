@@ -1,7 +1,33 @@
-<div class="w-full h-full flex items-center justify-center">
+<div class="w-2/3 m-auto pt-16">
+
+    <div [routerLink]="['/home']"
+        class="text-3xl font-display font-bold p-4 flex items-center cursor-pointer mb-16">
+        <img src="http://placekitten.com/50/50" alt="logo nexify" class="mr-4">
+        Nexify
+    </div>
+
+    <div class="uppercase font-light text-sm text-gray-500 mb-8">
+        Tutorial platform for developers
+    </div>
+
+    <div class="text-xl md:text-5xl font-extrabold mb-16">
+        Develop your skills with programming courses, <br>
+        explained step by step, <br>
+        to <span class="text-mygreen">learn by building things.</span>
+    </div>
+
+    <div class="bg-white text-md md:text-xl">
+        Ok, for now there is only <a class="underline font-semibold text-myblue"
+            routerLink="['/course/angular-firebase2']">one course</a>... But
+        there's more to come!
+    </div>
+
+</div>
+
+<div class="w-full h-full flex items-center justify-center mb-32">
 
     <action-button text="Go to course" route="/course/angular-firebase2"
-        class="mt-12" icon="fa-bolt" color="blue">
+        class="mt-12" icon="fa-bolt" color="blue" size="big">
     </action-button>
 
 </div>
