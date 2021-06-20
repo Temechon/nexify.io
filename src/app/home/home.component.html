@@ -3,7 +3,7 @@
 
 <div class="min-h-full flex flex-col">
 
-    <div class="w-2/3 m-auto mb-16">
+    <div class="w-full md:w-2/3 m-auto mb-8 px-8 md:px-0">
 
         <div
             class="focus:outline-none text-4xl font-display font-bold flex items-center cursor-pointer mt-20 select-none">
@@ -16,25 +16,28 @@
             </a>
         </div>
 
-        <div class="uppercase font-light text-sm text-gray-500 mb-20 mt-2 ">
+        <div
+            class="uppercase font-light text-sm text-gray-500 md:mb-20 mt-2 mb-12">
             Tutorial platform for developers
         </div>
 
-        <div class="text-xl md:text-5xl font-extrabold mb-16">
+        <div
+            class="text-3xl md:text-5xl font-extrabold mb-16 text-center md:text-left">
             Develop your skills with programming courses,
-            explained step by step, <br>
+            explained step by step,
             to <span class="text-mygreen md:text-6xl">learn by building
                 things.</span>
         </div>
 
-        <div class="bg-white text-md md:text-xl mb-28">
+        <div class="bg-white text-xl md:text-xl mb-12 md:mb-28">
             Ok, for now there is only <a
                 class="underline font-semibold text-myblue"
                 href="/course/angular-firebase2">one course</a>... But
             there's more to come!
         </div>
 
-        <div class="w-full h-full flex items-center justify-center mb-28">
+        <div
+            class="w-full h-full flex items-center justify-center mb-10 md:mb-28">
 
             <action-button text="Go to the first course"
                 route="/course/angular-firebase2" icon="fa-bolt" color="blue"
@@ -46,18 +49,19 @@
     </div>
     <div class="w-full bg-gray-50 pb-16">
 
-        <div class="w-2/3 m-auto">
+        <div class="md:w-2/3 w-full px-8 md:p-0 m-auto">
             <div
-                class="w-full m-auto bg-gradient-to-r from-mygreen to-myblue h-px mb-28">
+                class="w-full m-auto bg-gradient-to-r from-mygreen to-myblue h-px md:mb-28 mb-16">
             </div>
 
-            <div class="text-xl md:text-5xl font-extrabold mb-16 w-2/3">
-                Soon, you will be able to build <br><span
-                    class="text-mygreen text-6xl">your
+            <div
+                class="text-3xl md:text-5xl font-extrabold mb-16 w-2/3 text-center md:text-left">
+                Soon, you will be able to build <span
+                    class="text-mygreen text-4xl md:text-6xl">your
                     own course!</span>
             </div>
 
-            <div class="text-md md:text-xl mb-16 w-2/3">
+            <div class="text-xl md:text-xl mb-16">
                 With a simple block system, add your code, your explanations,
                 but also links, image and all you need to perfectly explain what
                 you need to say.
@@ -78,10 +82,11 @@
                 email
                 when we launch.</div>
 
-            <div class="w-full flex items-center justify-center">
+            <div
+                class="w-full flex items-center justify-center flex-col md:flex-row">
 
                 <input type="text" placeholder="Your email address here"
-                    class="p-3 w-72 mr-4 focus:outline-none focus:ring rounded-md">
+                    class="p-3 md:w-72 md:mr-4 focus:outline-none focus:ring rounded-md mb-4 md:mb-0 w-full">
 
                 <action-button text="Sign me up!" icon="fa-paper-plane"
                     size="big"></action-button>
@@ -104,4 +109,7 @@
             Nexify
         </div>
     </footer>
+</div>
+
+<div class="w-full h-1 bg-gradient-to-r from-mygreen to-myblue">
 </div>
