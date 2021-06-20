@@ -1,33 +1,107 @@
-<div class="w-2/3 m-auto pt-16">
-
-    <div [routerLink]="['/home']"
-        class="text-3xl font-display font-bold p-4 flex items-center cursor-pointer mb-16">
-        <img src="http://placekitten.com/50/50" alt="logo nexify" class="mr-4">
-        Nexify
-    </div>
-
-    <div class="uppercase font-light text-sm text-gray-500 mb-8">
-        Tutorial platform for developers
-    </div>
-
-    <div class="text-xl md:text-5xl font-extrabold mb-16">
-        Develop your skills with programming courses, <br>
-        explained step by step, <br>
-        to <span class="text-mygreen">learn by building things.</span>
-    </div>
-
-    <div class="bg-white text-md md:text-xl">
-        Ok, for now there is only <a class="underline font-semibold text-myblue"
-            routerLink="['/course/angular-firebase2']">one course</a>... But
-        there's more to come!
-    </div>
-
+<div class="w-full h-1 bg-gradient-to-r from-mygreen to-myblue">
 </div>
 
-<div class="w-full h-full flex items-center justify-center mb-32">
+<div class="min-h-full flex flex-col">
 
-    <action-button text="Go to course" route="/course/angular-firebase2"
-        class="mt-12" icon="fa-bolt" color="blue" size="big">
-    </action-button>
+    <div class="w-2/3 m-auto mb-16">
 
+        <div
+            class="focus:outline-none text-4xl font-display font-bold flex items-center cursor-pointer mt-20 select-none">
+
+            <a [routerLink]="['/home']"
+                class="flex transition-colors ease-out duration-500 hover:text-mygreen">
+                <img src="assets/logo_md_color.png" alt="logo nexify"
+                    width="40px" class="mr-4">
+                Nexify
+            </a>
+        </div>
+
+        <div class="uppercase font-light text-sm text-gray-500 mb-20 mt-2 ">
+            Tutorial platform for developers
+        </div>
+
+        <div class="text-xl md:text-5xl font-extrabold mb-16">
+            Develop your skills with programming courses,
+            explained step by step, <br>
+            to <span class="text-mygreen md:text-6xl">learn by building
+                things.</span>
+        </div>
+
+        <div class="bg-white text-md md:text-xl mb-28">
+            Ok, for now there is only <a
+                class="underline font-semibold text-myblue"
+                href="/course/angular-firebase2">one course</a>... But
+            there's more to come!
+        </div>
+
+        <div class="w-full h-full flex items-center justify-center mb-28">
+
+            <action-button text="Go to the first course"
+                route="/course/angular-firebase2" icon="fa-bolt" color="blue"
+                size="big">
+            </action-button>
+        </div>
+
+
+    </div>
+    <div class="w-full bg-gray-50 pb-16">
+
+        <div class="w-2/3 m-auto">
+            <div
+                class="w-full m-auto bg-gradient-to-r from-mygreen to-myblue h-px mb-28">
+            </div>
+
+            <div class="text-xl md:text-5xl font-extrabold mb-16 w-2/3">
+                Soon, you will be able to build <br><span
+                    class="text-mygreen text-6xl">your
+                    own course!</span>
+            </div>
+
+            <div class="text-md md:text-xl mb-16 w-2/3">
+                With a simple block system, add your code, your explanations,
+                but also links, image and all you need to perfectly explain what
+                you need to say.
+                <br><span class="font-semibold">Nexify makes it
+                    easy
+                    to create your own
+                    tutorial</span> in whatever language you are expert in.<br>
+                After that, make it free or sell it, and
+            </div>
+
+            <img src="http://www.placekitten.com/900/650" class="m-auto mb-20"
+                alt="">
+
+            <div class="text-center text-3xl font-semibold">
+                Sign up to be the first to be notified!
+            </div>
+            <div class="text-center text-xl font-light mb-12">I'll send you an
+                email
+                when we launch.</div>
+
+            <div class="w-full flex items-center justify-center">
+
+                <input type="text" placeholder="Your email address here"
+                    class="p-3 w-72 mr-4 focus:outline-none focus:ring rounded-md">
+
+                <action-button text="Sign me up!" icon="fa-paper-plane"
+                    size="big"></action-button>
+            </div>
+            <div
+                class="text-center text-sm text-gray-500 font-light mb-12 mt-2 ">
+                Privacy policy here
+            </div>
+        </div>
+
+    </div>
+
+    <footer
+        class="bg-mydarkblue-500 w-full h-40 p-12 relative flex flex-row items-center">
+
+        <div [routerLink]="['/home']"
+            class="text-4xl font-display font-bold flex text-white items-center cursor-pointer">
+            <img src="assets/logo_md_color.png" alt="logo nexify" width="40px"
+                class="mr-4">
+            Nexify
+        </div>
+    </footer>
 </div>
