@@ -6,5 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'chronoapp';
+
+  ngOnInit() {
+    const isDarkMode = JSON.parse(localStorage.getItem('nexify.darkmode'));
+    if (isDarkMode) {
+      document.body.classList.add('dark');
+    }
+
+  }
 }

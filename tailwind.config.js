@@ -1,6 +1,6 @@
 module.exports = {
   purge: [],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'class', // or 'media' or 'class'
   theme: {
     extend: {
       colors: {
@@ -12,7 +12,14 @@ module.exports = {
         'mygreen': "#00d68f",
         'myorange': "#ffaa00",
         'myred': "#ff3d71",
-        'myblue': "#0095ff"
+        'myblue': "#0095ff",
+        "darkmode-800": "#141519",
+        "darkmode-700": "#1b1c22",
+        "darkmode-600": "#24262e",
+        "darkmode-500": "#282c33",
+        "darkmode-400": "#333841",
+        "darkmode-300": "#4a515e",
+
       },
       fontFamily: {
         sans: ['Jost', 'sans-serif'],

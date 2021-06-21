@@ -1,8 +1,8 @@
-<div class="my-6 shadow-sm bg-white task">
+<div class="my-6 shadow-sm bg-white task rounded-md dark:bg-darkmode-300">
 
     <input type="text" [(ngModel)]="task.title" placeholder="Task title..."
         (input)="save()"
-        class="w-full font-semibold shadow-sm text-2xl mb-6 p-3 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50">
+        class="dark:bg-darkmode-300 dark:border-darkmode-800 dark:text-gray-200 w-full font-semibold shadow-sm text-2xl mb-6 p-3 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50">
 
     <div class="pl-6 pb-3">
 
@@ -10,9 +10,9 @@
             (cdkDropListDropped)="reorder($event)">
             <ng-container *ngFor="let content of task.content; let index=index">
 
-                <div class="flex flex-row items-center rounded-md my-2 relative border border-gray-100"
+                <div class="flex flex-row items-center rounded-md my-2 relative border border-gray-100 dark:bg-darkmode-400 dark:border-darkmode-800"
                     cdkDrag>
-                    <div class="w-4 h-full absolute left-0 rounded-l-md bg-gray-100 text-gray-400 flex items-center justify-center cursor-move"
+                    <div class="w-4 h-full absolute left-0 rounded-l-md dark:bg-darkmode-700 bg-gray-100 text-gray-400 flex items-center justify-center cursor-move"
                         cdkDragHandle>
                         <i class="fas fa-ellipsis-v"></i>
                     </div>
@@ -20,19 +20,20 @@
 
                         <!-- Action or explanation -->
                         <input placeholder="New action..."
-                            class="action border-none font-light text-lg py-1 w-full pl-4 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50"
+                            class="dark:bg-darkmode-400 dark:border-darkmode-400 dark:text-gray-200 action border-none font-light text-lg py-1 w-full pl-4 border focus:outline-none focus:ring focus:border-blue-300 border-indigo-50"
                             type="text" *ngIf="isAction(content)"
                             [value]="content.value"
                             (input)="saveText($event.target, index)">
 
                         <input placeholder="New explanation..."
-                            class="explanation border-none font-light text-lg py-1 w-full pl-4 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50"
+                            class="dark:bg-darkmode-400 dark:border-darkmode-400 dark:text-gray-200 explanation border-none font-light text-lg py-1 w-full pl-4 border focus:outline-none focus:ring focus:border-blue-300 border-indigo-50"
                             type="text" *ngIf="isExplanation(content)"
                             [value]="content.value"
                             (input)="saveText($event.target, index)">
 
                         <!-- Code -->
-                        <div *ngIf="isCode(content)" class="w-full">
+                        <div *ngIf="isCode(content)"
+                            class="w-full dark:bg-darkmode-400 ">
                             <code-edit [codes]="getCode(content)"
                                 (onTabSaved)="save()">
                             </code-edit>

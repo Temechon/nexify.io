@@ -1,28 +1,30 @@
 <section *ngIf="course">
 
-    <div class="my-2 text-lg font-semibold">Course title</div>
+    <div class=" my-2 text-lg font-semibold dark:text-gray-200">Course title
+    </div>
     <input type="text" [(ngModel)]="course.title" placeholder="Task title..."
         (input)="save()"
-        class="w-full font-extrabold shadow-sm text-3xl mb-12 font-display p-4 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50">
+        class="dark:bg-darkmode-300 dark:border-darkmode-800 dark:text-white w-full font-extrabold shadow-sm text-3xl mb-12 font-display p-4 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50">
 
 
-    <div class="my-2 text-lg font-semibold">Chapters</div>
+    <div class="my-2 text-lg font-semibold dark:text-gray-200">Chapters</div>
     <div cdkDropList (cdkDropListDropped)="reorder($event)">
 
         <ng-container *ngFor="let chapter of chapters; let index=index">
 
-            <div class="flex flex-row items-center rounded-md my-2 relative bg-white border border-gray-100"
+            <div class="flex flex-row items-center rounded-md my-2 relative dark:border-darkmode-800 dark:bg-darkmode-300 bg-white border border-gray-100"
                 cdkDrag>
-                <div class="w-4 h-full absolute left-0 rounded-l-md bg-gray-100 text-gray-400 flex items-center justify-center cursor-move"
+                <div class="w-4 h-full absolute left-0 rounded-l-md bg-gray-100 text-gray-400 dark:bg-darkmode-700 flex items-center justify-center cursor-move"
                     cdkDragHandle>
                     <i class="fas fa-ellipsis-v"></i>
                 </div>
-                <div class="w-full flex items-center bg-white ml-5">
+                <div
+                    class="w-full flex items-center bg-white dark:bg-darkmode-600 ml-5">
                     <input type="text" [(ngModel)]="chapter.title"
                         [id]="'chapter-'+chapter.id"
                         (input)="saveChapter(index)"
                         (keydown.enter)="addChapter()"
-                        class="p-4 w-full rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50">
+                        class="dark:bg-darkmode-300 dark:border-darkmode-800 dark:text-gray-200 p-4 w-full focus:outline-none focus:ring focus:border-blue-300 border-indigo-50">
                 </div>
 
                 <div class="flex items-center justify-center w-10 h-10">
@@ -40,7 +42,7 @@
         </action-button>
     </div>
 
-    <div class="my-2 text-lg font-semibold">Homepage</div>
+    <div class="my-2 text-lg font-semibold dark:text-gray-200">Homepage</div>
     <task-edit [task]="course.home"></task-edit>
 
     <div class="flex items-center justify-center select-none mt-12">

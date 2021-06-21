@@ -1,9 +1,9 @@
 <div #codeWrapper>
-    <div class="mb-2 w-full border-mygray border rounded-md shadow-sm">
+    <div class="mb-2 w-full rounded-md shadow-sm">
 
         <!-- Tab bar -->
         <div
-            class="flex flex-row items-center h-10 overflow-x-auto overflow-y-hidden">
+            class="flex flex-row items-center h-10 overflow-x-auto overflow-y-hidden dark:bg-mydarkgray-500">
 
             <!-- Display each tab -->
             <div class="tab relative" [ngClass]="{'active':index===0}"
@@ -12,7 +12,8 @@
                 (click)="openTab(tab.id)">
 
                 <!-- Tab name -->
-                <input type="text" [(ngModel)]="tab.name" class="tab-input pr-7"
+                <input type="text" [(ngModel)]="tab.name"
+                    class="tab-input pr-7 dark:bg-mydarkgray-500 dark:text-gray-200"
                     placeholder="New tab...">
 
                 <!-- remove tab button -->

@@ -1,10 +1,11 @@
-<div class="my-6 shadow-sm bg-white task" *ngIf="task.content.length > 0">
+<div class="my-6 shadow-sm bg-white dark:bg-darkmode-400 task"
+    *ngIf="task.content.length > 0">
     <div (click)="hideTask()" *ngIf="task.title"
-        class="font-semibold shadow-sm text-2xl mb-6 cursor-pointer hover:bg-gray-100 p-3 text-mygreen">
+        class="font-semibold shadow-sm text-2xl mb-6 cursor-pointer hover:bg-gray-100 dark:hover:bg-darkmode-300 p-3 text-mygreen">
         {{task.title}}
     </div>
 
-    <div #taskContent class="px-6 pb-3">
+    <div #taskContent class="px-6 pb-3 dark:text-gray-200">
 
         <!-- Content -->
         <ul *ngIf="task.content">

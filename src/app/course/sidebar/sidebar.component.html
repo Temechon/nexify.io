@@ -1,15 +1,25 @@
 <div
-    class="h-full flex flex-col w-80 border-mydarkblue-300 text-white select-none relative">
+    class="h-full flex flex-col w-80 border-mydarkblue-300 text-white dark:text-gray-200 select-none relative">
 
 
-    <div [routerLink]="['/home']"
-        class="text-white text-2xl font-display font-bold p-4 border-b border-gray-500 flex items-center cursor-pointer">
-        <img src="assets/logo_md_color.png" alt="logo nexify" width="30px"
-            class="mr-4">
-        Nexify
+    <div
+        class=" text-2xl font-display font-bold p-4 border-b border-gray-500 flex items-center">
+        <a [routerLink]="['/home']" class="flex">
+            <img src="assets/logo_md_color.png" alt="logo nexify" width="30px"
+                class="mr-4">
+            Nexify
+        </a>
+
+        <div class="h-5 w-10 cursor-pointer bg-mydarkblue-200 ml-auto rounded-full flex flex-row-reverse items-center"
+            (click)="darkMode()">
+            <div #darkModeToggle
+                class="text-mydarkblue-500 w-5 h-5 bg-white rounded-full flex items-center text-xs justify-center transform transition-transform">
+                <i class="fas fa-moon"></i>
+            </div>
+        </div>
     </div>
 
-    <div class="text-white font-semibold text-xl text-center py-6 px-4 mb-4">
+    <div class=" font-semibold text-xl text-center py-6 px-4 mb-4">
         <a class="focus:outline-none" [routerLink]="['/course', course.id]"
             (click)="goToCourse()">{{course.title}}</a>
     </div>

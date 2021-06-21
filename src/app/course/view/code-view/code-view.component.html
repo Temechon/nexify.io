@@ -1,19 +1,20 @@
 <div #codeWrapper>
     <div class="my-2 border-mygray border rounded-md shadow-sm"
         *ngIf="codes?.content.length > 0">
-        <div class="flex flex-row items-center h-10"
+        <div class="flex flex-row items-center h-10 rounded-md"
             *ngIf="codes.content[0]?.name">
 
-            <div class="tab" [ngClass]="{'active':index===0}"
+            <div class="tab rounded-t-md" [ngClass]="{'active':index===0}"
                 *ngFor="let tab of codes.content; let index=index"
                 (click)="openTab($event, tab.id)">
                 {{tab.name}}
             </div>
         </div>
         <ng-container *ngFor="let tab of codes.content; let index=index">
-            <div [id]="tab.id" class="code-content"
+            <div [id]="tab.id" class="code-content  rounded-md"
                 [ngClass]="{'hidden':index!==0}">
-                <pre><code [ngClass]='tab.classname' class="hljs">{{tab.code | removeRegexp}}</code></pre>
+                <pre
+                    class="rounded-md"><code [ngClass]='tab.classname' class="hljs rounded-md">{{tab.code | removeRegexp}}</code></pre>
             </div>
         </ng-container>
     </div>
