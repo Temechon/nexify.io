@@ -10,23 +10,23 @@
             (cdkDropListDropped)="reorder($event)">
             <ng-container *ngFor="let content of task.content; let index=index">
 
-                <div class="flex flex-row items-center rounded-md my-2 relative border border-gray-100 dark:bg-darkmode-400 dark:border-darkmode-800"
+                <div class="flex flex-row items-center rounded-md my-2 mr-4 relative border border-gray-100 dark:bg-darkmode-400 dark:border-darkmode-400"
                     cdkDrag>
                     <div class="w-4 h-full absolute left-0 rounded-l-md dark:bg-darkmode-700 bg-gray-100 text-gray-400 flex items-center justify-center cursor-move"
                         cdkDragHandle>
                         <i class="fas fa-ellipsis-v"></i>
                     </div>
-                    <div class="w-full flex items-center bg-white ml-5">
+                    <div class="w-full flex items-center ml-5">
 
                         <!-- Action or explanation -->
                         <input placeholder="New action..."
-                            class="dark:bg-darkmode-400 dark:border-darkmode-400 dark:text-gray-200 action border-none font-light text-lg py-1 w-full pl-4 border focus:outline-none focus:ring focus:border-blue-300 border-indigo-50"
+                            class="dark:bg-darkmode-400 dark:border-transparent dark:text-gray-200 action border-none font-light text-lg py-1 w-full pl-4 focus:outline-none focus:ring focus:border-blue-300 "
                             type="text" *ngIf="isAction(content)"
                             [value]="content.value"
                             (input)="saveText($event.target, index)">
 
                         <input placeholder="New explanation..."
-                            class="dark:bg-darkmode-400 dark:border-darkmode-400 dark:text-gray-200 explanation border-none font-light text-lg py-1 w-full pl-4 border focus:outline-none focus:ring focus:border-blue-300 border-indigo-50"
+                            class="dark:bg-darkmode-400  dark:text-gray-200 explanation border-none font-light text-lg py-1 w-full pl-4 border focus:outline-none focus:ring focus:border-blue-300 "
                             type="text" *ngIf="isExplanation(content)"
                             [value]="content.value"
                             (input)="saveText($event.target, index)">

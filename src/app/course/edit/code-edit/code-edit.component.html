@@ -1,19 +1,18 @@
 <div #codeWrapper>
     <div class="mb-2 w-full rounded-md shadow-sm">
 
-        <!-- Tab bar -->
         <div
             class="flex flex-row items-center h-10 overflow-x-auto overflow-y-hidden dark:bg-mydarkgray-500">
 
-            <!-- Display each tab -->
-            <div class="tab relative" [ngClass]="{'active':index===0}"
-                [id]="'header'+tab.id"
+            <!-- Tab bar -->
+            <div class="tab relative hover:bg-blue-50 hover:text-myblue dark:hover:bg-darkmode-300"
+                [ngClass]="{'active':index===0}" [id]="'header'+tab.id"
                 *ngFor="let tab of codes?.content; let index=index"
                 (click)="openTab(tab.id)">
 
                 <!-- Tab name -->
                 <input type="text" [(ngModel)]="tab.name"
-                    class="tab-input pr-7 dark:bg-mydarkgray-500 dark:text-gray-200"
+                    class="tab-input w-full h-full cursor-pointer pr-7 hover:bg-blue-50 dark:bg-mydarkgray-500 dark:text-gray-200 dark:hover:bg-darkmode-300"
                     placeholder="New tab...">
 
                 <!-- remove tab button -->
@@ -30,7 +29,8 @@
             </div>
 
             <!-- Add a new tab -->
-            <div class="tab text-gray-400" (click)="addTab()">
+            <div class="tab text-gray-400 hover:bg-blue-50 hover:text-myblue dark:hover:bg-darkmode-300"
+                (click)="addTab()">
                 <i class="fas fa-plus-circle mr-2"></i> tab
             </div>
         </div>

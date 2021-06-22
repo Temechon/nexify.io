@@ -16,11 +16,6 @@ pre {
         }
     }
 
-    &:hover {
-        @apply text-myblue;
-        @apply bg-blue-50;
-    }
-
     &.active {
         @apply bg-mydarkgray-500;
         @apply text-gray-200;

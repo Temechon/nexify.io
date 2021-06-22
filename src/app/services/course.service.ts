@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { forkJoin, Observable } from 'rxjs';
-import { map, mergeMap, take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { first, map, mergeMap } from 'rxjs/operators';
 import { Chapter } from '../model/chapter.model';
 import { Course } from '../model/course.model';
-import { Code, CodeDb, Task } from '../model/task.model';
+import { Code, CodeDb } from '../model/task.model';
 
 @Injectable({
     providedIn: 'root'
@@ -21,8 +21,18 @@ export class CourseService {
                 const course = new Course(courseDb);
                 course.id = courseid;
                 return course;
+            }),
+            mergeMap((course: Course) => {
+                return this.getCodesByTaskid(course.home.id).pipe(
+                    first(),
+                    map((allCodesForTask: Code[]) => {
+                        console.log("retrieving course la !");
+                        course.home.codes = allCodesForTask;
+                        return course;
+                    })
+                )
             })
-        )
+        );
     }
 
     /**
@@ -53,6 +63,12 @@ export class CourseService {
 
 
     save(course: Course) {
+        // Save all codes in course.home
+        const codes = course.home.codes;
+        for (let code of codes) {
+            this.db.collection('codes').doc(code.id).set(code.toObject());
+        }
+
         this.db.collection('courses').doc(course.id).set(course.toObject());
     }
 

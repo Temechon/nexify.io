@@ -43,7 +43,7 @@
     </div>
 
     <div class="my-2 text-lg font-semibold dark:text-gray-200">Homepage</div>
-    <task-edit [task]="course.home"></task-edit>
+    <task-edit [task]="course.home" (onUpdate)="save()"></task-edit>
 
     <div class="flex items-center justify-center select-none mt-12">
 
