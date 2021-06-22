@@ -22,6 +22,11 @@
                     <code-view [codes]="blocktype.getCode(task, content)">
                     </code-view>
                 </div>
+
+                <div *ngIf="blocktype.isImage(content)">
+                    <img-view [img]="content.value">
+                    </img-view>
+                </div>
             </ng-container>
         </ul>
     </div>
