@@ -10,16 +10,16 @@
         <!-- Content -->
         <ul *ngIf="task.content">
             <ng-container *ngFor="let content of task.content">
-                <li *ngIf="isExplanation(content) ||isAction(content)"
+                <li *ngIf="blocktype.isExplanation(content) || blocktype.isAction(content)"
                     [ngClass]="content.type" [innerHTML]="content.value">
                 </li>
 
-                <div *ngIf="isLink(content)">
+                <div *ngIf="blocktype.isLink(content)">
                     <link-view [link]="content.value"></link-view>
                 </div>
 
-                <div *ngIf="isCode(content)">
-                    <code-view [codes]="getCode(content)">
+                <div *ngIf="blocktype.isCode(content)">
+                    <code-view [codes]="blocktype.getCode(task, content)">
                     </code-view>
                 </div>
             </ng-container>

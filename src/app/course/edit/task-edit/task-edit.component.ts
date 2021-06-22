@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { ConfirmDialogComponent } from 'src/app/gui/dialog/confirm-dialog.component';
+import { Blocktype } from 'src/app/helpers/Blocktype';
 import { Code, TabCode, Task, TaskContent } from 'src/app/model/task.model';
 import { DialogService } from 'src/app/services/dialog.service';
 import * as _ from 'underscore';
@@ -25,6 +26,8 @@ export class TaskEditComponent implements OnInit {
 
   saveSub = new Subject();
 
+  blocktype = Blocktype;
+
   constructor(
     private dialogService: DialogService) {
 
@@ -38,38 +41,15 @@ export class TaskEditComponent implements OnInit {
   }
 
   /**
-   * Returns true if the given content is a code element
-   */
-  isCode(test: any) {
-    return test.type === "code";
-  }
-
-  /**
-   * Returns true if the given content is a explanation element
-   */
-  isExplanation(test: any) {
-    return test.type === "explanation";
-  }
-  /**
-   * Returns true if the given content is an action element
-   */
-  isAction(test: any) {
-    return test.type === "action";
-  }
-
-  /**
-   * Returns true if the given content is a link element
-   */
-  isLink(test: any) {
-    return test.type === "link";
-  }
-
-  /**
    * Update the given string content in database 
    */
-  saveText(t: any, index: number) {
+  saveText(t: any | string, index: number) {
     const content = this.task.content[index] as { type: string, value: string };
-    content.value = t.value;
+    if (typeof t === "string") {
+      content.value = t;
+    } else {
+      content.value = t.value;
+    }
     this.saveSub.next();
   }
 
@@ -115,6 +95,12 @@ export class TaskEditComponent implements OnInit {
       value: []
     })
 
+  }
+  addImage() {
+    this.task.content.push({
+      type: 'image',
+      value: ""
+    })
   }
 
   /**

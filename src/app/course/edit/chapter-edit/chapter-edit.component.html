@@ -9,7 +9,7 @@
     <task-edit *ngFor="let task of chapter.tasks; let index=index" [task]="task"
         (onUpdate)="saveChapter()" (onDelete)="deleteTask(index)"></task-edit>
 
-    <div class="flex items-center justify-center">
+    <div class="flex items-center justify-center my-12">
 
         <action-button text="Task" (click)="addTask()" icon="fa-plus" size="big"
             color="blue">
@@ -20,20 +20,4 @@
         </action-button>
 
     </div>
-
-
-    <!-- <div class="task">
-        <div class="font-semibold">Install angular globally</div>
-        <div class="pl-6">
-            <ul>
-                <li>Angular CLI : Command Line Interface</li>
-                <li>Used to create projects, generate application and library
-                    code,
-                    and perform a variety of ongoing development tasks such as
-                    testing, bundling, and deployment.</li>
-            </ul>
-            <app-code [codes]="codes"></app-code>
-
-        </div>
-    </div> -->
 </section>

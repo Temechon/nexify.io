@@ -1,0 +1,19 @@
+<div
+    class="flex flex-col w-full dark:bg-darkmode-400 dark:text-gray-200 bg-white">
+
+    <div class="m-auto h-52 flex items-center justify-center">
+        <img class="max-h-52 rounded-sm" *ngIf="img" [src]="img" alt="">
+        <div class="h-52 border border-myblue border-opacity-50 rounded-sm text-myblue flex items-center justify-center p-5 text-center text-opacity-50"
+            *ngIf="!img">
+            Your image will be displayed here.
+        </div>
+    </div>
+
+    <div class="flex w-full">
+        <div class="w-24 p-2 pl-4">Img Url</div>
+        <input type="text" [(ngModel)]="img" (input)="save()"
+            class="dark:bg-darkmode-500 dark:border-darkmode-500 dark:text-gray-200 w-full p-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50"
+            placeholder="Link text">
+    </div>
+
+</div>

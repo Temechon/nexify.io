@@ -21,18 +21,18 @@
                         <!-- Action or explanation -->
                         <input placeholder="New action..."
                             class="dark:bg-darkmode-400 dark:border-transparent dark:text-gray-200 action border-none font-light text-lg py-1 w-full pl-4 focus:outline-none focus:ring focus:border-blue-300 "
-                            type="text" *ngIf="isAction(content)"
+                            type="text" *ngIf="blocktype.isAction(content)"
                             [value]="content.value"
                             (input)="saveText($event.target, index)">
 
                         <input placeholder="New explanation..."
                             class="dark:bg-darkmode-400  dark:text-gray-200 explanation border-none font-light text-lg py-1 w-full pl-4 border focus:outline-none focus:ring focus:border-blue-300 "
-                            type="text" *ngIf="isExplanation(content)"
+                            type="text" *ngIf="blocktype.isExplanation(content)"
                             [value]="content.value"
                             (input)="saveText($event.target, index)">
 
                         <!-- Code -->
-                        <div *ngIf="isCode(content)"
+                        <div *ngIf="blocktype.isCode(content)"
                             class="w-full dark:bg-darkmode-400 ">
                             <code-edit [codes]="getCode(content)"
                                 (onTabSaved)="save()">
@@ -40,10 +40,16 @@
                         </div>
 
                         <!-- Link -->
-                        <div *ngIf="isLink(content)" class="w-full">
+                        <div *ngIf="blocktype.isLink(content)" class="w-full">
                             <link-edit [link]="content.value"
                                 (onUpdate)="save()">
                             </link-edit>
+                        </div>
+                        <!-- Link -->
+                        <div *ngIf="blocktype.isImage(content)" class="w-full">
+                            <img-edit [img]="content.value"
+                                (onUpdate)="saveText($event, index)">
+                            </img-edit>
                         </div>
 
                     </div>
@@ -59,7 +65,7 @@
             </ng-container>
         </div>
 
-        <div class="flex items-center justify-center ">
+        <div class="flex items-center justify-center flex-wrap gap-2">
 
             <action-button text="action" (click)="add('action')" icon="fa-bolt"
                 color="blue">
@@ -73,6 +79,10 @@
             </action-button>
 
             <action-button text="code" (click)="addCode()" icon="fa-code"
+                color="blue">
+            </action-button>
+
+            <action-button text="image" (click)="addImage()" icon="fa-image"
                 color="blue">
             </action-button>
 

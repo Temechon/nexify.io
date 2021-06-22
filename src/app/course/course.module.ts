@@ -6,18 +6,20 @@ import { AutosizeModule } from "ngx-autosize";
 import { RemoveRegexp } from "../helpers/Pipe";
 import { CourseHomeViewComponent } from "./view/course-home-view/course-home-view.component";
 import { CourseRoutingModule } from "./course-routing.module";
-import { CodeEditComponent } from "./edit/code-edit/code-edit.component";
+import { CodeEditComponent } from "./edit/blocks/code-edit/code-edit.component";
 import { ChapterEditComponent } from "./edit/chapter-edit/chapter-edit.component";
-import { LinkEditComponent } from "./edit/link-edit/link-edit.component";
+import { LinkEditComponent } from "./edit/blocks/link-edit/link-edit.component";
 import { TaskEditComponent } from "./edit/task-edit/task-edit.component";
 import { SidebarComponent } from "./sidebar/sidebar.component";
-import { CodeViewComponent } from "./view/code-view/code-view.component";
+import { CodeViewComponent } from "./view/blocks/code-view/code-view.component";
 import { ChapterViewComponent } from "./view/chapter-view/chapter-view.component";
-import { LinkViewComponent } from "./view/link-view/link-view.component";
+import { LinkViewComponent } from "./view/blocks/link-view/link-view.component";
 import { TaskViewComponent } from "./view/task-view/task-view.component";
 import { CourseComponent } from './course/course.component';
 import { CourseHomeEditComponent } from './edit/course-home-edit/course-home-edit.component';
 import { GuiModule } from "../gui/gui.module";
+import { ImgViewComponent } from './view/blocks/img-view/img-view.component';
+import { ImgEditComponent } from './edit/blocks/img-edit/img-edit.component';
 
 @NgModule({
     declarations: [
@@ -35,6 +37,8 @@ import { GuiModule } from "../gui/gui.module";
         LinkViewComponent,
         CourseComponent,
         CourseHomeEditComponent,
+        ImgViewComponent,
+        ImgEditComponent,
     ],
     imports: [
         FormsModule,
