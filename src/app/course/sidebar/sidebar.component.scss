@@ -1,0 +1,32 @@
+.chapters-title-logo {
+    display: none;
+}
+
+.small {
+    .logo {
+        .nexify-text {
+            display: none;
+        }
+    }
+
+    .course-title {
+        display: none;
+    }
+
+    .chapters-title {
+        display: none;
+    }
+
+    .chapters-title-logo {
+        display: flex;
+    }
+
+    .chapter-title {
+        display: none;
+    }
+    .chapter-index {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+    }
+}

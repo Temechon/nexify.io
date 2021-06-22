@@ -1,44 +1,55 @@
-<div
-    class="h-full flex flex-col w-80 border-mydarkblue-300 text-white dark:text-gray-200 select-none relative">
+<div id="sidebar-content"
+    class="h-full flex flex-col w-80 border-mydarkblue-300 text-white dark:text-gray-200 select-none relative transition duration-200">
 
+    <div id="sidebar-chevron"
+        class="absolute text-gray-200 right-5 top-5 text-2xl cursor-pointer hover:text-white transition-colors duration-200 dark:text-myblue"
+        (click)="toggleSidebar()">
+        <i
+            class="fas fa-chevron-left transition-all transform duration-200"></i>
+    </div>
 
     <div
-        class=" text-2xl font-display font-bold p-4 border-b border-gray-500 flex items-center">
+        class="logo text-2xl font-display font-bold p-4 border-b border-gray-500 flex items-center">
         <a [routerLink]="['/home']" class="flex">
             <img src="assets/logo_md_color.png" alt="logo nexify" width="30px"
                 class="mr-4">
-            Nexify
+            <span class="nexify-text">Nexify</span>
         </a>
 
-        <div class="h-5 w-10 cursor-pointer bg-mydarkblue-200 ml-auto rounded-full flex flex-row-reverse items-center"
-            (click)="darkMode()">
-            <div #darkModeToggle
-                class="text-mydarkblue-500 w-5 h-5 bg-white rounded-full flex items-center text-xs justify-center transform transition-transform">
-                <i class="fas fa-moon"></i>
-            </div>
-        </div>
     </div>
 
-    <div class=" font-semibold text-xl text-center py-6 px-4 mb-4">
+    <div class="course-title font-semibold text-xl text-center py-6 px-4 mb-4">
         <a class="focus:outline-none" [routerLink]="['/course', course.id]"
             (click)="goToCourse()">{{course.title}}</a>
     </div>
 
-    <div class="ml-4 text-sm text-gray-400 h-8 leading-8 pt-2 mb-4">
+    <div
+        class="chapters-title ml-4 text-sm text-gray-400 h-8 leading-8 pt-2 mb-4">
         Chapters
     </div>
-    <div *ngFor="let chapter of chapters | async" class="w-full">
+    <div
+        class="chapters-title-logo text-xl text-gray-400 mb-4 flex items-center justify-center mt-12">
+        <i class="fas fa-bookmark"></i>
+    </div>
+    <div *ngFor="let chapter of chapters | async; let index = index"
+        class="w-full">
         <a [routerLink]="['/course', course.id, chapter.id]"
             routerLinkActive="bg-mygreen text-green-900" class="block my-0.5 py-2 px-4 text-left transition-colors duration-150 truncate w-full cursor-pointer hover:bg-mygreen hover:text-green-900
                 focus:outline-none
             ">
 
-            {{chapter.title}}</a>
+            <span class="chapter-index">{{index+1}}.</span>
+            <span class="chapter-title ml-2 ">{{chapter.title}}</span>
+        </a>
     </div>
 
-    <div
-        class="absolute text-gray-300 right-5 bottom-5 text-2xl cursor-pointer hover:text-white">
-        <i class="fas fa-chevron-left"></i>
+
+    <div class="absolute right-3 bottom-5 h-5 w-10 cursor-pointer bg-mydarkblue-200 ml-auto rounded-full flex flex-row-reverse items-center"
+        (click)="darkMode()">
+        <div #darkModeToggle
+            class="text-mydarkblue-500 w-5 h-5 bg-white rounded-full flex items-center text-xs justify-center transform transition-transform">
+            <i class="fas fa-moon"></i>
+        </div>
     </div>
 
 </div>

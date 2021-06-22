@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Chapter } from 'src/app/model/chapter.model';
@@ -54,6 +54,51 @@ export class SidebarComponent {
     const bg = darkModeButton.parentElement as HTMLDivElement;
     bg.classList.toggle('bg-mydarkblue-200');
     bg.classList.toggle('bg-myblue');
+  }
+
+  _hideSidebar() {
+    const sidebar = document.querySelector('#sidebar-content') as HTMLDivElement;
+    sidebar.classList.add('small')
+    sidebar.classList.remove('w-80')
+    sidebar.classList.add('w-16')
+    sidebar.parentElement.parentElement.classList.remove('w-80')
+    sidebar.parentElement.parentElement.classList.add('w-16')
+
+    const chevron = sidebar.querySelector('#sidebar-chevron') as HTMLDivElement;
+    chevron.classList.remove('right-5')
+    chevron.classList.remove('text-gray-200')
+    chevron.classList.add('-right-5')
+    chevron.classList.add('text-mydarkblue-500')
+
+    const icon = chevron.querySelector('i') as HTMLLIElement;
+    icon.classList.add('rotate-180')
+  }
+
+  toggleSidebar() {
+    const sidebar = document.querySelector('#sidebar-content') as HTMLDivElement;
+    if (sidebar.classList.contains('small')) {
+      this._showSidebar()
+    } else {
+      this._hideSidebar();
+    }
+  }
+
+  _showSidebar() {
+    const sidebar = document.querySelector('#sidebar-content') as HTMLDivElement;
+    sidebar.classList.remove('small')
+    sidebar.classList.add('w-80')
+    sidebar.classList.remove('w-16')
+    sidebar.parentElement.parentElement.classList.add('w-80')
+    sidebar.parentElement.parentElement.classList.remove('w-16')
+
+    const chevron = sidebar.querySelector('#sidebar-chevron') as HTMLDivElement;
+    chevron.classList.add('right-5')
+    chevron.classList.add('text-gray-200')
+    chevron.classList.remove('-right-5')
+    chevron.classList.remove('text-mydarkblue-500')
+
+    const icon = chevron.querySelector('i') as HTMLLIElement;
+    icon.classList.remove('rotate-180')
   }
 
 }
