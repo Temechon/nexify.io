@@ -1,7 +1,9 @@
-<div class="w-full h-1 bg-gradient-to-r from-mygreen to-myblue">
+<div class="absolute top-5 right-5 z-10">
+    <a class="text-myblue cursor-pointer hover:text-blue-300 text-lg"
+        [routerLink]="['/login']">Login</a>
 </div>
 
-<div class="min-h-full flex flex-col">
+<div class="min-h-full flex flex-col relative">
 
     <div class="w-full md:w-2/3 m-auto mb-8 px-8 md:px-0">
 
@@ -71,7 +73,7 @@
                     tutorial</span> in whatever language you are expert in.<br>
             </div>
 
-            <div class="w-2/3 mb-12 mx-auto">
+            <div class="w-full xl:w-2/3 mb-12 mx-auto">
                 <div
                     style='position:relative; padding-bottom:calc(56.25% + 44px)'>
                     <iframe
