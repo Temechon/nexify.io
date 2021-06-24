@@ -2,29 +2,31 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from "@angular/router";
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
 
 export class AuthService {
-    userData: any; // Save logged in user data
+    // userData: any; // Save logged in user data
 
     constructor(
         public afs: AngularFirestore,
-        public angularFireAuth: AngularFireAuth,
+        public auth: AngularFireAuth,
         public router: Router
     ) {
         /* Saving user data in localstorage when 
         logged in and setting up null when logged out */
-        this.angularFireAuth.authState.subscribe(user => {
+        this.auth.authState.subscribe(user => {
             console.log("authentication state updated", user);
             if (user) {
-                this.userData = user;
-                localStorage.setItem('nexify.user', JSON.stringify(this.userData));
+                // this.userData = user;
+                // localStorage.setItem('nexify.user', JSON.stringify(this.userData));
                 // JSON.parse(localStorage.getItem('user'));
             } else {
-                localStorage.setItem('nexify.user', null);
+                // localStorage.setItem('nexify.user', null);
                 // JSON.parse(localStorage.getItem('user'));
             }
         })
@@ -32,7 +34,7 @@ export class AuthService {
 
     // Sign in with email/password ;,;
     signIn(email: string, password: string) {
-        return this.angularFireAuth.signInWithEmailAndPassword(email, password)
+        return this.auth.signInWithEmailAndPassword(email, password)
             .then((result) => {
                 console.log("authenticated !!", result)
                 // this.ngZone.run(() => {
@@ -42,12 +44,12 @@ export class AuthService {
             })
     }
 
-
-    // Returns true when user is looged in and email is verified
-    get isLoggedIn(): boolean {
-        const user = JSON.parse(localStorage.getItem('nexify.user'));
-        // console.log(user);
-        return user !== null;
+    isLoggedIn(): Observable<boolean> {
+        return this.auth.user.pipe(
+            map(user => {
+                return !!user;
+            })
+        );
     }
 
     /* Setting up user data when sign in with username/password, 
@@ -69,7 +71,7 @@ export class AuthService {
 
     // Sign out 
     signOut() {
-        return this.angularFireAuth.signOut().then(() => {
+        return this.auth.signOut().then(() => {
             localStorage.removeItem('nexify.user');
         })
     }

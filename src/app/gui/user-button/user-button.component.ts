@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -9,16 +11,19 @@ import { AuthService } from 'src/app/services/auth.service';
 export class UserButtonComponent implements OnInit {
 
   constructor(
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private router: Router) { }
+
+  isLoggedIn: Observable<boolean>
 
   ngOnInit(): void {
+    this.isLoggedIn = this.authService.isLoggedIn();
   }
 
 
-  isLoggedIn() {
-    return this.authService.isLoggedIn;
-  }
   logout() {
-    return this.authService.signOut();
+    this.authService.signOut().then(() => {
+      this.router.navigate(['/home']);
+    })
   }
 }
