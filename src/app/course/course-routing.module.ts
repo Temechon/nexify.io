@@ -7,6 +7,8 @@ import { CourseComponent } from './course/course.component';
 import { CourseHomeEditComponent } from './edit/course-home-edit/course-home-edit.component';
 import { ChapterEditComponent } from './edit/chapter-edit/chapter-edit.component';
 import { ChapterViewComponent } from './view/chapter-view/chapter-view.component';
+import { canActivate, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+
 
 const routes: Routes = [
 
@@ -32,6 +34,7 @@ const routes: Routes = [
                     {
                         path: 'editor',
                         component: CourseHomeEditComponent,
+                        ...canActivate(() => redirectUnauthorizedTo(['/login']))
                     },
                     {
                         path: ':chapter',
@@ -46,6 +49,7 @@ const routes: Routes = [
                             {
                                 path: 'editor',
                                 component: ChapterEditComponent,
+                                ...canActivate(() => redirectUnauthorizedTo(['/login']))
                             }
                         ]
                     }

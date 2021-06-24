@@ -24,11 +24,23 @@ module.exports = {
       fontFamily: {
         sans: ['Jost', 'sans-serif'],
         display: ['Jost', 'sans-serif']
+      },
+
+      height: {
+        "100": '450px'
+      },
+
+      animation: {
+        'spin-fast': 'spin 0.35s linear infinite',
       }
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      opacity: ['disabled'],
+      backgroundColor: ['disabled'],
+      cursor: ['disabled']
+    },
   },
   plugins: [],
 }

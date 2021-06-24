@@ -1,0 +1,9 @@
+<div class="absolute top-5 right-5 z-10">
+    <a *ngIf="!isLoggedIn()"
+        class="text-myblue cursor-pointer hover:text-blue-300 text-lg"
+        [routerLink]="['/login']">Login</a>
+
+    <a *ngIf="isLoggedIn()"
+        class="text-myblue cursor-pointer hover:text-blue-300 text-lg"
+        (click)="logout()">Logout</a>
+</div>

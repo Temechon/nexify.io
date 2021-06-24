@@ -6,18 +6,27 @@
     class="absolute z-10 w-full h-screen bg-gradient-to-bl from-white to-transparent">
 
     <div
-        class="select-none w-1/2 max-w-lg bg-white m-auto rounded-xl h-96 relative top-1/2 transform -translate-y-1/2 shadow-lg p-12">
+        class="select-none w-1/2 max-w-lg bg-white m-auto rounded-xl h-100 relative top-1/2 transform -translate-y-1/2 shadow-lg p-12">
         <div class="text-5xl text-center font-extrabold">
             Sign in</div>
 
-        <input type="email"
-            class="ring-myblue bg-gray-100 ring-opacity-50 p-3 mt-8 w-full focus:outline-none focus:ring rounded-md"
+        <input #email type="email"
+            class="ring-myblue bg-gray-100 ring-opacity-50 p-3 mt-12 w-full focus:outline-none focus:ring rounded-md"
             placeholder="E-mail" required>
-        <input type="password"
-            class="ring-myblue bg-gray-100 ring-opacity-50 p-3 mt-8 w-full focus:outline-none focus:ring rounded-md"
-            placeholder="Password" required>
+        <input #password type="password"
+            class="ring-myblue bg-gray-100 ring-opacity-50 p-3 mt-4 w-full focus:outline-none focus:ring rounded-md"
+            placeholder="Password" required
+            (keydown.enter)="login(email.value, password.value, button)">
 
-        <input type="submit" value="Login" name="login"
-            class="mt-8 w-full  py-2 px-3 bg-myblue text-white rounded-md shadow-md text-lg hover:bg-mygreen cursor-pointer">
+        <button #button (click)="login(email.value, password.value, button)"
+            class="disabled:opacity-50 disabled:bg-mydarkblue-500 disabled:cursor-default mt-12 w-full  py-2 px-3 bg-myblue text-white rounded-md shadow-md text-lg hover:bg-mygreen cursor-pointer">Login</button>
+
+        <div class="text-center text-red-400 mt-4" *ngIf="errorMessage">
+            {{errorMessage}}</div>
+
+        <div *ngIf="loading"
+            class="animate-spin-fast flex items-center justify-center text-myblue text-xl mt-4">
+            <i class="fas fa-spinner"></i>
+        </div>
     </div>
 </div>

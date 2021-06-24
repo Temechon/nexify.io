@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Chapter } from 'src/app/model/chapter.model';
 import { Course } from 'src/app/model/course.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { ChapterService } from 'src/app/services/chapter.service';
 
 @Component({
@@ -27,4 +28,5 @@ export class CourseComponent implements OnInit {
     // get all chapters for this course
     this.chapters = this.chapterService.getAll(this.course.id)
   }
+
 }

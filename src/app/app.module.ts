@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { GuiModule } from './gui/gui.module';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { AuthService } from './services/auth.service';
 
 
 
@@ -22,7 +23,7 @@ import { LoginComponent } from './login/login.component';
     GuiModule,
     AngularFireModule.initializeApp(environment.firebase),
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

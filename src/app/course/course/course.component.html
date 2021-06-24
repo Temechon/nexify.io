@@ -1,12 +1,7 @@
-<div class="absolute top-5 right-5 z-10">
-    <a class="text-myblue cursor-pointer hover:text-blue-300 text-lg"
-        [routerLink]="['/login']">Login</a>
-</div>
-
+<user-button></user-button>
 
 <div class="flex h-full min-h-screen relative">
-    <div id="sidebar"
-        class="transition-all duration-500 w-80 bg-mydarkblue-500 dark:bg-darkmode-700 text-white">
+    <div id="sidebar" class="bg-mydarkblue-500 dark:bg-darkmode-700 text-white">
         <sidebar [chapters]="chapters" [course]="course"></sidebar>
     </div>
 

@@ -1,17 +1,18 @@
-<section class="relative">
+<section class="relative mt-12 m-0 p-4 w-full md:m-auto">
+
 
     <div
-        class="absolute -right-20 top-0 flex items-center justify-center select-none">
+        class="text-mydarkblue-500 dark:text-gray-100 font-extrabold text-3xl md:text-5xl mb-12 mt-8 font-display text-center">
+        {{course.title}}
+    </div>
+
+    <div class="flex items-center justify-center select-none -mt-8">
 
         <action-button text="Edit" route="editor" icon="fa-pen" color="blue"
             size="small">
         </action-button>
 
     </div>
-
-    <h1 class="text-mydarkblue-500 dark:text-gray-100">
-        {{course.title}}
-    </h1>
 
     <task-view [task]="course.home"></task-view>
 

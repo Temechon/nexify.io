@@ -31,6 +31,14 @@ export class SidebarComponent {
     if (document.body.classList.contains('dark')) {
       this._setDark();
     }
+    window.addEventListener('resize', this._resize.bind(this));
+    this._resize();
+  }
+
+  _resize() {
+    if (document.body.clientWidth < 1024) {
+      this._hideSidebar();
+    }
   }
 
   goToCourse() {
@@ -58,11 +66,9 @@ export class SidebarComponent {
 
   _hideSidebar() {
     const sidebar = document.querySelector('#sidebar-content') as HTMLDivElement;
-    sidebar.classList.add('small')
-    sidebar.classList.remove('w-80')
     sidebar.classList.add('w-16')
-    sidebar.parentElement.parentElement.classList.remove('w-80')
-    sidebar.parentElement.parentElement.classList.add('w-16')
+    sidebar.classList.remove('w-80')
+    sidebar.classList.add('small')
 
     const chevron = sidebar.querySelector('#sidebar-chevron') as HTMLDivElement;
     chevron.classList.remove('right-5')
@@ -85,11 +91,9 @@ export class SidebarComponent {
 
   _showSidebar() {
     const sidebar = document.querySelector('#sidebar-content') as HTMLDivElement;
-    sidebar.classList.remove('small')
     sidebar.classList.add('w-80')
     sidebar.classList.remove('w-16')
-    sidebar.parentElement.parentElement.classList.add('w-80')
-    sidebar.parentElement.parentElement.classList.remove('w-16')
+    sidebar.classList.remove('small')
 
     const chevron = sidebar.querySelector('#sidebar-chevron') as HTMLDivElement;
     chevron.classList.add('right-5')

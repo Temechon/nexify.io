@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ActionButtonComponent } from './action-button/action-button.component';
+import { UserButtonComponent } from './user-button/user-button.component';
 
 
 
@@ -13,10 +14,12 @@ import { ActionButtonComponent } from './action-button/action-button.component';
         RouterModule,
     ],
     declarations: [
-        ActionButtonComponent
+        ActionButtonComponent,
+        UserButtonComponent
     ],
     exports: [
-        ActionButtonComponent
+        ActionButtonComponent,
+        UserButtonComponent
     ],
     entryComponents: [],
     providers: [],
