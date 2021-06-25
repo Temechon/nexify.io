@@ -100,7 +100,7 @@ export class Task {
     id: string;
     title: string;
     content: Array<TaskContent> = [];
-    // Should not be saved in database.
+    // Should be saved in database.
     codes: Array<Code> = [];
 
     constructor(params: TaskDb) {

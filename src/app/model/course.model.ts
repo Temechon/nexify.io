@@ -5,11 +5,18 @@ export class Course {
     id: string;
     title: string;
     home: Task;
+    introduction: string;
+    prerequisite: string;
+    objectives: string;
 
     constructor(params: any) {
         this.id = params.id;
         this.title = params.title;
         this.home = new Task(params.home);
+
+        this.introduction = params.introduction;
+        this.prerequisite = params.prerequisite;
+        this.objectives = params.objectives;
     }
 
     toObject() {
