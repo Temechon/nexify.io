@@ -1,16 +1,16 @@
 <div class="my-6 shadow-sm bg-white task rounded-md dark:bg-darkmode-300">
 
-    <input type="text" [(ngModel)]="task.title" placeholder="Task title..."
-        (input)="save()"
+    <input *ngIf="showTitle" type="text" [(ngModel)]="task.title"
+        placeholder="Task title..." (input)="save()"
         class="dark:bg-darkmode-300 dark:border-darkmode-800 dark:text-gray-200 w-full font-semibold shadow-sm text-2xl mb-6 p-3 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50">
 
-    <div class="pl-6 pb-3">
+    <div class="pl-6 py-3">
 
         <div *ngIf="task.content" cdkDropList
             (cdkDropListDropped)="reorder($event)">
             <ng-container *ngFor="let content of task.content; let index=index">
 
-                <div class="flex flex-row items-center rounded-md my-2 mr-4 relative border border-gray-100 dark:bg-darkmode-400 dark:border-darkmode-400"
+                <div class="flex flex-row items-center rounded-md my-4 mr-4 relative border border-gray-100 dark:bg-darkmode-400 dark:border-darkmode-400"
                     cdkDrag>
                     <div class="w-4 h-full absolute left-0 rounded-l-md dark:bg-darkmode-700 bg-gray-100 text-gray-400 flex items-center justify-center cursor-move"
                         cdkDragHandle>
@@ -18,16 +18,16 @@
                     </div>
                     <div class="w-full flex items-center ml-5">
 
-                        <!-- Action or explanation -->
+                        <!-- Action  -->
                         <input placeholder="New action..."
                             class="dark:bg-darkmode-400 dark:border-transparent dark:text-gray-200 action border-none font-light text-lg py-1 w-full pl-4 focus:outline-none focus:ring focus:border-blue-300 "
                             type="text" *ngIf="blocktype.isAction(content)"
                             [value]="content.value"
                             (input)="saveText($event.target, index)">
 
-                        <input placeholder="New explanation..."
-                            class="dark:bg-darkmode-400  dark:text-gray-200 explanation border-none font-light text-lg py-1 w-full pl-4 border focus:outline-none focus:ring focus:border-blue-300 "
-                            type="text" *ngIf="blocktype.isExplanation(content)"
+                        <input placeholder="New item..."
+                            class="dark:bg-darkmode-400  dark:text-gray-200 item border-none font-light text-lg py-1 w-full pl-4 border focus:outline-none focus:ring focus:border-blue-300 "
+                            type="text" *ngIf="blocktype.isItem(content)"
                             [value]="content.value"
                             (input)="saveText($event.target, index)">
 
@@ -67,27 +67,28 @@
 
         <div class="flex items-center justify-center flex-wrap gap-2">
 
-            <action-button text="action" (click)="add('action')" icon="fa-bolt"
-                color="blue">
+            <action-button *ngIf="canUse('action')" text="action"
+                (click)="add('action')" icon="fa-bolt" color="blue">
             </action-button>
 
-            <action-button text="explanation" (click)="add('explanation')"
-                icon="fa-lightbulb" color="blue">
-            </action-button>
-            <action-button text="link" (click)="addLink()" icon="fa-link"
-                color="blue">
+            <action-button *ngIf="canUse('item')" text="text"
+                (click)="add('item')" icon="fa-pencil-alt" color="blue">
             </action-button>
 
-            <action-button text="code" (click)="addCode()" icon="fa-code"
-                color="blue">
+            <action-button *ngIf="canUse('link')" text="link"
+                (click)="addLink()" icon="fa-link" color="blue">
             </action-button>
 
-            <action-button text="image" (click)="addImage()" icon="fa-image"
-                color="blue">
+            <action-button *ngIf="canUse('code')" text="code"
+                (click)="addCode()" icon="fa-code" color="blue">
             </action-button>
 
-            <action-button text="delete task" (click)="deleteTask()"
-                icon="fa-times" color="red">
+            <action-button *ngIf="canUse('image')" text="image"
+                (click)="addImage()" icon="fa-image" color="blue">
+            </action-button>
+
+            <action-button *ngIf="showDelete" text="delete task"
+                (click)="deleteTask()" icon="fa-times" color="red">
             </action-button>
 
         </div>

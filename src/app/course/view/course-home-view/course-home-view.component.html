@@ -14,34 +14,29 @@
 
     </div>
 
-    <div class="text-gray-400 font-semibold text-2xl mt-12">Pre-requisite</div>
-    <div
-        class="bg-white dark:bg-darkmode-400 dark:text-gray-200 p-10 my-4 border shadow-sm border-l-8 border-gray-400">
-        <!-- {{course.prerequisite}} -->
-        Devant une vingtaine de collégiens, deux policiers, deux contrôleurs de
-        la TAN et un pompier sont venus animer un atelier de discussion pour
-        tenter de « déconstruire une image souvent fausse », estime le major
-        Anthony Glotain, l’un des intervenants. Après une rapide présentation de
-        leurs missions et leur matériel, une grande place est laissée aux
-        questions, entre méconnaissance et défiance. « Des fois vous contrôlez
-        des personnes parce qu’elles sont habillées en Lacoste… », assure l
-    </div>
-    <div class="text-myblue font-semibold text-2xl mt-12">Objectives</div>
-    <div
-        class="bg-white dark:bg-darkmode-400 dark:text-gray-200 p-10 mt-4 border shadow-sm border-l-8 border-myblue mb-12">
-        <!-- {{course.prerequisite}} -->
-        Devant une vingtaine de collégiens, deux policiers, deux contrôleurs de
-        la TAN et un pompier sont venus animer un atelier de discussion pour
-        tenter de « déconstruire une image souvent fausse », estime le major
-        Anthony Glotain, l’un des intervenants. Après une rapide présentation de
-        leurs missions et leur matériel, une grande place est laissée aux
-        questions, entre méconnaissance et défiance. « Des fois vous contrôlez
-        des personnes parce qu’elles sont habillées en Lacoste… », assure l
-    </div>
+    <ng-container *ngIf="!course.prerequisite.isEmpty()">
+        <div class="text-gray-400 font-semibold text-2xl mt-12">Pre-requisite
+        </div>
+        <div
+            class="bg-white dark:bg-darkmode-400 dark:text-gray-200 p-10 my-4 border shadow-sm border-l-8 border-gray-400">
+            <task-view [task]="course.prerequisite">
+            </task-view>
+        </div>
+    </ng-container>
+
+
+    <ng-container *ngIf="!course.objectives.isEmpty()">
+        <div class="text-myblue font-semibold text-2xl mt-12">Objectives</div>
+        <div
+            class="bg-white dark:bg-darkmode-400 dark:text-gray-200 p-10 mt-4 border shadow-sm border-l-8 border-myblue mb-12">
+            <task-view [task]="course.objectives">
+            </task-view>
+        </div>
+    </ng-container>
 
     <task-view [task]="course.home"></task-view>
 
-    <div class="flex items-center justify-center select-none"
+    <div class="flex items-center justify-center select-none mt-12"
         *ngIf="firstChapter">
         <action-button text="Start !" (click)="startCourse()" icon="fa-bolt"
             size="big" color="red">

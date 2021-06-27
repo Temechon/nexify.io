@@ -8,7 +8,11 @@
 
     </div>
 
-    <h1 class="dark:text-white">{{chapter.title}}</h1>
+    <div
+        class="text-mydarkblue-500 dark:text-gray-100 font-extrabold text-3xl md:text-5xl mb-12 mt-8 font-display text-center">
+        {{chapter.title}}
+    </div>
+
     <task-view *ngFor="let task of chapter.tasks" [task]="task"></task-view>
 
 

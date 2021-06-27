@@ -6,8 +6,8 @@ export class Course {
     title: string;
     home: Task;
     introduction: string;
-    prerequisite: string;
-    objectives: string;
+    prerequisite: Task;
+    objectives: Task;
 
     constructor(params: any) {
         this.id = params.id;
@@ -15,8 +15,8 @@ export class Course {
         this.home = new Task(params.home);
 
         this.introduction = params.introduction;
-        this.prerequisite = params.prerequisite;
-        this.objectives = params.objectives;
+        this.prerequisite = new Task(params.prerequisite);
+        this.objectives = new Task(params.objectives);
     }
 
     toObject() {
@@ -26,6 +26,8 @@ export class Course {
         });
 
         res.home = this.home.toObject();
+        res.prerequisite = this.prerequisite.toObject();
+        res.objectives = this.objectives.toObject();
 
         delete res.id;
 

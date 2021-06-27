@@ -15,6 +15,30 @@ import * as _ from 'underscore';
 })
 export class TaskEditComponent implements OnInit {
 
+  /**
+   * The list of not authorized block that can be used in this task
+   */
+  @Input()
+  excluded: Array<string> = [];
+
+  /**
+ * The list of authorized block that can be used in this task
+ */
+  @Input()
+  included: Array<string> = [];
+
+  /**
+   * True if this task should ask for a title, false otherwise
+   */
+  @Input()
+  showTitle: boolean = true;
+
+  /**
+   * True if this task can be deleted, false otherwise
+   */
+  @Input()
+  showDelete: boolean = true;
+
   @Input()
   task: Task;
 
@@ -63,6 +87,18 @@ export class TaskEditComponent implements OnInit {
   reorder(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.task.content, event.previousIndex, event.currentIndex);
     this.save();
+  }
+
+  canUse(type: string) {
+
+    if (_.contains(this.excluded, type)) {
+      return false;
+    }
+
+    if (this.included.length > 0) {
+      return _.contains(this.included, type);
+    }
+    return true;
   }
 
   add(type: string) {

@@ -104,9 +104,20 @@ export class Task {
     codes: Array<Code> = [];
 
     constructor(params: TaskDb) {
+        if (!params) {
+            params = {
+                id: Helpers.guid(),
+                title: '',
+                content: []
+            }
+        }
         this.id = params.id || Helpers.guid();
         this.title = params.title || '';
         this.content = params.content;
+    }
+
+    isEmpty(): boolean {
+        return this.content.length === 0;
     }
 
     /**

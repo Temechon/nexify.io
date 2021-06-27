@@ -1,29 +1,34 @@
-<div class="my-6 shadow-sm bg-white dark:bg-darkmode-400 task"
+<div class="my-6 shadow-sm bg-white dark:bg-darkmode-400"
     *ngIf="task.content.length > 0">
+
     <div (click)="hideTask()" *ngIf="task.title"
-        class="font-semibold shadow-sm text-xl md:text-2xl mb-6 cursor-pointer hover:bg-gray-100 dark:hover:bg-darkmode-300 p-3 text-mygreen">
+        class="font-semibold shadow-sm text-xl md:text-2xlcursor-pointer hover:bg-gray-100 dark:hover:bg-darkmode-300 p-3 text-mygreen task-title">
         {{task.title}}
     </div>
 
-    <div #taskContent class="px-6 pb-3 dark:text-gray-200">
+    <div #taskContent class="px-6 pt-3 pb-3 dark:text-gray-200">
 
         <!-- Content -->
         <ul *ngIf="task.content">
             <ng-container *ngFor="let content of task.content">
-                <li *ngIf="blocktype.isExplanation(content) || blocktype.isAction(content)"
-                    [ngClass]="content.type" [innerHTML]="content.value">
+                <li *ngIf="blocktype.isAction(content)" [ngClass]="content.type"
+                    [innerHTML]="content.value" class="my-4 action">
                 </li>
 
-                <div *ngIf="blocktype.isLink(content)">
+                <li *ngIf="blocktype.isItem(content)" [ngClass]="content.type"
+                    [innerHTML]="content.value" class="my-4">
+                </li>
+
+                <div *ngIf="blocktype.isLink(content)" class="my-4">
                     <link-view [link]="content.value"></link-view>
                 </div>
 
-                <div *ngIf="blocktype.isCode(content)">
+                <div *ngIf="blocktype.isCode(content)" class="my-4">
                     <code-view [codes]="blocktype.getCode(task, content)">
                     </code-view>
                 </div>
 
-                <div *ngIf="blocktype.isImage(content)">
+                <div *ngIf="blocktype.isImage(content)" class="my-4">
                     <img-view [img]="content.value">
                     </img-view>
                 </div>

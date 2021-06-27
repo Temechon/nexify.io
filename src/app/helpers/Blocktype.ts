@@ -8,10 +8,10 @@ export abstract class Blocktype {
     }
 
     /**
-     * Returns true if the given content is a explanation element
+     * Returns true if the given content is an item element
      */
-    static isExplanation(test: TaskContent) {
-        return test.type === "explanation";
+    static isItem(test: TaskContent) {
+        return test.type === "item";
     }
     /**
      * Returns true if the given content is an action element

@@ -27,7 +27,8 @@ export class TaskViewComponent implements OnInit {
     const taskContentDiv = this.taskContent.nativeElement as HTMLDivElement;
     taskContentDiv.classList.toggle('hidden');
 
-    taskContentDiv.parentElement.classList.toggle('active');
+    const taskTitle = taskContentDiv.parentElement.querySelector('.task-title') as HTMLDivElement;
+    taskTitle.classList.toggle('active');
 
   }
 }
