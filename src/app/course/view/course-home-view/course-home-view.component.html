@@ -18,7 +18,7 @@
         <div class="text-gray-400 font-semibold text-2xl mt-12">Pre-requisite
         </div>
         <div
-            class="bg-white dark:bg-darkmode-400 dark:text-gray-200 p-10 my-4 border shadow-sm border-l-8 border-gray-400">
+            class="bg-white dark:bg-darkmode-400 dark:text-gray-200 my-4 border shadow-sm border-l-8 border-gray-400">
             <task-view [task]="course.prerequisite">
             </task-view>
         </div>
@@ -28,7 +28,7 @@
     <ng-container *ngIf="!course.objectives.isEmpty()">
         <div class="text-myblue font-semibold text-2xl mt-12">Objectives</div>
         <div
-            class="bg-white dark:bg-darkmode-400 dark:text-gray-200 p-10 mt-4 border shadow-sm border-l-8 border-myblue mb-12">
+            class="bg-white dark:bg-darkmode-400 dark:text-gray-200 mt-4 border shadow-sm border-l-8 border-myblue mb-12">
             <task-view [task]="course.objectives">
             </task-view>
         </div>
