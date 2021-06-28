@@ -12,6 +12,9 @@ export class TaskViewComponent implements OnInit {
   @Input()
   task: Task;
 
+  @Input()
+  hasMargin: boolean = true;
+
   @ViewChild('taskContent', { static: false })
   taskContent: ElementRef;
 

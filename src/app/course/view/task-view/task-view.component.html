@@ -1,4 +1,4 @@
-<div class="my-6 shadow-sm bg-white dark:bg-darkmode-400"
+<div [ngClass]="{'my-6':hasMargin}" class="bg-white dark:bg-darkmode-400"
     *ngIf="task.content.length > 0">
 
     <div (click)="hideTask()" *ngIf="task.title"

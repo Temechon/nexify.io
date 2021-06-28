@@ -71,7 +71,9 @@ export class CourseHomeEditComponent implements OnInit {
     // Set order index in chapters and next/previous chapters ids
     this.chapters.map((chap: Chapter, index: number) => {
 
-      chap.order = index
+      chap.order = index;
+      chap.previousChapterId = null;
+      chap.nextChapterId = null;
 
       const previous = this.chapters[index - 1];
       const next = this.chapters[index + 1];
