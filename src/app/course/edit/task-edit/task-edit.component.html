@@ -20,7 +20,7 @@
 
                         <!-- Action  -->
                         <input placeholder="New action..."
-                            class="dark:bg-darkmode-400 dark:border-transparent dark:text-gray-200 action border-none font-light text-lg py-1 w-full pl-4 focus:outline-none focus:ring focus:border-blue-300 "
+                            class="action dark:bg-darkmode-400 dark:border-transparent dark:text-gray-200 action border-none font-light text-lg py-1 w-full pl-4 focus:outline-none focus:ring focus:border-blue-300 "
                             type="text" *ngIf="blocktype.isAction(content)"
                             [value]="content.value"
                             (input)="saveText($event.target, index)">

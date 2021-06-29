@@ -1,10 +1,9 @@
 <section class="relative mt-12 m-0 p-4 w-full md:m-auto">
 
-
-    <div
+    <h1
         class="text-mydarkblue-500 dark:text-gray-100 font-extrabold text-3xl md:text-5xl mb-12 mt-8 font-display text-center">
         {{course.title}}
-    </div>
+    </h1>
 
     <div class="flex items-center justify-center select-none -mt-8">
 
@@ -36,7 +35,7 @@
 
     <task-view [task]="course.home"></task-view>
 
-    <div class="flex items-center justify-center select-none mt-12"
+    <div class="flex items-center justify-center select-none my-12"
         *ngIf="firstChapter">
         <action-button text="Start !" (click)="startCourse()" icon="fa-bolt"
             size="big" color="red">

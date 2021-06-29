@@ -23,6 +23,8 @@ export class ChapterViewComponent implements OnInit {
       this.chapter = data.chapter;
     })
     )
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
   }
 
   goToNextChapter() {

@@ -66,14 +66,14 @@ export class SidebarComponent {
 
   _hideSidebar() {
     const sidebar = document.querySelector('#sidebar-content') as HTMLDivElement;
-    sidebar.classList.add('w-16')
+    sidebar.classList.add('w-0')
     sidebar.classList.remove('w-80')
     sidebar.classList.add('small')
 
     const chevron = sidebar.querySelector('#sidebar-chevron') as HTMLDivElement;
     chevron.classList.remove('right-5')
     chevron.classList.remove('text-gray-200')
-    chevron.classList.add('-right-5')
+    chevron.classList.add('-right-10')
     chevron.classList.add('text-mydarkblue-500')
 
     const icon = chevron.querySelector('i') as HTMLLIElement;
@@ -92,13 +92,13 @@ export class SidebarComponent {
   _showSidebar() {
     const sidebar = document.querySelector('#sidebar-content') as HTMLDivElement;
     sidebar.classList.add('w-80')
-    sidebar.classList.remove('w-16')
+    sidebar.classList.remove('w-0')
     sidebar.classList.remove('small')
 
     const chevron = sidebar.querySelector('#sidebar-chevron') as HTMLDivElement;
     chevron.classList.add('right-5')
     chevron.classList.add('text-gray-200')
-    chevron.classList.remove('-right-5')
+    chevron.classList.remove('-right-10')
     chevron.classList.remove('text-mydarkblue-500')
 
     const icon = chevron.querySelector('i') as HTMLLIElement;

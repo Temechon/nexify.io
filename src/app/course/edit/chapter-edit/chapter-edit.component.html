@@ -1,4 +1,4 @@
-<section *ngIf="chapter">
+<section class="relative mt-12 m-0 p-4 w-full md:m-auto" *ngIf="chapter">
     <div class="my-2 text-lg font-semibold">Chapter title</div>
     <input type="text" [(ngModel)]="chapter.title" placeholder="Chapter title"
         (input)="saveChapter()"

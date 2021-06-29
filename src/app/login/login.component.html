@@ -2,9 +2,9 @@
     class="absolute z-0 w-full h-screen bg-gradient-to-r from-mygreen to-myblue">
 </div> -->
 
-<div class="flex flex-row w-full h-full">
+<div class="flex flex-col lg:flex-row w-full h-full">
     <div
-        class="w-1/2 h-screen bg-mydarkblue-500 flex items-center flex-col justify-center text-white">
+        class="lg:w-1/2 lg:h-screen h-52 bg-mydarkblue-500 flex items-center flex-col justify-center text-white">
         <div class="flex items-center mb-5 cursor-pointer"
             [routerLink]="['/home']">
             <img src="assets/logo_md_color.png" alt="" class="w-16 mr-5">
@@ -16,7 +16,7 @@
 
     </div>
     <div
-        class="select-none w-1/2 max-w-lg bg-white m-auto rounded-xl h-100 shadow-lg p-12">
+        class="select-none lg:w-1/2 max-w-lg lg:mt-auto mt-12 bg-white m-auto rounded-xl h-100 shadow-none sm:shadow-lg p-12">
         <div class="text-3xl text-center font-extrabold text-myblue">
             Sign in</div>
 

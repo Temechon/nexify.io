@@ -2,7 +2,7 @@
     class="h-full flex flex-col w-80 border-mydarkblue-300 text-white dark:text-gray-200 select-none relative transition-all duration-500">
 
     <div id="sidebar-chevron"
-        class="absolute text-gray-200 right-5 top-5 text-2xl cursor-pointer hover:text-white transition-colors duration-200 dark:text-myblue"
+        class="absolute select-none text-gray-200 right-5 top-5 text-2xl cursor-pointer transition-colors duration-200 dark:text-myblue"
         (click)="toggleSidebar()">
         <i
             class="fas fa-chevron-left transition-all transform duration-200"></i>
@@ -32,7 +32,7 @@
         <i class="fas fa-bookmark"></i>
     </div>
     <div *ngFor="let chapter of chapters | async; let index = index"
-        class="w-full">
+        class="chapter w-full">
         <a [routerLink]="['/course', course.id, chapter.id]"
             routerLinkActive="bg-mygreen text-green-900" class="block my-0.5 py-2 px-4 text-left transition-colors duration-150 truncate w-full cursor-pointer hover:bg-mygreen hover:text-green-900
                 focus:outline-none

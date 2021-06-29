@@ -4,9 +4,10 @@
 
 .small {
     .logo {
-        .nexify-text {
-            display: none;
-        }
+        display: none;
+        // .nexify-text {
+        //     display: none;
+        // }
     }
 
     .course-title {
@@ -18,15 +19,18 @@
     }
 
     .chapters-title-logo {
-        display: flex;
+        display: none;
     }
 
     .chapter-title {
         display: none;
     }
     .chapter-index {
-        display: inline-block;
-        width: 100%;
-        text-align: center;
+        display: none;
+        // width: 100%;
+        // text-align: center;
+    }
+    .chapter {
+        display: none;
     }
 }

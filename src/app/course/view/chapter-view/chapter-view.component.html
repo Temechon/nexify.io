@@ -1,20 +1,21 @@
-<section class="relative">
-    <div
-        class="absolute right-0 top-0 flex items-center justify-center select-none">
+<section class="relative mt-12 m-0 p-4 w-full md:m-auto">
 
-        <action-button text="Edit" route="editor" icon="fa-pen" size="small"
-            color="blue">
+    <h1
+        class="text-mydarkblue-500 dark:text-gray-100 font-extrabold text-3xl md:text-5xl mb-12 mt-8 font-display text-center">
+        {{chapter.title}}
+    </h1>
+
+    <div class="flex items-center justify-center select-none -mt-8">
+
+        <action-button text="Edit" route="editor" icon="fa-pen" color="blue"
+            size="small">
         </action-button>
 
     </div>
 
-    <div
-        class="text-mydarkblue-500 dark:text-gray-100 font-extrabold text-3xl md:text-5xl mb-12 mt-8 font-display text-center">
-        {{chapter.title}}
+    <div class="my-16" *ngFor="let task of chapter.tasks">
+        <task-view [task]="task"></task-view>
     </div>
-
-    <task-view *ngFor="let task of chapter.tasks" [task]="task"></task-view>
-
 
 
     <div class="flex items-center justify-center select-none my-12">
