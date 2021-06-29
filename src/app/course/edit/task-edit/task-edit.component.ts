@@ -101,11 +101,12 @@ export class TaskEditComponent implements OnInit {
     return true;
   }
 
-  add(type: string) {
-    this.task.content.push({
+  add(type: string, index: number, value: any = '') {
+    const taskContent = {
       type,
-      value: ''
-    });
+      value
+    };
+    this.task.content.splice(index + 1, 0, taskContent);
     this.saveSub.next();
   }
 
@@ -115,28 +116,33 @@ export class TaskEditComponent implements OnInit {
     })
   }
 
-  addCode() {
+
+  displayAddLine($div: EventTarget, addLineDiv: HTMLDivElement) {
+    const interlinDiv = $div as HTMLDivElement;
+    interlinDiv.classList.add('hidden');
+    interlinDiv.classList.remove('flex');
+    // interlinDiv.classList.add('h-24');
+
+    // const addLineDiv = interlinDiv.querySelector('.add-line') as HTMLDivElement;
+    addLineDiv.classList.add('flex');
+    addLineDiv.classList.remove('hidden');
+
+
+
+  }
+
+  addCode(index: number) {
     const newCode = new Code({
       id: '',
       taskid: this.task.id,
       content: [TabCode.createNew()]
     })
     this.task.codes.push(newCode);
-    this.task.content.push({ type: 'code', value: newCode.id });
+    this.add('code', index, newCode.id);
   }
 
-  addLink() {
-    this.task.content.push({
-      type: 'link',
-      value: []
-    })
-
-  }
-  addImage() {
-    this.task.content.push({
-      type: 'image',
-      value: ""
-    })
+  addLink(index: number) {
+    this.add('link', index, []);
   }
 
   /**

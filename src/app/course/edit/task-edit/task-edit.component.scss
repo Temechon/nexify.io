@@ -3,3 +3,9 @@
     @apply text-xl;
     @apply relative;
 }
+
+.new-block-line {
+    &:hover > .plus-line {
+        display: flex;
+    }
+}
