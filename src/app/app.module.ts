@@ -8,6 +8,7 @@ import { GuiModule } from './gui/gui.module';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './services/auth.service';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 
 
 
@@ -15,7 +16,8 @@ import { AuthService } from './services/auth.service';
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    PrivacyPolicyComponent
   ],
   imports: [
     BrowserModule,
