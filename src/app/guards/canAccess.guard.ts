@@ -27,7 +27,7 @@ export class CanAccessGuard implements CanActivate {
                 if (canAccess) {
                     return true;
                 } else {
-                    this.router.navigate(['/login'], { queryParams: { redirectUrl: this.router.url } })
+                    this.router.navigate(['/login'], { queryParams: { redirectUrl: state.url } })
                 }
                 return canAccess;
             })

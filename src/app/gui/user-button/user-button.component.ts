@@ -12,7 +12,7 @@ export class UserButtonComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private router: Router) { }
+    public router: Router) { }
 
   isLoggedIn: Observable<boolean>
 

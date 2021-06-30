@@ -5,7 +5,8 @@
         {{course.title}}
     </h1>
 
-    <div class="flex items-center justify-center select-none -mt-8">
+    <div class="flex items-center justify-center select-none -mt-8"
+        *ngIf="isLoggedIn | async">
 
         <action-button text="Edit" route="editor" icon="fa-pen" color="blue"
             size="small">
@@ -13,11 +14,14 @@
 
     </div>
 
+    <task-view [task]="course.home"></task-view>
+
     <ng-container *ngIf="!course.prerequisite.isEmpty()">
-        <div class="text-gray-400 font-semibold text-2xl mt-12">Pre-requisite
+        <div class="text-mydarkblue-200 font-semibold text-2xl mt-12">
+            Pre-requisite
         </div>
         <div
-            class="bg-white dark:bg-darkmode-400 dark:text-gray-200 my-4 border shadow-sm border-l-8 border-gray-400">
+            class="bg-white dark:bg-mydarkblue-200 dark:text-gray-200 my-4 border shadow-sm border-l-8 border-mydarkblue-200">
             <task-view [task]="course.prerequisite" [hasMargin]="false">
             </task-view>
         </div>
@@ -25,15 +29,15 @@
 
 
     <ng-container *ngIf="!course.objectives.isEmpty()">
-        <div class="text-myblue font-semibold text-2xl mt-12">Objectives</div>
+        <div class="text-mydarkblue-200 font-semibold text-2xl mt-12">Objectives
+        </div>
         <div
-            class="bg-white dark:bg-darkmode-400 dark:text-gray-200 mt-4 border shadow-sm border-l-8 border-myblue mb-12">
+            class="bg-white dark:bg-mydarkblue-200 dark:text-gray-200 my-4 border shadow-sm border-l-8 border-mydarkblue-200">
             <task-view [task]="course.objectives" [hasMargin]="false">
             </task-view>
         </div>
     </ng-container>
 
-    <task-view [task]="course.home"></task-view>
 
     <div class="flex items-center justify-center select-none my-12"
         *ngIf="firstChapter">

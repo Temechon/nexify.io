@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Chapter } from 'src/app/model/chapter.model';
 import { Course } from 'src/app/model/course.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { ChapterService } from 'src/app/services/chapter.service';
 
 @Component({
@@ -19,10 +20,13 @@ export class CourseHomeViewComponent implements OnInit {
 
   private toDestroy: Array<Subscription> = [];
 
+  isLoggedIn: Observable<boolean>;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private chapterService: ChapterService
+    private chapterService: ChapterService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -35,6 +39,8 @@ export class CourseHomeViewComponent implements OnInit {
       console.log("COURSE HOME VIEW --- First chapter:", chaps[0]);
       this.firstChapter = chaps[0];
     }));
+
+    this.isLoggedIn = this.authService.isLoggedIn();
   }
 
   startCourse() {
