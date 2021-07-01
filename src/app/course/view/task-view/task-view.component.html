@@ -12,11 +12,11 @@
         <ul *ngIf="task.content">
             <ng-container *ngFor="let content of task.content">
                 <li *ngIf="blocktype.isAction(content)" [ngClass]="content.type"
-                    [innerHTML]="content.value" class="my-4 action">
+                    [innerHTML]="content.value" class="mt-6 mb-4">
                 </li>
 
                 <li *ngIf="blocktype.isItem(content)" [ngClass]="content.type"
-                    [innerHTML]="content.value" class="my-4">
+                    [innerHTML]="content.value | markdown" class="my-1">
                 </li>
 
                 <div *ngIf="blocktype.isLink(content)" class="my-4">

@@ -141,10 +141,6 @@ export class TaskEditComponent implements OnInit {
     this.add('code', index, newCode.id);
   }
 
-  addLink(index: number) {
-    this.add('link', index, []);
-  }
-
   /**
    * Removes the content at the given index from the task content
    */

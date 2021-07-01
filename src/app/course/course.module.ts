@@ -4,7 +4,7 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { AutosizeModule } from "ngx-autosize";
 import { GuiModule } from "../gui/gui.module";
-import { RemoveRegexp } from "../helpers/Pipe";
+import { MarkdownPipe, RemoveRegexp } from "../helpers/Pipe";
 import { CourseRoutingModule } from "./course-routing.module";
 import { CourseComponent } from './course/course.component';
 import { CodeEditComponent } from "./edit/blocks/code-edit/code-edit.component";
@@ -33,6 +33,7 @@ import { TaskViewComponent } from "./view/task-view/task-view.component";
         TaskEditComponent,
         CodeEditComponent,
         RemoveRegexp,
+        MarkdownPipe,
         LinkEditComponent,
         LinkViewComponent,
         CourseComponent,

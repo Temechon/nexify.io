@@ -20,6 +20,7 @@
     @apply leading-6;
     @apply relative;
     @apply pl-4;
+
     &:before {
         content: "";
         @apply absolute;

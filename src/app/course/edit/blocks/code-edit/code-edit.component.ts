@@ -31,7 +31,6 @@ export class CodeEditComponent implements OnInit {
     this.saveSub.pipe(
       debounceTime(500)
     ).subscribe((tabinfo: { tabid: string, index: number }) => {
-      console.log("saving here", tabinfo);
       this._saveTab(tabinfo.tabid, tabinfo.index);
     })
 

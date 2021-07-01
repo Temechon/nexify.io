@@ -6,6 +6,32 @@
 
     <div class="px-6 py-3">
 
+        <div *ngIf="task.content.length === 0">
+            <div class="flex items-center justify-center flex-wrap gap-2 mb-4">
+
+                <action-button *ngIf="canUse('action')" text="action"
+                    (click)="add('action', 0)" icon="fa-bolt" color="blue">
+                </action-button>
+                <action-button *ngIf="canUse('item')" text="text"
+                    (click)="add('item', 0)" icon="fa-pencil-alt" color="blue">
+                </action-button>
+
+                <action-button *ngIf="canUse('link')" text="link"
+                    (click)="add('link', 0, [])" icon="fa-link" color="blue">
+                </action-button>
+
+                <action-button *ngIf="canUse('code')" text="code"
+                    (click)="addCode(0)" icon="fa-code" color="blue">
+                </action-button>
+
+                <action-button *ngIf="canUse('image')" text="image"
+                    (click)="add('image', 0)" icon="fa-image" color="blue">
+                </action-button>
+
+            </div>
+
+        </div>
+
         <div *ngIf="task.content" cdkDropList
             (cdkDropListDropped)="reorder($event)">
             <ng-container *ngFor="let content of task.content; let index=index">
@@ -86,7 +112,7 @@
                     </action-button>
 
                     <action-button *ngIf="canUse('link')" text="link"
-                        (click)="add('link', index)" icon="fa-link"
+                        (click)="add('link', index, [])" icon="fa-link"
                         color="blue">
                     </action-button>
 

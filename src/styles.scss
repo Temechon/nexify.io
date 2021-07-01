@@ -30,12 +30,6 @@ h2 {
     @apply text-2xl;
 }
 
-p {
-    @apply py-2;
-    @apply text-justify;
-    @apply m-auto;
-}
-
 .darkblue-grad {
     background-image: linear-gradient(to right, #45617c, #2d3f51);
     color: #fff !important;
