@@ -11,6 +11,9 @@ export const environment = {
     storageBucket: "chronoapp-b27f8.appspot.com",
     messagingSenderId: "333155769617",
     appId: "1:333155769617:web:2d98c788b86236adc100b0"
+  },
+  matomo: {
+    // No matomo in dev environment
   }
 };
 

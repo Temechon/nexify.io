@@ -8,28 +8,39 @@ import { map } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root'
 })
+// From https://www.positronx.io/full-angular-7-firebase-authentication-system/
 
 export class AuthService {
     // userData: any; // Save logged in user data
+    uid: Observable<string>;
 
     constructor(
         public afs: AngularFirestore,
         public auth: AngularFireAuth,
         public router: Router
     ) {
+        this.uid = this.auth.authState.pipe(
+            map((authState) => {
+                if (!authState) {
+                    return null;
+                } else {
+                    return authState.uid;
+                }
+            })
+        );
         /* Saving user data in localstorage when 
         logged in and setting up null when logged out */
-        this.auth.authState.subscribe(user => {
-            console.log("authentication state updated", user);
-            if (user) {
-                // this.userData = user;
-                // localStorage.setItem('nexify.user', JSON.stringify(this.userData));
-                // JSON.parse(localStorage.getItem('user'));
-            } else {
-                // localStorage.setItem('nexify.user', null);
-                // JSON.parse(localStorage.getItem('user'));
-            }
-        })
+        // this.auth.authState.subscribe(user => {
+        //     console.log("authentication state updated", user);
+        //     if (user) {
+        //         // this.userData = user;
+        //         // localStorage.setItem('nexify.user', JSON.stringify(this.userData));
+        //         // JSON.parse(localStorage.getItem('user'));
+        //     } else {
+        //         // localStorage.setItem('nexify.user', null);
+        //         // JSON.parse(localStorage.getItem('user'));
+        //     }
+        // })
     }
 
     // Sign in with email/password ;,;
@@ -42,12 +53,16 @@ export class AuthService {
                 // });
                 // this.SetUserData(result.user);
             })
+            .catch(err => {
+                console.log('Something went wrong during authent: ', err.message);
+            });
     }
 
     isLoggedIn(): Observable<boolean> {
-        return this.auth.user.pipe(
-            map(user => {
-                return !!user;
+        return this.uid.pipe(
+            map(uid => {
+                // console.log("USER", user)
+                return !!uid;
             })
         );
     }
@@ -72,7 +87,7 @@ export class AuthService {
     // Sign out 
     signOut() {
         return this.auth.signOut().then(() => {
-            localStorage.removeItem('nexify.user');
+            // localStorage.removeItem('nexify.user');
         })
     }
 
