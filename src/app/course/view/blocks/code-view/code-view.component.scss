@@ -1,7 +1,9 @@
 pre {
     @apply my-0;
 }
-
+code {
+    @apply whitespace-pre-wrap;
+}
 .tab {
     @apply h-full;
     @apply flex items-center;

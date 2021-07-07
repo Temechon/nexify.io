@@ -17,9 +17,9 @@
 .item {
     @apply font-light;
     @apply text-lg;
-    @apply leading-6;
     @apply relative;
     @apply pl-4;
+    @apply my-3;
 
     &:before {
         content: "";
