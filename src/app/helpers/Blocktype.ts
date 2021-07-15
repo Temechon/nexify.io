@@ -33,6 +33,13 @@ export abstract class Blocktype {
         return test.type === "image";
     }
 
+    /**
+     * Returns true if the given content is a tip element
+     */
+    static isTip(test: TaskContent) {
+        return test.type === "tip";
+    }
+
     static getCode(task: Task, taskContent: TaskContent) {
         return _.find(task.codes, (code: Code) => {
             return code.id === taskContent.value

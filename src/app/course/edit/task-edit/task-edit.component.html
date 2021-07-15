@@ -1,4 +1,4 @@
-<div class="my-6 shadow-sm bg-white task rounded-md dark:bg-darkmode-300">
+<div class="shadow-sm bg-white task rounded-md dark:bg-darkmode-300">
 
     <input *ngIf="showTitle" type="text" [(ngModel)]="task.title"
         placeholder="Task title..." (input)="save()"
@@ -71,11 +71,17 @@
                                 (onUpdate)="save()">
                             </link-edit>
                         </div>
-                        <!-- Link -->
+                        <!-- Image -->
                         <div *ngIf="blocktype.isImage(content)" class="w-full">
                             <img-edit [img]="content.value"
                                 (onUpdate)="saveText($event, index)">
                             </img-edit>
+                        </div>
+                        <!-- Tip -->
+                        <div *ngIf="blocktype.isTip(content)" class="w-full">
+                            <tip-edit [tip]="content.value"
+                                (onUpdate)="saveText($event, index)">
+                            </tip-edit>
                         </div>
 
                     </div>
@@ -125,19 +131,16 @@
                         color="blue">
                     </action-button>
 
+                    <action-button *ngIf="canUse('tip')" text="tip"
+                        (click)="add('tip', index)" icon="fa-lightbulb"
+                        color="blue">
+                    </action-button>
+
                 </div>
 
 
             </ng-container>
         </div>
-
-
-        <div class="flex items-center justify-center my-4">
-            <action-button *ngIf="showDelete" text="delete task"
-                (click)="deleteTask()" icon="fa-times" color="red">
-            </action-button>
-        </div>
-
     </div>
 
 </div>

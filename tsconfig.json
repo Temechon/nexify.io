@@ -11,6 +11,7 @@
     "sourceMap": true,
     "strictNullChecks": false,
     "strictPropertyInitialization": false,
+    "allowSyntheticDefaultImports": true,
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,

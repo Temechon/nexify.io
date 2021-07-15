@@ -4,7 +4,7 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { AutosizeModule } from "ngx-autosize";
 import { GuiModule } from "../gui/gui.module";
-import { MarkdownPipe, RemoveRegexp } from "../helpers/Pipe";
+import { MarkdownPipe, RemoveRegexp, SafeHtmlPipe } from "../helpers/Pipe";
 import { CourseRoutingModule } from "./course-routing.module";
 import { CourseComponent } from './course/course.component';
 import { CodeEditComponent } from "./edit/blocks/code-edit/code-edit.component";
@@ -20,6 +20,8 @@ import { LinkViewComponent } from "./view/blocks/link-view/link-view.component";
 import { ChapterViewComponent } from "./view/chapter-view/chapter-view.component";
 import { CourseHomeViewComponent } from "./view/course-home-view/course-home-view.component";
 import { TaskViewComponent } from "./view/task-view/task-view.component";
+import { TipEditComponent } from './edit/blocks/tip-edit/tip-edit.component';
+import { TipViewComponent } from './view/blocks/tip-view/tip-view.component';
 
 @NgModule({
     declarations: [
@@ -33,13 +35,16 @@ import { TaskViewComponent } from "./view/task-view/task-view.component";
         TaskEditComponent,
         CodeEditComponent,
         RemoveRegexp,
+        SafeHtmlPipe,
         MarkdownPipe,
         LinkEditComponent,
         LinkViewComponent,
         CourseComponent,
         CourseHomeEditComponent,
         ImgViewComponent,
-        ImgEditComponent
+        ImgEditComponent,
+        TipEditComponent,
+        TipViewComponent
     ],
     imports: [
         FormsModule,

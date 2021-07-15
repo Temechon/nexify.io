@@ -6,8 +6,31 @@
 
 
     <div class="my-2 text-lg font-semibold">Tasks</div>
-    <task-edit *ngFor="let task of chapter.tasks; let index=index" [task]="task"
-        (onUpdate)="saveChapter()" (onDelete)="deleteTask(index)"></task-edit>
+    <div *ngFor="let task of chapter.tasks; let index=index"
+        class="flex my-8 relative">
+        <div class="mx-2 absolute -left-12 flex items-center flex-col">
+            <div (click)="reorderTask($event.target, index, -1)"
+                class=" flex items-center justify-center rounded-lg cursor-pointer w-6 h-6 dark:text-white dark:bg-darkmode-300 hover:bg-myblue dark:hover:bg-myblue hover:text-white active:bg-mydarkblue-500">
+                <i class="fas fa-angle-up pointer-events-none"></i>
+            </div>
+
+            <div (click)="reorderTask($event.target, index, 1)"
+                class="flex items-center justify-center rounded-lg cursor-pointer w-6 h-6 dark:text-white dark:bg-darkmode-300 hover:bg-myblue dark:hover:bg-myblue  hover:text-white active:bg-mydarkblue-500">
+                <i class="fas fa-angle-down pointer-events-none"></i>
+            </div>
+
+
+            <div (click)="deleteTask(index)"
+                class="flex items-center justify-center rounded-lg cursor-pointer w-8 h-8 bg-myred text-white text-sm mt-6">
+                <i class="fas fa-trash-alt pointer-events-none"></i>
+            </div>
+
+
+        </div>
+        <div class="w-full">
+            <task-edit [task]="task" (onUpdate)="saveChapter()"></task-edit>
+        </div>
+    </div>
 
     <div class="flex items-center justify-center my-12">
 

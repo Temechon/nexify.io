@@ -33,12 +33,6 @@ export class TaskEditComponent implements OnInit {
   @Input()
   showTitle: boolean = true;
 
-  /**
-   * True if this task can be deleted, false otherwise
-   */
-  @Input()
-  showDelete: boolean = true;
-
   @Input()
   task: Task;
 
@@ -52,8 +46,7 @@ export class TaskEditComponent implements OnInit {
 
   blocktype = Blocktype;
 
-  constructor(
-    private dialogService: DialogService) {
+  constructor() {
 
     this.saveSub.pipe(debounceTime(500)).subscribe(() => {
       this.onUpdate.emit(this.task);
@@ -147,33 +140,6 @@ export class TaskEditComponent implements OnInit {
   deleteContent(index: number) {
     this.task.content.splice(index, 1);
     this.save();
-  }
-
-  deleteTask() {
-    // Display modal "are you sure ?"
-    const dialogref = this.dialogService.openDialog(
-      ConfirmDialogComponent,
-      {
-        title: "Are you sure?",
-        content: "<span class='font-semibold'>Are you sure you want to delete this task?</span><br><br> All content linked to this task will be deleted as well.",
-        button1: {
-          text: 'Delete',
-          param: 'delete'
-        },
-        button2: {
-          text: 'Cancel',
-          param: 'cancel',
-          type: 'cancel'
-        }
-      }
-    );
-
-    dialogref.onClose.subscribe((data: string) => {
-      if (data === "delete") {
-        console.log("DELETE task", this.task)
-        this.onDelete.emit();
-      }
-    })
   }
 
   ngOnDestroy() {

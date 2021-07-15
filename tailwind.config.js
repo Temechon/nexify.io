@@ -1,6 +1,6 @@
 module.exports = {
   purge: {
-    enabled: true,
+    enabled: false,
     content: [
       './src/**/*.{html,ts,scss}',
     ]
@@ -43,7 +43,7 @@ module.exports = {
   variants: {
     extend: {
       opacity: ['disabled'],
-      backgroundColor: ['disabled'],
+      backgroundColor: ['disabled', 'active'],
       cursor: ['disabled']
     },
   },

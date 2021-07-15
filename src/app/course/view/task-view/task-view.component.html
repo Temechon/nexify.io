@@ -32,6 +32,11 @@
                     <img-view [img]="content.value">
                     </img-view>
                 </div>
+
+                <div *ngIf="blocktype.isTip(content)" class="my-4">
+                    <tip-view [tip]="content.value">
+                    </tip-view>
+                </div>
             </ng-container>
         </ul>
     </div>

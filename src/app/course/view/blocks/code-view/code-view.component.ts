@@ -1,6 +1,7 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { Code } from 'src/app/model/task.model';
+import { Code, TabCode } from 'src/app/model/task.model';
 import { HighlightService } from '../../../../services/Highlight.service';
+
 
 @Component({
   selector: 'code-view',
@@ -44,5 +45,7 @@ export class CodeViewComponent implements OnInit {
     tabDiv.classList.add('active');
   }
 
-
+  isHtml(tab: TabCode) {
+    return tab.classname.indexOf('html') !== -1;
+  }
 }
