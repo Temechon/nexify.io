@@ -23,17 +23,24 @@ export class ChapterViewComponent implements OnInit {
       this.chapter = data.chapter;
     })
     )
-    document.body.scrollTop = 0; // For Safari
-    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    setTimeout(() => {
+    }, 250)
   }
 
   goToNextChapter() {
     const courseid = this.route.parent.parent.snapshot.data.course.id;
-    this.router.navigate(['/course', courseid, this.chapter.nextChapterId]);
+    this.router.navigate(['/course', courseid, this.chapter.nextChapterId]).then(() => {
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    })
+
   }
   goToPreviousChapter() {
     const courseid = this.route.parent.parent.snapshot.data.course.id;
-    this.router.navigate(['/course', courseid, this.chapter.previousChapterId]);
+    this.router.navigate(['/course', courseid, this.chapter.previousChapterId]).then(() => {
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    })
   }
 
   ngOnDestroy() {

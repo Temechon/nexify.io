@@ -16,7 +16,7 @@
                 <div class="flex flex-col">
                     <pre><code [ngClass]='tab.classname' class="hljs">{{tab.code | removeRegexp}}</code></pre>
                     <div [innerHTML]="tab.code | removeRegexp | safeHtml"
-                        class="p-8" *ngIf="isHtml(tab)">
+                        class="p-4" *ngIf="isHtml(tab)">
                     </div>
                 </div>
 
