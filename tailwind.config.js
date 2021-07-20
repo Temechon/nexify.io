@@ -1,8 +1,20 @@
 module.exports = {
   purge: {
-    enabled: false,
+    enabled: true,
     content: [
       './src/**/*.{html,ts,scss}',
+    ],
+    safelist: [
+      'bg-red-400',
+      'hover:bg-red-700',
+      'bg-indigo-400',
+      'bg-indigo-50',
+      'bg-mydarkblue-300',
+      'w-1/2',
+      'active:bg-red-500',
+      'h-20',
+      'disabled:bg-gray-600',
+      'disabled:cursor-not-allowed'
     ]
   },
   darkMode: 'class', // or 'media' or 'class'
