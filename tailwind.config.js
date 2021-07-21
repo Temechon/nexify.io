@@ -14,7 +14,10 @@ module.exports = {
       'active:bg-red-500',
       'h-20',
       'disabled:bg-gray-600',
-      'disabled:cursor-not-allowed'
+      'disabled:cursor-not-allowed',
+      'dark:bg-gray-300',
+      'dark:text-gray-900',
+      'dark:hover:bg-red-500'
     ]
   },
   darkMode: 'class', // or 'media' or 'class'
