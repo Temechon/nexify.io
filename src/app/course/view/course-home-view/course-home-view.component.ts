@@ -45,7 +45,7 @@ export class CourseHomeViewComponent implements OnInit {
 
   startCourse() {
     if (this.firstChapter) {
-      this.router.navigate(['course', this.course.id, this.firstChapter.id])
+      this.router.navigate(['course', this.course.name, this.firstChapter.id])
     }
   }
 

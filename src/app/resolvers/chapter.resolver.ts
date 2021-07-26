@@ -19,11 +19,12 @@ export class ChapterResolver {
 
         // Check if the note id is in the curent route
         let chapid = route.paramMap.get('chapter');
-        let courseid = route.parent.paramMap.get('id');
-        console.log('chapterid', chapid, 'courseid', courseid)
+        let coursename = route.parent.paramMap.get('name');
+        let courseid = route.parent.data.course.id;
+        console.log('chapterid', chapid, 'coursename', coursename, 'courseid', courseid)
 
         // Check if the project is the same as the previous one
-        if (chapid && courseid) {
+        if (chapid && coursename) {
             // Otherwise, retrieve it from database
             return this.chapterService.get(courseid, chapid).pipe(
                 take(1),

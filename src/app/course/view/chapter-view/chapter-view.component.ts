@@ -28,7 +28,7 @@ export class ChapterViewComponent implements OnInit {
   }
 
   goToNextChapter() {
-    const courseid = this.route.parent.parent.snapshot.data.course.id;
+    const courseid = this.route.parent.parent.snapshot.data.course.name;
     this.router.navigate(['/course', courseid, this.chapter.nextChapterId]).then(() => {
       document.body.scrollTop = 0; // For Safari
       document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
@@ -36,7 +36,7 @@ export class ChapterViewComponent implements OnInit {
 
   }
   goToPreviousChapter() {
-    const courseid = this.route.parent.parent.snapshot.data.course.id;
+    const courseid = this.route.parent.parent.snapshot.data.course.name;
     this.router.navigate(['/course', courseid, this.chapter.previousChapterId]).then(() => {
       document.body.scrollTop = 0; // For Safari
       document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera

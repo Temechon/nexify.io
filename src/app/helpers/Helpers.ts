@@ -6,4 +6,17 @@ export class Helpers {
             return v.toString(16);
         });
     }
+
+    public static slugify(str: string): string {
+
+        const isString = (value: any) => {
+            return typeof value === 'string';
+        }
+
+        return isString(str)
+            ? str.toLowerCase().trim()
+                .replace(/[^\w\-]+/g, ' ')
+                .replace(/\s+/g, '-')
+            : str;
+    }
 }

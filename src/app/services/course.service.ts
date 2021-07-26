@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { first, map, mergeMap } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { first, map, mergeMap, tap } from 'rxjs/operators';
 import { Chapter } from '../model/chapter.model';
 import { Course } from '../model/course.model';
 import { Code, CodeDb } from '../model/task.model';
@@ -16,23 +16,35 @@ export class CourseService {
 
     getCourse(courseid: string): Observable<any> {
 
-        return this.db.collection<Chapter>('courses').doc(courseid).valueChanges().pipe(
-            map((courseDb: any) => {
-                const course = new Course(courseDb);
-                course.id = courseid;
-                return course;
-            }),
-            mergeMap((course: Course) => {
-                return this.getCodesByTaskid(course.home.id).pipe(
-                    first(),
-                    map((allCodesForTask: Code[]) => {
-                        console.log("retrieving course la !");
-                        course.home.codes = allCodesForTask;
-                        return course;
-                    })
-                )
-            })
-        );
+        return this.db.collection<Chapter>('courses', ref => ref.where('name', '==', courseid))
+            .snapshotChanges()
+            .pipe(
+                map(changes => {
+                    console.log("changes here", changes);
+                    if (changes.length !== 1) {
+
+                        throw new Error('Too much results for course name:' + courseid);
+                    }
+                    const c = changes[0];
+                    return new Course({ id: c.payload.doc.id, ...c.payload.doc.data() })
+                }),
+                tap(course => console.log("Course retrived from database", course)),
+                // map((courseDb: any) => {
+                //     const course = new Course(courseDb);
+                //     course.id = courseid;
+                //     return course;
+                // }),
+                mergeMap((course: Course) => {
+                    return this.getCodesByTaskid(course.home.id).pipe(
+                        first(),
+                        map((allCodesForTask: Code[]) => {
+                            // console.log("retrieving course la !");
+                            course.home.codes = allCodesForTask;
+                            return course;
+                        })
+                    )
+                })
+            );
     }
 
     /**

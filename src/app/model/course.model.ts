@@ -2,7 +2,10 @@ import * as _ from 'underscore';
 import { Task } from "./task.model";
 
 export class Course {
+    /** THe ID in Firestore */
     id: string;
+    /** The url displayed at the top */
+    name: string;
     title: string;
     home: Task;
     introduction: string;
@@ -11,6 +14,7 @@ export class Course {
 
     constructor(params: any) {
         this.id = params.id;
+        this.name = params.name;
         this.title = params.title;
         this.home = new Task(params.home);
 

@@ -2,9 +2,14 @@
 
     <div class=" my-2 text-lg font-semibold dark:text-gray-200">Course title
     </div>
-    <input type="text" [(ngModel)]="course.title" placeholder="Task title..."
-        (input)="save()"
+    <input type="text" [(ngModel)]="course.title" placeholder="Course title..."
+        (input)="save()" (blur)="updateName(name)"
         class="dark:bg-darkmode-300 dark:border-darkmode-800 dark:text-white w-full font-extrabold shadow-sm text-3xl mb-12 font-display p-4 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50">
+
+    <div class="my-2 text-lg font-semibold dark:text-gray-200">Course id</div>
+    <input #name type="text" [(ngModel)]="course.name"
+        placeholder="Course id..." (input)="save()"
+        class="dark:bg-darkmode-300 dark:border-darkmode-800 dark:text-white w-full font-normal shadow-sm text-base mb-12 font-display p-4 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50">
 
 
     <div class="my-2 text-lg font-semibold dark:text-gray-200">Chapters</div>

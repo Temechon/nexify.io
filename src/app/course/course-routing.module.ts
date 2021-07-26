@@ -18,7 +18,7 @@ const routes: Routes = [
         redirectTo: '/home'
     },
     {
-        path: ':id',
+        path: ':name',
         children: [
             {
                 path: '',
@@ -34,8 +34,8 @@ const routes: Routes = [
                     {
                         path: 'editor',
                         component: CourseHomeEditComponent,
-                        canActivate: [CanAccessGuard]
-                        // ...canActivate(() => redirectUnauthorizedTo(['/login']))
+                        canActivate: [CanAccessGuard],
+                        ...canActivate(() => redirectUnauthorizedTo(['/login']))
                     },
                     {
                         path: ':chapter',

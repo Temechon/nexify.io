@@ -41,11 +41,6 @@ export class SidebarComponent {
     }
   }
 
-  goToCourse() {
-    console.log(this.course);
-
-  }
-
   darkMode() {
     this._setDark();
     const isDark = document.body.classList.toggle('dark');

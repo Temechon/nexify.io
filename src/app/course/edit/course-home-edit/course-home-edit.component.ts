@@ -1,14 +1,15 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, Subject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, first } from 'rxjs/operators';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, first } from 'rxjs/operators';
 import { ConfirmDialogComponent } from 'src/app/gui/dialog/confirm-dialog.component';
 import { Chapter } from 'src/app/model/chapter.model';
 import { Course } from 'src/app/model/course.model';
+import { ChapterService } from 'src/app/services/chapter.service';
 import { CourseService } from 'src/app/services/course.service';
 import { DialogService } from 'src/app/services/dialog.service';
-import { ChapterService } from 'src/app/services/chapter.service';
+import * as slug from 'slug';
 
 @Component({
   selector: 'course-home-edit',
@@ -104,6 +105,13 @@ export class CourseHomeEditComponent implements OnInit {
   reorder(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.chapters, event.previousIndex, event.currentIndex);
     this._saveChapters();
+  }
+
+  updateName(nameField: any) {
+    // Slugify the title
+    const slugged = slug(this.course.title);
+    nameField.value = slugged;
+    this.course.name = slugged;
   }
 
   deleteChapter(index: number) {

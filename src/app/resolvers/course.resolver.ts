@@ -18,13 +18,13 @@ export class CourseResolver {
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Chapter> {
 
         // Check if the note id is in the curent route
-        let id = route.paramMap.get('id');
-        console.log("COURSE ID", id)
+        let name = route.paramMap.get('name');
+        console.log("COURSE ID", name)
 
         // Check if the project is the same as the previous one
-        if (id) {
+        if (name) {
             // Otherwise, retrieve it from database
-            return this.courseService.getCourse(id).pipe(
+            return this.courseService.getCourse(name).pipe(
                 take(1),
                 catchError(
                     err => {
