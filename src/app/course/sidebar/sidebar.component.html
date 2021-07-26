@@ -33,7 +33,7 @@
     </div>
     <div *ngFor="let chapter of chapters | async; let index = index"
         class="chapter w-full">
-        <a [routerLink]="['/course', course.id, chapter.id]"
+        <a [routerLink]="['/course', course.name, chapter.id]"
             routerLinkActive="bg-mygreen text-green-900" class="block my-0.5 py-2 px-4 text-left transition-colors duration-150 truncate w-full cursor-pointer hover:bg-mygreen hover:text-green-900
                 focus:outline-none
             ">
