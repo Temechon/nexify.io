@@ -1,7 +1,9 @@
 import jsPDF from 'jspdf';
+import _ from 'underscore';
+import { Blocktype } from '../helpers/Blocktype';
 import { Chapter } from '../model/chapter.model';
 import { Course } from '../model/course.model';
-import { jostBlack, jostMedium } from './pdf.customfonts';
+import { jostBlack, jostLight, jostMedium } from './pdf.customfonts';
 
 
 export class PDFService {
@@ -11,19 +13,60 @@ export class PDFService {
 
     }
 
+    static loadAllImages(chapters: Chapter[]): Promise<any> {
+
+        let allImages = [];
+        for (let chap of chapters) {
+            for (let task of chap.tasks) {
+                for (let content of task.content) {
+                    if (Blocktype.isImage(content)) {
+                        allImages.push(content.value);
+                    }
+                }
+            }
+        }
+
+        let allPromises = [];
+        for (let img of allImages) {
+            const p = new Promise(resolved => {
+                var i = new Image()
+                i.onload = function () {
+                    resolved({ imgid: img, w: i.width * 0.26, h: i.height * 0.26 })
+                };
+                i.src = img
+            });
+            allPromises.push(p);
+        }
+        return Promise.all(allPromises);
+    }
+
+
 
     static createPDF(course: Course, chapters: Chapter[]) {
+
+
+        this.loadAllImages(chapters).then(imgs => {
+            this._createPDFWhenReady(course, chapters, imgs);
+        });
+    }
+
+    private static _createPDFWhenReady(course: Course, chapters: Chapter[], images: Array<{ imgid: string, w: number, h: number }>) {
 
         const doc = new jsPDF({
             unit: 'mm',
             format: 'a4'
         });
 
+        const margin = 30;
+        const docLength = 210 - margin * 2;
+
         (doc as any).addFileToVFS('Jost-Medium.ttf', jostMedium);
         (doc as any).addFileToVFS('Jost-Black.ttf', jostBlack);
+        (doc as any).addFileToVFS('Jost-Light.ttf', jostLight);
         // (doc as any).addFileToVFS('arimo.regular-bold.ttf', this.regularBold);
         doc.addFont('Jost-Medium.ttf', 'jost', 'normal');
         doc.addFont('Jost-Black.ttf', 'jost', 'bold');
+        doc.addFont('Jost-Light.ttf', 'jost', 'light');
         // doc.addFont('arimo.regular-bold.ttf', 'arimo', 'bold');
 
         // doc.addFont('jost-medium-normal.ttf', 'jost-medium', 'normal');
@@ -31,108 +74,108 @@ export class PDFService {
         // Logo - Image
         // doc.addImage(this.LOGO, 'JPEG', 112 - 30, 31 - 8, 44, 13);
         // blue background
-        doc.setFillColor(249, 250, 251);
-        doc.rect(0, 0, 210, 297, 'F');
+        // doc.setFillColor(249, 250, 251);
+        // doc.setFillColor(0, 250, 251);
+        // doc.rect(0, 0, 210, 297, 'F');
+
+
+        let y = margin;
+        const newLine = () => {
+            y += 12;
+            if (y > 297 - margin) {
+                doc.addPage();
+                y = margin;
+            }
+        };
+
+        const addChapter = (title: string) => {
+            doc
+                .setFontSize(24)
+                .setFont('jost', 'bold')
+                .setTextColor('black');
+            doc.text(title, margin + docLength / 2, y, { align: 'center' });
+
+            newLine();
+            newLine();
+        }
+
+        const addTask = (title: string) => {
+            doc
+                .setFontSize(14)
+                .setFont('jost', 'normal')
+                .setTextColor('#00d68f');
+            doc.text(title, margin, y);
+
+            newLine();
+        }
+
 
         // Course title
-        doc.setFont('jost', 'normal');
-        doc.setTextColor('black');
-        doc.text(course.title, 104, 52, { align: 'center' });
+        doc
+            .setFontSize(24)
+            .setFont('jost', 'normal')
+            .setTextColor('black');
+        doc.text(course.title, 104, y, { align: 'center' });
+
+        newLine();
 
         for (const chap of chapters) {
 
+            y = margin;
+
             doc.addPage();
-            doc.setTextColor('black');
-            doc.text(chap.title, 104, 52, { align: 'center' });
+            addChapter(chap.title);
+
+            for (let task of chap.tasks) {
+
+                addTask(task.title);
+
+                doc.setTextColor('black');
+                doc.setFontSize(12);
+                doc.setFont('jost', 'light')
+
+                for (let taskContent of task.content) {
+                    if (Blocktype.isAction(taskContent)) {
+                        doc.setFont('jost', 'normal');
+                        let lines = doc.splitTextToSize(taskContent.value, docLength)
+                        doc.text(lines, margin, y);
+                        y += (lines.length / 2) * 12;
+                        // newLine();
+                    }
+                    if (Blocktype.isItem(taskContent)) {
+                        doc.setFont('jost', 'light');
+                        let lines = doc.splitTextToSize(taskContent.value, docLength)
+                        doc.text(lines, margin, y);
+                        y += (lines.length / 2) * 12;
+                        // newLine();
+                    }
+                    if (Blocktype.isImage(taskContent)) {
+                        const imgdata = taskContent.value;
+
+                        const realimg = _.find(images, i => i.imgid === imgdata);
+                        // let i = new Image();
+                        // let w = 0, h = 0
+                        // i.onload = function () {
+                        //     alert(i.width + ", " + i.height);
+                        // };
+                        // i.src = taskContent.value;
+                        doc.addImage(realimg.imgid, 'JPEG', margin + docLength / 2 - realimg.w / 2, y, realimg.w, realimg.h)
+                        y += realimg.h;
+                        newLine();
+                        // doc.ex
+                    }
+                    if (y > 297 - margin) {
+                        doc.addPage();
+                        y = margin;
+                    }
+
+                }
+                newLine();
+
+            }
 
 
         }
-
-        // for (const l of wload.lots) {
-        //     if (l.tasks.length === 0) {
-        //         continue;
-        //     }
-        //     let y = doc.lastAutoTable.finalY + 5 || 65;
-
-        //     const body = [];
-        //     let id = 1; // Ids in the document starts at 1
-        //     for (const task of l.tasks) {
-        //         body.push([
-        //             id++,
-        //             task.name,
-        //             task.workload
-        //         ]);
-        //     }
-        //     // Total line
-        //     body.push([
-        //         id,
-        //         'TOTAL ' + l.name,
-        //         l.total()
-        //     ]);
-
-        //     // Lot 1 - background
-        //     if (l.name) {
-        //         doc.setFillColor(51, 63, 80);
-        //         doc.rect(17, y, 174, 6, 'F');
-        //         // Lot 1 - Title
-        //         doc.setFont('helvetica');
-        //         doc.setFontType('normal');
-        //         doc.setTextColor('white');
-        //         doc.setFontSize(10);
-        //         doc.text(l.name, 104, y + 4, { align: 'center' });
-        //     } else {
-        //         y -= 6;
-        //     }
-
-        //     doc.setTextColor('black');
-        //     doc.autoTable(
-        //         {
-        //             columnStyles: {
-        //                 0: { halign: 'center', valign: 'middle', cellWidth: 20 },
-        //                 1: { halign: 'left', valign: 'middle', cellWidth: 133 },
-        //                 2: { halign: 'center', valign: 'middle', cellWidth: 20 }
-        //             },
-        //             headStyles: {
-        //                 fillColor: [230, 230, 230],
-        //                 textColor: [0, 0, 0],
-        //                 halign: 'center'
-        //             },
-        //             columns: [
-        //                 'ID',
-        //                 'Description',
-        //                 'Qtté (j/h)'
-        //             ],
-        //             body,
-        //             margin: { left: 17, right: 19 },
-        //             startY: y + 6,
-        //             theme: 'grid',
-
-        //             // Total line
-        //             didParseCell: (data) => {
-        //                 const rows = data.table.body;
-
-        //                 if (rows.length !== 0 && data.row.index === rows.length - 1) {
-        //                     data.cell.styles.fillColor = [230, 230, 230];
-        //                 }
-        //             }
-        //         }
-        //     );
-        // }
-
-        // // Total workload - background
-        // const y = doc.lastAutoTable.finalY + 5;
-        // doc.setFillColor(51, 63, 80);
-        // doc.rect(17, doc.lastAutoTable.finalY + 5, 174, 10, 'F');
-        // doc.setFont('helvetica');
-        // doc.setFontType('bold');
-        // doc.setTextColor('white');
-        // doc.setFontSize(10);
-        // doc.text('ESTIMATION DE CHARGE TOTALE (en j/h)', 94, y + 6, { align: 'center' });
-        // doc.setFontSize(14);
-        // doc.text(wload.total().toString(), 177, y + 6.5, { align: 'left' });
-
-        // const date = moment().format('YYYY-MM-DD');
-
         doc.save(`course.pdf`);
     }
 

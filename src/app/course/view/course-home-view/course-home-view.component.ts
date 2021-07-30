@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { Chapter } from 'src/app/model/chapter.model';
 import { Course } from 'src/app/model/course.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -43,6 +44,8 @@ export class CourseHomeViewComponent implements OnInit {
       console.log("COURSE HOME VIEW --- First chapter:", chaps[0]);
       this.firstChapter = chaps[0];
     }));
+
+    this.chapters.pipe(first()).subscribe(d => this.download());
 
     this.isLoggedIn = this.authService.isLoggedIn();
   }
