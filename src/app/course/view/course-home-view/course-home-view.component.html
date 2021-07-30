@@ -5,14 +5,20 @@
         {{course.title}}
     </h1>
 
-    <div class="flex items-center justify-center select-none -mt-8"
-        *ngIf="isLoggedIn | async">
+    <div class="flex items-center justify-center select-none -mt-8">
 
-        <action-button text="Edit" route="editor" icon="fa-pen" color="blue"
-            size="small">
+        <ng-container *ngIf="isLoggedIn | async">
+            <action-button text="Edit" route="editor" icon="fa-pen" color="blue"
+                size="small">
+            </action-button>
+        </ng-container>
+
+        <action-button text="Download" (onClick)="download()" icon="fa-download"
+            color="green" size="small">
         </action-button>
 
     </div>
+
 
     <task-view [task]="course.home"></task-view>
 

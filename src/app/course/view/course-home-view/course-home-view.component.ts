@@ -5,6 +5,7 @@ import { Chapter } from 'src/app/model/chapter.model';
 import { Course } from 'src/app/model/course.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { ChapterService } from 'src/app/services/chapter.service';
+import { PDFService } from 'src/app/services/pdf.service';
 
 @Component({
   selector: 'course-home-view',
@@ -16,6 +17,8 @@ export class CourseHomeViewComponent implements OnInit {
 
   course: Course;
   chapters: Observable<Chapter[]>;
+  allChapters: Array<Chapter>;
+
   firstChapter: Chapter;
 
   private toDestroy: Array<Subscription> = [];
@@ -36,6 +39,7 @@ export class CourseHomeViewComponent implements OnInit {
     this.chapters = this.chapterService.getAll(this.course.id);
 
     this.toDestroy.push(this.chapters.subscribe(chaps => {
+      this.allChapters = chaps;
       console.log("COURSE HOME VIEW --- First chapter:", chaps[0]);
       this.firstChapter = chaps[0];
     }));
@@ -52,6 +56,10 @@ export class CourseHomeViewComponent implements OnInit {
   ngOnDestroy() {
     this.toDestroy.map(sub => sub.unsubscribe());
     this.toDestroy = [];
+  }
+
+  download() {
+    PDFService.createPDF(this.course, this.allChapters);
   }
 
 }
