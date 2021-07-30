@@ -80,8 +80,8 @@ export class PDFService {
 
 
         let y = margin;
-        const newLine = () => {
-            y += 12;
+        const newLine = (space: number = 12) => {
+            y += space;
             if (y > 297 - margin) {
                 doc.addPage();
                 y = margin;
@@ -164,6 +164,28 @@ export class PDFService {
                         newLine();
                         // doc.ex
                     }
+
+                    if (Blocktype.isCode(taskContent)) {
+                        doc.text(taskContent.value, margin, y);
+                        newLine();
+                    }
+
+                    if (Blocktype.isLink(taskContent)) {
+                        newLine(6);
+                        doc.setFont('jost', 'light');
+                        let lines = doc.splitTextToSize(taskContent.value[0], docLength)
+                        const linesH = lines.length / 2 * 12;
+
+                        doc.textWithLink(lines, margin + 7, y, { url: taskContent.value[1] });
+
+                        doc.setFillColor(0, 214, 143);
+                        doc.rect(margin, y - 6, 3, linesH + 3, 'F');
+
+                        y += linesH;
+
+                        newLine();
+                    }
+
                     if (y > 297 - margin) {
                         doc.addPage();
                         y = margin;
