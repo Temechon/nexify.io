@@ -30,7 +30,7 @@ export class ChapterService {
                     return this.getCodesByTaskid(task.id).pipe(
                         take(1),
                         map((allCodesForTask: Code[]) => {
-                            console.log("la !");
+                            // console.log("la !");
                             task.codes = allCodesForTask;
                             return allCodesForTask;
                         })
@@ -58,7 +58,8 @@ export class ChapterService {
     }
 
     /**
-     * Returns all chapters for a given course, sorted by order asc
+     * Returns all chapters for a given course, sorted by order asc.
+     * Doesn't retrieve all codes used for this chapter.
      */
     getAll(courseid: string): Observable<Chapter[]> {
 

@@ -5,6 +5,20 @@ import { Chapter } from '../model/chapter.model';
 import { Course } from '../model/course.model';
 import { jostBlack, jostLight, jostMedium } from './pdf.customfonts';
 
+import 'prismjs';
+import 'prismjs/plugins/toolbar/prism-toolbar';
+import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard';
+import 'prismjs/components/prism-css';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-java';
+import 'prismjs/components/prism-markup';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-sass';
+import 'prismjs/components/prism-scss';
+
+
+declare var Prism: any;
+
 
 export class PDFService {
 
@@ -44,6 +58,7 @@ export class PDFService {
 
     static createPDF(course: Course, chapters: Chapter[]) {
 
+        console.log("Creating PDF for", chapters);
 
         this.loadAllImages(chapters).then(imgs => {
             this._createPDFWhenReady(course, chapters, imgs);
@@ -82,11 +97,15 @@ export class PDFService {
         let y = margin;
         const newLine = (space: number = 12) => {
             y += space;
+            checkNewPage()
+        };
+
+        const checkNewPage = () => {
             if (y > 297 - margin) {
                 doc.addPage();
                 y = margin;
             }
-        };
+        }
 
         const addChapter = (title: string) => {
             doc
@@ -105,8 +124,59 @@ export class PDFService {
                 .setFont('jost', 'normal')
                 .setTextColor('#00d68f');
             doc.text(title, margin, y);
-
+            // doc.html("<p class='bg-red-500>COUCOU JCH</p>")
             newLine();
+        }
+
+
+        const displayCode = (codeElement: ChildNode, x: number) => {
+            if (!codeElement.hasChildNodes()) {
+                console.log("--> ", codeElement.textContent);
+
+                let lines = doc.splitTextToSize(codeElement.textContent, docLength, { textIndent: x });
+                if (lines.length === 1) {
+                    doc.text(lines, x, y);
+                    let w = doc.getTextWidth(lines);
+                    if (x + w > docLength) {
+                        y += (lines.length) * 6;
+                        if (y > 297 - margin) {
+                            doc.addPage();
+                            y = margin;
+                        }
+                        return 0;
+                    }
+                    return w;
+                } else {
+                    doc.text(lines[0], x, y);
+                    lines.shift();
+                    y += (lines.length) * 6;
+                    if (y > 297 - margin) {
+                        doc.addPage();
+                        y = margin;
+                    }
+                    doc.text(lines, margin, y);
+                    let w = doc.getTextWidth(lines);
+                    return -w;
+                }
+            }
+
+
+            const nodes = codeElement.childNodes;
+            let width = 0;
+            for (let i = 0; i < nodes.length; i++) {
+                const dx = displayCode(nodes[i], x);
+                if (dx === 0) {
+                    x = margin;
+                } else if (dx < 0) {
+                    x = margin + Math.abs(dx);
+                    width += Math.abs(dx);
+                }
+                else {
+                    x += dx;
+                    width += dx;
+                }
+            }
+            return width;
         }
 
 
@@ -135,21 +205,22 @@ export class PDFService {
                 doc.setFont('jost', 'light')
 
                 for (let taskContent of task.content) {
+
                     if (Blocktype.isAction(taskContent)) {
                         doc.setFont('jost', 'normal');
                         let lines = doc.splitTextToSize(taskContent.value, docLength)
                         doc.text(lines, margin, y);
                         y += (lines.length / 2) * 12;
-                        // newLine();
+                        doc.setFont('jost', 'light');
                     }
                     if (Blocktype.isItem(taskContent)) {
-                        doc.setFont('jost', 'light');
                         let lines = doc.splitTextToSize(taskContent.value, docLength)
                         doc.text(lines, margin, y);
                         y += (lines.length / 2) * 12;
                         // newLine();
                     }
                     if (Blocktype.isImage(taskContent)) {
+                        newLine();
                         const imgdata = taskContent.value;
 
                         const realimg = _.find(images, i => i.imgid === imgdata);
@@ -162,17 +233,44 @@ export class PDFService {
                         doc.addImage(realimg.imgid, 'JPEG', margin + docLength / 2 - realimg.w / 2, y, realimg.w, realimg.h)
                         y += realimg.h;
                         newLine();
-                        // doc.ex
                     }
 
+                    // For a code, display all tabs and their content
                     if (Blocktype.isCode(taskContent)) {
-                        doc.text(taskContent.value, margin, y);
-                        newLine();
+                        // newLine();
+                        const code = Blocktype.getCode(task, taskContent);
+                        const regex = /\/\/\/(.*)\n/im; // to remove the ///language-XXXX
+
+                        for (let tab of code.content) {
+                            if (tab.name) {
+                                doc.text(tab.name, margin, y);
+                                newLine();
+                            }
+
+                            let codeElement = document.createElement('code');
+                            codeElement.classList.add(tab.classname);
+                            codeElement.textContent = tab.code;
+                            Prism.highlightElement(codeElement);
+                            // console.log("after prism", codeElement);
+
+                            displayCode(codeElement, margin);
+                            newLine();
+
+                            // let str = Prism.highlight(tab.code, Prism.languages.javascript, "javascript");
+                            // console.log("hihglihted", str);
+
+
+                            // const realCode = tab.code.replace(regex, "");
+                            // let lines = doc.splitTextToSize(realCode, docLength)
+                            // doc.text(lines, margin, y);
+                            // y += (lines.length / 2 - 1) * 12;
+                        }
+                        // doc.text(taskContent.value, margin, y);
+                        // newLine();
                     }
 
                     if (Blocktype.isLink(taskContent)) {
                         newLine(6);
-                        doc.setFont('jost', 'light');
                         let lines = doc.splitTextToSize(taskContent.value[0], docLength)
                         const linesH = lines.length / 2 * 12;
 
@@ -183,17 +281,11 @@ export class PDFService {
 
                         y += linesH;
 
-                        newLine();
+                        newLine(6);
                     }
-
-                    if (y > 297 - margin) {
-                        doc.addPage();
-                        y = margin;
-                    }
-
+                    checkNewPage()
                 }
                 newLine();
-
             }
 
 

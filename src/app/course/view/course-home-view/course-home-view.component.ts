@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { forkJoin, Observable, Subscription } from 'rxjs';
+import { first, tap } from 'rxjs/operators';
 import { Chapter } from 'src/app/model/chapter.model';
 import { Course } from 'src/app/model/course.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -62,7 +62,17 @@ export class CourseHomeViewComponent implements OnInit {
   }
 
   download() {
-    PDFService.createPDF(this.course, this.allChapters);
+
+    // Retrieve all chapter content
+    const getAllCodes = this.allChapters.map((chap: Chapter) => {
+      return this.chapterService.get(this.course.id, chap.id).pipe(first());
+    })
+
+    forkJoin(getAllCodes)
+      .pipe(first())
+      .subscribe(
+        allChapters => PDFService.createPDF(this.course, allChapters)
+      );
   }
 
 }
