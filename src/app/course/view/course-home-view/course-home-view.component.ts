@@ -45,8 +45,6 @@ export class CourseHomeViewComponent implements OnInit {
       this.firstChapter = chaps[0];
     }));
 
-    this.chapters.pipe(first()).subscribe(d => this.download());
-
     this.isLoggedIn = this.authService.isLoggedIn();
   }
 

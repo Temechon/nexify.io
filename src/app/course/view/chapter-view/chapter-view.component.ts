@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Chapter } from 'src/app/model/chapter.model';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'chapter-view',
@@ -13,18 +14,20 @@ export class ChapterViewComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private authService: AuthService) { }
 
   chapter: Chapter;
   private toDestroy: Array<Subscription> = [];
+  isLoggedIn: Observable<boolean>;
 
   ngOnInit(): void {
     this.toDestroy.push(this.route.data.subscribe((data) => {
       this.chapter = data.chapter;
     })
     )
-    setTimeout(() => {
-    }, 250)
+
+    this.isLoggedIn = this.authService.isLoggedIn();
   }
 
   goToNextChapter() {
