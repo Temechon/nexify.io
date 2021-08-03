@@ -133,19 +133,14 @@ export class PDFService {
         // The x coordinates where the next token should be written
         let xx = margin;
 
-        let flag = 0;
         const displayCode = (codeElement: ChildNode, textColor?: string) => {
             if (!codeElement.hasChildNodes()) {
                 const codeText = codeElement.textContent;
-
-                console.log("--> ", codeText);
-                // doc.setTextColor(flag++ % 2 == 0 ? 'red' : 'blue');
+                if (codeText.indexOf('language-') !== -1) {
+                    return;
+                }
 
                 doc.setTextColor(textColor);
-
-
-                // doc.text("#", xx, y);
-                // doc.text(codeText, xx, y
                 const lines = doc.splitTextToSize(codeText, docLength, { textIndent: xx });
 
                 if (lines.length === 1) {
@@ -158,7 +153,7 @@ export class PDFService {
                 } else {
                     doc.text(lines[0], xx, y);
 
-                    const startCut = /*lines[0].length === 0 ? 0 : */lines[0].length + 1;
+                    const startCut = lines[0].length + 1;
                     const nextCodeText = codeText.substr(startCut, codeText.length);
                     const nextLines = doc.splitTextToSize(nextCodeText, docLength);
 
@@ -167,16 +162,6 @@ export class PDFService {
                         doc.text(l, margin, y);
                         xx = margin + doc.getTextWidth(l);
                     }
-
-                    // xx = margin;
-
-                    // doc.text(nextLines, xx, y);
-                    // xx = margin + doc.getTextWidth(nextLines);
-                    // y += (nextLines.length) * 6;
-                    // if (y > 297 - margin) {
-                    //     doc.addPage();
-                    //     y = margin;
-                    // }
                 }
                 doc.setTextColor('black')
             } else {
@@ -185,25 +170,34 @@ export class PDFService {
                 const nodes = codeElement.childNodes;
                 const codeElementDom = codeElement as HTMLElement;
 
-                const tags = ["tag", "punctuation", "attr-name", "attr-value", "keyword", "string", "selector", "property", "operator", "boolean"];
-                const tagsColor = ["red", "black", "green", "blue", "pink"];
+                const tagsColor: {
+                    [index: string]: string;
+                } = {
+                    "tag": "#c04750",
+                    "punctuation": "black",
+                    "attr-name": "#1755ac",
+                    "attr-value": "#00d68f",
+                    "keyword": "#1755ac",
+                    "string": "#00d68f",
+                    "selector": "#c04750",
+                    "property": "#1755ac",
+                    "operator": "black",
+                    "boolean": "#00d68f",
+                    "comment": "#999"
+                }
                 let textColor = "black";
 
-                tags.forEach((tag: string, index: number) => {
-
+                for (let tag in tagsColor) {
                     if (codeElementDom.classList.contains(tag)) {
-                        textColor = tagsColor[index];
+                        textColor = tagsColor[tag];
                     }
-                })
+                }
 
                 for (let i = 0; i < nodes.length; i++) {
                     displayCode(nodes[i], textColor);
                 }
-                // if (codeElementDom.classList.contains('tag')) {
                 doc.setTextColor('black');
-                // }
             }
-            // return width;
         }
 
 
@@ -266,12 +260,18 @@ export class PDFService {
                     if (Blocktype.isCode(taskContent)) {
                         // newLine();
                         const code = Blocktype.getCode(task, taskContent);
-                        const regex = /\/\/\/(.*)\n/im; // to remove the ///language-XXXX
 
                         for (let tab of code.content) {
                             if (tab.name) {
-                                doc.text(tab.name, margin, y);
-                                newLine();
+
+                                newLine(6);
+                                doc.setFillColor(45, 63, 81);
+                                doc.rect(margin, y - 6, docLength, 9, 'F');
+
+                                doc.setTextColor('white').setFont('jost', 'normal');
+                                doc.text(tab.name, margin + 2, y);
+                                doc.setTextColor('black').setFont('jost', 'light');
+                                newLine(9);
                             }
 
                             let codeElement = document.createElement('code');
@@ -306,6 +306,23 @@ export class PDFService {
                         doc.textWithLink(lines, margin + 7, y, { url: taskContent.value[1] });
 
                         doc.setFillColor(0, 214, 143);
+                        doc.rect(margin, y - 6, 3, linesH + 3, 'F');
+
+                        y += linesH;
+
+                        newLine(6);
+                    }
+
+                    if (Blocktype.isTip(taskContent)) {
+                        newLine(6);
+                        let lines = doc.splitTextToSize(taskContent.value, docLength - 7)
+                        const linesH = lines.length / 2 * 12;
+
+                        doc.setTextColor("#fbbf24").setFont('jost', 'normal');
+                        doc.text(lines, margin + 7, y);
+                        doc.setTextColor("black").setFont('jost', 'light');
+
+                        doc.setFillColor(251, 191, 36);
                         doc.rect(margin, y - 6, 3, linesH + 3, 'F');
 
                         y += linesH;
