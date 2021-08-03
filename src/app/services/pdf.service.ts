@@ -203,12 +203,20 @@ export class PDFService {
 
         // Course title
         doc
-            .setFontSize(24)
-            .setFont('jost', 'normal')
+            .setFontSize(48)
+            .setFont('jost', 'bold')
             .setTextColor('black');
-        doc.text(course.title, 104, y, { align: 'center' });
 
-        newLine();
+        let title = doc.splitTextToSize(course.title, docLength);
+
+        doc.text(title, 210 / 2, margin * 3, { align: 'center' });
+
+        doc
+            .setFontSize(12)
+            .setFont('jost', 'light')
+            .setTextColor('black');
+
+        doc.textWithLink("Exported from nexify.io", 210 / 2, 297 - margin / 2, { align: 'center', url: "http://nexify.io" });
 
         for (const chap of chapters) {
 
@@ -336,7 +344,20 @@ export class PDFService {
 
 
         }
-        doc.save(`course.pdf`);
+
+        // Add footer on all pages
+        const pageCount = doc.getNumberOfPages();
+        doc.setFont('helvetica', 'italic')
+        doc.setFontSize(8)
+        for (var i = 2; i <= pageCount; i++) {
+            doc.setPage(i)
+            doc.text('Page ' + String(i) + ' of ' + String(pageCount), doc.internal.pageSize.width / 2, 287, {
+                align: 'center'
+            })
+        }
+
+        // Saving document
+        doc.save(`${course.title}.pdf`);
     }
 
 }
