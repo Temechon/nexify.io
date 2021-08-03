@@ -3,7 +3,7 @@ import _ from 'underscore';
 import { Blocktype } from '../helpers/Blocktype';
 import { Chapter } from '../model/chapter.model';
 import { Course } from '../model/course.model';
-import { jostBlack, jostLight, jostMedium } from './pdf.customfonts';
+import { inconsolata, jostBlack, jostLight, jostMedium } from './pdf.customfonts';
 
 import 'prismjs';
 import 'prismjs/plugins/toolbar/prism-toolbar';
@@ -78,10 +78,12 @@ export class PDFService {
         (doc as any).addFileToVFS('Jost-Medium.ttf', jostMedium);
         (doc as any).addFileToVFS('Jost-Black.ttf', jostBlack);
         (doc as any).addFileToVFS('Jost-Light.ttf', jostLight);
+        (doc as any).addFileToVFS('Inconsolata.ttf', inconsolata);
         // (doc as any).addFileToVFS('arimo.regular-bold.ttf', this.regularBold);
         doc.addFont('Jost-Medium.ttf', 'jost', 'normal');
         doc.addFont('Jost-Black.ttf', 'jost', 'bold');
         doc.addFont('Jost-Light.ttf', 'jost', 'light');
+        doc.addFont('Inconsolata.ttf', 'inconsolata', 'normal');
         // doc.addFont('arimo.regular-bold.ttf', 'arimo', 'bold');
 
         // doc.addFont('jost-medium-normal.ttf', 'jost-medium', 'normal');
@@ -128,55 +130,80 @@ export class PDFService {
             newLine();
         }
 
+        // The x coordinates where the next token should be written
+        let xx = margin;
 
-        const displayCode = (codeElement: ChildNode, x: number) => {
+        let flag = 0;
+        const displayCode = (codeElement: ChildNode, textColor?: string) => {
             if (!codeElement.hasChildNodes()) {
-                console.log("--> ", codeElement.textContent);
+                const codeText = codeElement.textContent;
 
-                let lines = doc.splitTextToSize(codeElement.textContent, docLength, { textIndent: x });
+                console.log("--> ", codeText);
+                // doc.setTextColor(flag++ % 2 == 0 ? 'red' : 'blue');
+
+                doc.setTextColor(textColor);
+
+
+                // doc.text("#", xx, y);
+                // doc.text(codeText, xx, y
+                const lines = doc.splitTextToSize(codeText, docLength, { textIndent: xx });
+
                 if (lines.length === 1) {
-                    doc.text(lines, x, y);
-                    let w = doc.getTextWidth(lines);
-                    if (x + w > docLength) {
-                        y += (lines.length) * 6;
-                        if (y > 297 - margin) {
-                            doc.addPage();
-                            y = margin;
-                        }
-                        return 0;
+                    doc.text(lines, xx, y);
+                    xx += doc.getTextWidth(lines);
+                    if (xx >= docLength + margin) {
+                        xx = margin;
+                        newLine(6);
                     }
-                    return w;
                 } else {
-                    doc.text(lines[0], x, y);
-                    lines.shift();
-                    y += (lines.length) * 6;
-                    if (y > 297 - margin) {
-                        doc.addPage();
-                        y = margin;
+                    doc.text(lines[0], xx, y);
+
+                    const startCut = /*lines[0].length === 0 ? 0 : */lines[0].length + 1;
+                    const nextCodeText = codeText.substr(startCut, codeText.length);
+                    const nextLines = doc.splitTextToSize(nextCodeText, docLength);
+
+                    for (let l of nextLines) {
+                        newLine(6);
+                        doc.text(l, margin, y);
+                        xx = margin + doc.getTextWidth(l);
                     }
-                    doc.text(lines, margin, y);
-                    let w = doc.getTextWidth(lines);
-                    return -w;
+
+                    // xx = margin;
+
+                    // doc.text(nextLines, xx, y);
+                    // xx = margin + doc.getTextWidth(nextLines);
+                    // y += (nextLines.length) * 6;
+                    // if (y > 297 - margin) {
+                    //     doc.addPage();
+                    //     y = margin;
+                    // }
                 }
-            }
+                doc.setTextColor('black')
+            } else {
 
 
-            const nodes = codeElement.childNodes;
-            let width = 0;
-            for (let i = 0; i < nodes.length; i++) {
-                const dx = displayCode(nodes[i], x);
-                if (dx === 0) {
-                    x = margin;
-                } else if (dx < 0) {
-                    x = margin + Math.abs(dx);
-                    width += Math.abs(dx);
+                const nodes = codeElement.childNodes;
+                const codeElementDom = codeElement as HTMLElement;
+
+                const tags = ["tag", "punctuation", "attr-name", "attr-value", "keyword", "string", "selector", "property", "operator", "boolean"];
+                const tagsColor = ["red", "black", "green", "blue", "pink"];
+                let textColor = "black";
+
+                tags.forEach((tag: string, index: number) => {
+
+                    if (codeElementDom.classList.contains(tag)) {
+                        textColor = tagsColor[index];
+                    }
+                })
+
+                for (let i = 0; i < nodes.length; i++) {
+                    displayCode(nodes[i], textColor);
                 }
-                else {
-                    x += dx;
-                    width += dx;
-                }
+                // if (codeElementDom.classList.contains('tag')) {
+                doc.setTextColor('black');
+                // }
             }
-            return width;
+            // return width;
         }
 
 
@@ -252,9 +279,11 @@ export class PDFService {
                             codeElement.textContent = tab.code;
                             Prism.highlightElement(codeElement);
                             // console.log("after prism", codeElement);
-
-                            displayCode(codeElement, margin);
+                            xx = margin;
+                            doc.setFont("inconsolata", "normal").setFontSize(10);
+                            displayCode(codeElement);
                             newLine();
+                            doc.setFont('jost', 'light').setFontSize(12);
 
                             // let str = Prism.highlight(tab.code, Prism.languages.javascript, "javascript");
                             // console.log("hihglihted", str);
