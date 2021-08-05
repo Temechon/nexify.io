@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatomoModule } from 'ngx-matomo';
 import { environment } from 'src/environments/environment';
@@ -9,6 +10,7 @@ import { GuiModule } from './gui/gui.module';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { SubscribeComponent } from './subscribe/subscribe.component';
 
 
 
@@ -17,10 +19,12 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
     AppComponent,
     HomeComponent,
     LoginComponent,
-    PrivacyPolicyComponent
+    PrivacyPolicyComponent,
+    SubscribeComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     GuiModule,
     AngularFireModule.initializeApp(environment.firebase),

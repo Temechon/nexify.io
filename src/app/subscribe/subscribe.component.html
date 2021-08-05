@@ -14,23 +14,25 @@
     <div
         class="select-none lg:w-1/2 max-w-lg lg:mt-auto mt-12 bg-white m-auto rounded-xl h-100 shadow-none sm:shadow-lg p-12">
         <div class="text-3xl text-center font-extrabold text-myblue">
-            Sign in</div>
+            Subscribe</div>
 
-        <input #email type="email"
+        <input #pseudo type="text" [(ngModel)]="user.name"
             class="ring-myblue bg-gray-100 ring-opacity-50 p-3 mt-12 w-full focus:outline-none focus:ring rounded-md"
-            placeholder="E-mail" required>
-        <input #password type="password"
+            placeholder="Name" required>
+
+        <input #email type="email" [(ngModel)]="user.email"
             class="ring-myblue bg-gray-100 ring-opacity-50 p-3 mt-4 w-full focus:outline-none focus:ring rounded-md"
-            placeholder="Password" required
-            (keydown.enter)="login(email.value, password.value, button)">
+            placeholder="E-mail" required>
 
-        <button #button (click)="login(email.value, password.value, button)"
-            class="disabled:opacity-50 disabled:bg-mydarkblue-500 disabled:cursor-default mt-12 w-full  py-2 px-3 bg-myblue text-white rounded-md shadow-md text-lg hover:bg-mygreen cursor-pointer">Login</button>
+        <input #password type="password" [(ngModel)]="user.password"
+            class="ring-myblue bg-gray-100 ring-opacity-50 p-3 mt-4 w-full focus:outline-none focus:ring rounded-md"
+            placeholder="Password" required>
 
-        <div class="text-center mt-5">
-            <a class="text-myblue cursor-pointer hover:text-blue-300 text-lg"
-                [routerLink]="['/subscribe']">Subscribe</a>
-        </div>
+
+        <button #button (click)="signup(email.value, password.value, button)"
+            [attr.disabled]="!user.name || !user.email ||!user.password ? 'true':null"
+            class="disabled:opacity-50 disabled:bg-mydarkblue-500 disabled:cursor-default mt-12 w-full  py-2 px-3 bg-myblue text-white rounded-md shadow-md text-lg hover:bg-mygreen cursor-pointer">Subscribe</button>
+
 
         <div class="text-center text-red-400 mt-4" *ngIf="errorMessage">
             {{errorMessage}}</div>

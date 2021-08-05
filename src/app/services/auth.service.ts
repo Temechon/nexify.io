@@ -43,6 +43,17 @@ export class AuthService {
         // })
     }
 
+    // Sign up with email/password
+    // TODO
+    signUp(email: string, password: string) {
+        return this.auth.createUserWithEmailAndPassword(email, password)
+            .then((result) => {
+                console.log("You have been successfully registered!", result.user)
+            }).catch((error) => {
+                console.error(error)
+            })
+    }
+
     // Sign in with email/password ;,;
     signIn(email: string, password: string) {
         return this.auth.signInWithEmailAndPassword(email, password)
