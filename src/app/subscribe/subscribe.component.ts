@@ -10,6 +10,7 @@ import { AuthService } from '../services/auth.service';
 export class SubscribeComponent implements OnInit {
 
   errorMessage: string = null;
+  successMessage: string = null;
   loading = false;
 
   user = {
@@ -29,21 +30,25 @@ export class SubscribeComponent implements OnInit {
 
 
     this.errorMessage = null;
+    this.successMessage = null;
     this.loading = true;
     button.disabled = true;
 
-    // this.authService.signUp(email, password)
-    //   .then(() => {
-    //     // forward to redirect url
-    //     // this.redirectApp();
-    //   })
-    //   .catch((error) => {
-    //     console.log('erreur authent', error)
-    //     this.errorMessage = error.message;
-    //   })
-    //   .finally(() => {
-    //     this.loading = false;
-    //     button.disabled = false;
-    //   })
+    this.authService.signUp(email, password)
+      .then(() => {
+        // forward to redirect url
+        this.successMessage = "Account successfully created!"
+        setTimeout(() => {
+          this.router.navigateByUrl('home');
+        }, 200)
+      })
+      .catch((error) => {
+        console.log('erreur authent', error)
+        this.errorMessage = error.message;
+      })
+      .finally(() => {
+        this.loading = false;
+        button.disabled = false;
+      })
   }
 }

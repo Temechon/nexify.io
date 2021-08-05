@@ -1,11 +1,52 @@
-<div class="absolute top-5 right-5 z-10">
-    <a *ngIf="!(isLoggedIn | async); else logoutbloc"
-        class="text-myblue cursor-pointer hover:text-blue-300 text-lg"
-        [routerLink]="['/login']"
-        [queryParams]="{ redirectUrl: router.url }">Login</a>
+<div class="absolute top-5 right-14  z-10">
+    <div *ngIf="!(isLoggedIn | async); else logoutbloc">
+
+        <a class="text-myorange cursor-pointer hover:text-yellow-300 text-lg mr-6"
+            [routerLink]="['/subscribe']">Subscribe</a>
+
+        <a class="text-myblue cursor-pointer hover:text-blue-300 text-lg"
+            [routerLink]="['/login']"
+            [queryParams]="{ redirectUrl: router.url }">Login</a>
+    </div>
 
     <ng-template #logoutbloc>
-        <a class="text-myblue cursor-pointer hover:text-blue-300 text-lg"
-            (click)="logout()">Logout</a>
+
+        <button type="button"
+            class="relative border text-base text-myblue bg-white rounded-md px-2 py-1.5 text-left cursor-pointer focus:outline-none"
+            aria-haspopup="listbox" aria-expanded="true"
+            aria-labelledby="listbox-label" (click)="toggleOptions()">
+
+            <span class="block truncate">
+                Profile
+            </span>
+        </button>
+        <!-- POPUP DISPLAYED WHEN CLICKED -->
+        <ul #options
+            class="absolute -left-32 hidden z-10 mt-1 w-48 bg-white shadow-sm max-h-64 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+            role="listbox" aria-labelledby="listbox-label"
+            aria-activedescendant="listbox-option-3">
+
+            <li class="option" role="option" (click)="select(1)" tabindex="-1">
+                <div class="flex items-center">
+                    <i class="text-mygreen fas fa-id-card"></i>
+                    <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
+                    <span class="ml-3 block truncate">
+                        Dashboard
+                    </span>
+                </div>
+            </li>
+            <li class="option" role="option" (click)="logout()" tabindex="-1">
+                <div class="flex items-center">
+                    <i class="text-mygreen fas fa-sign-out-alt"></i>
+                    <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
+                    <span class="ml-3 block truncate">
+                        Logout
+                    </span>
+                </div>
+            </li>
+        </ul>
+
+        <!-- <a class=" text-myblue cursor-pointer hover:text-blue-300 text-lg"
+            (click)="logout()">Logout</a> -->
     </ng-template>
 </div>

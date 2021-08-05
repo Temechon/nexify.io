@@ -15,27 +15,35 @@
         class="select-none lg:w-1/2 max-w-lg lg:mt-auto mt-12 bg-white m-auto rounded-xl h-100 shadow-none sm:shadow-lg p-12">
         <div class="text-3xl text-center font-extrabold text-myblue">
             Subscribe</div>
+        <form>
+            <input #pseudo type="text" [(ngModel)]="user.name" name="username"
+                class="ring-myblue bg-gray-100 ring-opacity-50 p-3 mt-12 w-full focus:outline-none focus:ring rounded-md"
+                placeholder="Name" required>
 
-        <input #pseudo type="text" [(ngModel)]="user.name"
-            class="ring-myblue bg-gray-100 ring-opacity-50 p-3 mt-12 w-full focus:outline-none focus:ring rounded-md"
-            placeholder="Name" required>
+            <input #email type="email" [(ngModel)]="user.email"
+                autocomplete="email" name="email"
+                class="ring-myblue bg-gray-100 ring-opacity-50 p-3 mt-4 w-full focus:outline-none focus:ring rounded-md"
+                placeholder="E-mail" required>
 
-        <input #email type="email" [(ngModel)]="user.email"
-            class="ring-myblue bg-gray-100 ring-opacity-50 p-3 mt-4 w-full focus:outline-none focus:ring rounded-md"
-            placeholder="E-mail" required>
+            <input #password type="password" [(ngModel)]="user.password"
+                autocomplete="new-password" name="password"
+                class="ring-myblue bg-gray-100 ring-opacity-50 p-3 mt-4 w-full focus:outline-none focus:ring rounded-md"
+                placeholder="Password" required>
+            <div class="italic text-sm text-gray-400 mt-2">6 characters min.
+            </div>
 
-        <input #password type="password" [(ngModel)]="user.password"
-            class="ring-myblue bg-gray-100 ring-opacity-50 p-3 mt-4 w-full focus:outline-none focus:ring rounded-md"
-            placeholder="Password" required>
 
-
-        <button #button (click)="signup(email.value, password.value, button)"
-            [attr.disabled]="!user.name || !user.email ||!user.password ? 'true':null"
-            class="disabled:opacity-50 disabled:bg-mydarkblue-500 disabled:cursor-default mt-12 w-full  py-2 px-3 bg-myblue text-white rounded-md shadow-md text-lg hover:bg-mygreen cursor-pointer">Subscribe</button>
-
+            <input type="submit" #button
+                (click)="signup(email.value, password.value, button)"
+                [attr.disabled]="!user.name || !user.email ||!user.password ? 'true':null"
+                value="Subscribe"
+                class="disabled:opacity-50 disabled:bg-mydarkblue-500 disabled:cursor-default mt-12 w-full  py-2 px-3 bg-myblue text-white rounded-md shadow-md text-lg hover:bg-mygreen cursor-pointer">
+        </form>
 
         <div class="text-center text-red-400 mt-4" *ngIf="errorMessage">
             {{errorMessage}}</div>
+        <div class="text-center text-green-400 mt-4" *ngIf="successMessage">
+            {{successMessage}}</div>
 
         <div *ngIf="loading"
             class="animate-spin-fast flex items-center justify-center text-myblue text-xl mt-4">

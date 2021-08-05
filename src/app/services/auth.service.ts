@@ -49,8 +49,6 @@ export class AuthService {
         return this.auth.createUserWithEmailAndPassword(email, password)
             .then((result) => {
                 console.log("You have been successfully registered!", result.user)
-            }).catch((error) => {
-                console.error(error)
             })
     }
 
@@ -64,9 +62,6 @@ export class AuthService {
                 // });
                 // this.SetUserData(result.user);
             })
-            .catch(err => {
-                console.log('Something went wrong during authent: ', err.message);
-            });
     }
 
     isLoggedIn(): Observable<boolean> {

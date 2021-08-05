@@ -16,21 +16,25 @@
         <div class="text-3xl text-center font-extrabold text-myblue">
             Sign in</div>
 
-        <input #email type="email"
-            class="ring-myblue bg-gray-100 ring-opacity-50 p-3 mt-12 w-full focus:outline-none focus:ring rounded-md"
-            placeholder="E-mail" required>
-        <input #password type="password"
-            class="ring-myblue bg-gray-100 ring-opacity-50 p-3 mt-4 w-full focus:outline-none focus:ring rounded-md"
-            placeholder="Password" required
-            (keydown.enter)="login(email.value, password.value, button)">
+        <form>
+            <input #email type="email" name="email" autocomplete="email"
+                class="ring-myblue bg-gray-100 ring-opacity-50 p-3 mt-12 w-full focus:outline-none focus:ring rounded-md"
+                placeholder="E-mail" required>
+            <input #password type="password" name="password"
+                autocomplete="current-password"
+                class="ring-myblue bg-gray-100 ring-opacity-50 p-3 mt-4 w-full focus:outline-none focus:ring rounded-md"
+                placeholder="Password" required
+                (keydown.enter)="login(email.value, password.value, button)">
 
-        <button #button (click)="login(email.value, password.value, button)"
-            class="disabled:opacity-50 disabled:bg-mydarkblue-500 disabled:cursor-default mt-12 w-full  py-2 px-3 bg-myblue text-white rounded-md shadow-md text-lg hover:bg-mygreen cursor-pointer">Login</button>
+            <input #button (click)="login(email.value, password.value, button)"
+                type="submit" value="Login"
+                class="disabled:opacity-50 disabled:bg-mydarkblue-500 disabled:cursor-default mt-12 w-full  py-2 px-3 bg-myblue text-white rounded-md shadow-md text-lg hover:bg-mygreen cursor-pointer">
 
-        <div class="text-center mt-5">
-            <a class="text-myblue cursor-pointer hover:text-blue-300 text-lg"
-                [routerLink]="['/subscribe']">Subscribe</a>
-        </div>
+            <div class="text-center mt-5">
+                <a class="text-myblue cursor-pointer hover:text-blue-300 text-lg"
+                    [routerLink]="['/subscribe']">Subscribe</a>
+            </div>
+        </form>
 
         <div class="text-center text-red-400 mt-4" *ngIf="errorMessage">
             {{errorMessage}}</div>
