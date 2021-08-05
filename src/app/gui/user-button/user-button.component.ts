@@ -38,7 +38,8 @@ export class UserButtonComponent implements OnInit {
   }
 
 
-  select(size: number) {
-    console.log("select", size);
+  dashboard() {
+
+    this.router.navigate(['/dashboard']);
   }
 }

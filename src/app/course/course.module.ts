@@ -13,7 +13,7 @@ import { LinkEditComponent } from "./edit/blocks/link-edit/link-edit.component";
 import { ChapterEditComponent } from "./edit/chapter-edit/chapter-edit.component";
 import { CourseHomeEditComponent } from './edit/course-home-edit/course-home-edit.component';
 import { TaskEditComponent } from "./edit/task-edit/task-edit.component";
-import { SidebarComponent } from "./sidebar/sidebar.component";
+import { SidebarComponent } from "../gui/sidebar/sidebar.component";
 import { CodeViewComponent } from "./view/blocks/code-view/code-view.component";
 import { ImgViewComponent } from './view/blocks/img-view/img-view.component';
 import { LinkViewComponent } from "./view/blocks/link-view/link-view.component";
@@ -26,7 +26,7 @@ import { TipViewComponent } from './view/blocks/tip-view/tip-view.component';
 @NgModule({
     declarations: [
 
-        SidebarComponent,
+        // SidebarComponent,
         CourseHomeViewComponent,
         ChapterViewComponent,
         CodeViewComponent,
@@ -47,7 +47,6 @@ import { TipViewComponent } from './view/blocks/tip-view/tip-view.component';
         TipViewComponent
     ],
     imports: [
-        FormsModule,
         AutosizeModule,
         DragDropModule,
         FormsModule,
