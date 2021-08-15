@@ -7,6 +7,14 @@ const routes: Routes = [
     {
         path: '',
         component: DashboardComponent
+    },
+    {
+        path: 'mycourses',
+        component: DashboardComponent
+    },
+    {
+        path: 'bookmarks',
+        component: DashboardComponent
     }
 ];
 

@@ -8,6 +8,7 @@
             class="fas fa-chevron-left transition-all transform duration-200"></i>
     </div>
 
+    <!-- Logo -->
     <div
         class="logo text-2xl font-display font-bold p-4 border-b border-gray-500 flex items-center justify-center">
         <a [routerLink]="['/home']">
@@ -16,30 +17,46 @@
 
     </div>
 
-    <div class="course-title font-semibold text-xl text-center py-6 px-4 mb-4">
-        <a class="focus:outline-none"
-            [routerLink]="['/course', course.name]">{{course.title}}</a>
-    </div>
+    <ng-container *ngIf="course; else dashboard">
+        <!-- Course title -->
+        <div
+            class="course-title font-semibold text-xl text-center py-6 px-4 mb-4">
+            <a class="focus:outline-none"
+                [routerLink]="['/course', course.name]">{{course.title}}</a>
+        </div>
 
-    <div
-        class="chapters-title ml-4 text-sm text-gray-400 h-8 leading-8 pt-2 mb-4">
-        Chapters
-    </div>
-    <div
-        class="chapters-title-logo text-xl text-gray-400 mb-4 flex items-center justify-center mt-12">
-        <i class="fas fa-bookmark"></i>
-    </div>
-    <div *ngFor="let chapter of chapters | async; let index = index"
-        class="chapter w-full">
-        <a [routerLink]="['/course', course.name, chapter.id]"
-            routerLinkActive="bg-mygreen text-green-900" class="block my-0.5 py-2 px-4 text-left transition-colors duration-150 truncate w-full cursor-pointer hover:bg-mygreen hover:text-green-900
+        <!-- Chapters list -->
+        <div
+            class="chapters-title ml-4 text-sm text-gray-400 h-8 leading-8 pt-2 mb-4">
+            Chapters
+        </div>
+
+        <div *ngFor="let chapter of chapters | async; let index = index"
+            class="chapter w-full">
+            <a [routerLink]="['/course', course.name, chapter.id]"
+                routerLinkActive="bg-mygreen text-green-900" class="block my-0.5 py-2 px-4 text-left transition-colors duration-150 truncate w-full cursor-pointer hover:bg-mygreen hover:text-green-900
                 focus:outline-none
             ">
 
-            <span class="chapter-index">{{index+1}}.</span>
-            <span class="chapter-title ml-2 ">{{chapter.title}}</span>
-        </a>
-    </div>
+                <span class="chapter-index">{{index+1}}.</span>
+                <span class="chapter-title ml-2 ">{{chapter.title}}</span>
+            </a>
+        </div>
+    </ng-container>
+
+    <ng-template #dashboard>
+
+        <div class="chapter w-full mt-4"
+            *ngFor="let category of dashboardCategories">
+            <a [routerLink]="['/dashboard', category.url]"
+                routerLinkActive="bg-mygreen text-green-900" class="block my-0.5 py-4 text-lg px-4 text-left transition-colors duration-150 truncate w-full cursor-pointer hover:bg-mygreen hover:text-green-900
+                focus:outline-none
+            ">
+                <i class="fas mr-4" [ngClass]="category.icon"></i>
+                <span class="chapter-title ml-2">{{category.name}}</span>
+            </a>
+        </div>
+    </ng-template>
 
 
     <div class="absolute right-3 bottom-5 h-5 w-10 cursor-pointer bg-mydarkblue-200 ml-auto rounded-full flex flex-row-reverse items-center"

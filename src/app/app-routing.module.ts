@@ -31,10 +31,10 @@ const routes: Routes = [
         component: LoginComponent
       },
 
-      {
-        path: 'subscribe',
-        component: SubscribeComponent
-      },
+      // {
+      //   path: 'subscribe',
+      //   component: SubscribeComponent
+      // },
       {
         path: 'course',
         loadChildren: () => import('./course/course.module').then(m => m.CourseModule)

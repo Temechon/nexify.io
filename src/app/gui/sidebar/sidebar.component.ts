@@ -16,14 +16,31 @@ export class SidebarComponent {
   ) { }
 
 
+  /**
+   * Optionnal : the course currently displayed
+   */
   @Input()
   course: Course;
 
+  /** Optionnal : the list of chapters of the given course */
   @Input()
   chapters: Observable<Chapter[]>;
 
   @ViewChild('darkModeToggle', { static: true })
   darkModeToggle: ElementRef;
+
+  dashboardCategories = [
+    {
+      url: 'bookmarks',
+      name: 'My bookmarks',
+      icon: 'fa-bookmark'
+    },
+    {
+      url: 'mycourses',
+      name: 'My courses',
+      icon: 'fa-graduation-cap'
+    }
+  ]
 
 
 
