@@ -1,12 +1,13 @@
 {
-  "name": "chronoapp",
+  "name": "nexify",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && npm run copy",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "copy": "cpx robots.txt dist/nexify"
   },
   "private": true,
   "dependencies": {
@@ -44,6 +45,7 @@
     "@types/sanitize-html": "^2.3.2",
     "@types/slug": "^5.0.2",
     "@types/underscore": "^1.11.2",
+    "cpx": "^1.5.0",
     "jasmine-core": "~3.7.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",
