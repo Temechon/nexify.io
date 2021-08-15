@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/auth";
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from "@angular/router";
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { User } from '../model/user.model';
 
 @Injectable({
     providedIn: 'root'
@@ -11,11 +12,11 @@ import { map } from 'rxjs/operators';
 // From https://www.positronx.io/full-angular-7-firebase-authentication-system/
 
 export class AuthService {
-    // userData: any; // Save logged in user data
+    userData: any; // Save logged in user data
     uid: Observable<string>;
 
     constructor(
-        public afs: AngularFirestore,
+        public db: AngularFirestore,
         public auth: AngularFireAuth,
         public router: Router
     ) {
@@ -30,25 +31,29 @@ export class AuthService {
         );
         /* Saving user data in localstorage when 
         logged in and setting up null when logged out */
-        // this.auth.authState.subscribe(user => {
-        //     console.log("authentication state updated", user);
-        //     if (user) {
-        //         // this.userData = user;
-        //         // localStorage.setItem('nexify.user', JSON.stringify(this.userData));
-        //         // JSON.parse(localStorage.getItem('user'));
-        //     } else {
-        //         // localStorage.setItem('nexify.user', null);
-        //         // JSON.parse(localStorage.getItem('user'));
-        //     }
-        // })
+        this.auth.authState.subscribe(user => {
+            console.log("authentication state updated", user);
+            if (user) {
+                console.log("retrieve user from local storage")
+                // this.userData = user;
+                this.userData = new User(JSON.parse(localStorage.getItem('nexify.user')));
+                console.log(this.userData);
+
+                // JSON.parse(localStorage.getItem('user'));
+            } else {
+                console.log("/!\\ remove user from local storage")
+                localStorage.removeItem('nexify.user');
+                // JSON.parse(localStorage.getItem('user'));
+            }
+        })
     }
 
     // Sign up with email/password
-    // TODO
     signUp(email: string, password: string) {
         return this.auth.createUserWithEmailAndPassword(email, password)
             .then((result) => {
                 console.log("You have been successfully registered!", result.user)
+                this.setUserData(result.user);
             })
     }
 
@@ -57,10 +62,8 @@ export class AuthService {
         return this.auth.signInWithEmailAndPassword(email, password)
             .then((result) => {
                 console.log("authenticated !!", result)
-                // this.ngZone.run(() => {
-                //     this.router.navigate(['home']);
-                // });
-                // this.SetUserData(result.user);
+                // Get user rights from database and save them in local storage
+                this.setUserData(result.user)
             })
     }
 
@@ -73,11 +76,13 @@ export class AuthService {
         );
     }
 
-    /* Setting up user data when sign in with username/password, 
-    sign up with username/password and sign in with social auth  
-    provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-    SetUserData(user: any) {
-        const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
+    /**
+     * Retrieve this user from database and get all its rights
+     */
+    setUserData(user: any) {
+        const userRef = this.db.collection('users').doc(user.uid);
+
+        console.log("ici 1")
         const userData: any = {
             uid: user.uid,
             email: user.email,
@@ -85,9 +90,21 @@ export class AuthService {
             photoURL: user.photoURL,
             emailVerified: user.emailVerified
         }
+
         return userRef.set(userData, {
             merge: true
+        }).then(() => {
+            console.log("ici 2")
+            return this.db.collection('users').doc(user.uid).valueChanges().pipe(
+                map((userdb: any) => {
+                    console.log("Saving user in database", userdb);
+                    localStorage.setItem('nexify.user', JSON.stringify(userdb));
+                }))
+
+        }).catch((e) => {
+            console.error(e);
         })
+
     }
 
     // Sign out 

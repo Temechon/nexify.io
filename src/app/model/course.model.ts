@@ -1,5 +1,6 @@
 import * as _ from 'underscore';
 import { Task } from "./task.model";
+import { User } from "./user.model";
 
 export class Course {
     /** THe ID in Firestore */
@@ -11,6 +12,7 @@ export class Course {
     introduction: string;
     prerequisite: Task;
     objectives: Task;
+    author: User;
 
     constructor(params: any) {
         this.id = params.id;
@@ -21,6 +23,7 @@ export class Course {
         this.introduction = params.introduction;
         this.prerequisite = new Task(params.prerequisite);
         this.objectives = new Task(params.objectives);
+        this.author = new User(params.author);
     }
 
     toObject() {
