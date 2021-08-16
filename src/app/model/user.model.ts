@@ -1,11 +1,11 @@
 export class User {
 
-    login: string;
+    displayName: string;
     uid: string;
 
     constructor(params: any) {
 
-        this.login = params?.login || '';
+        this.displayName = params?.displayName || '';
         this.uid = params?.uid || '';
     }
 }

@@ -18,7 +18,6 @@ export class SubscribeComponent implements OnInit {
     email: '',
     password: ''
   }
-
   constructor(private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router) { }
@@ -26,7 +25,7 @@ export class SubscribeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  signup(email: string, password: string, button: HTMLButtonElement) {
+  signup(button: HTMLButtonElement) {
 
 
     this.errorMessage = null;
@@ -34,7 +33,7 @@ export class SubscribeComponent implements OnInit {
     this.loading = true;
     button.disabled = true;
 
-    this.authService.signUp(email, password)
+    this.authService.signUp(this.user.email, this.user.password, this.user.name)
       .then(() => {
         // forward to redirect url
         this.successMessage = "Account successfully created!"
@@ -50,5 +49,10 @@ export class SubscribeComponent implements OnInit {
         this.loading = false;
         button.disabled = false;
       })
+  }
+
+  isFormFilled(login: string, email: string, password: string) {
+    console.log("jch", !!login && !!email && !!password)
+    return login && email && password;
   }
 }

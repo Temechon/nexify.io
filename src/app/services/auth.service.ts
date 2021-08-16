@@ -3,7 +3,7 @@ import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from "@angular/router";
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 import { User } from '../model/user.model';
 
 @Injectable({
@@ -49,11 +49,19 @@ export class AuthService {
     }
 
     // Sign up with email/password
-    signUp(email: string, password: string) {
+    signUp(email: string, password: string, login: string) {
+        let user: any;
         return this.auth.createUserWithEmailAndPassword(email, password)
             .then((result) => {
-                console.log("You have been successfully registered!", result.user)
-                this.setUserData(result.user);
+                user = result.user;
+                console.log("Updating display name", user, "login", login)
+                return result.user.updateProfile({
+                    displayName: login
+                })
+            })
+            .then(() => {
+                console.log("You have been successfully registered!", user)
+                this.setUserData(user, login);
             })
     }
 
@@ -79,31 +87,44 @@ export class AuthService {
     /**
      * Retrieve this user from database and get all its rights
      */
-    setUserData(user: any) {
+    setUserData(user: any, login?: string) {
         const userRef = this.db.collection('users').doc(user.uid);
 
-        console.log("ici 1")
         const userData: any = {
             uid: user.uid,
             email: user.email,
-            displayName: user.displayName,
+            displayName: login || user.displayName,
             photoURL: user.photoURL,
             emailVerified: user.emailVerified
         }
 
-        return userRef.set(userData, {
+        userRef.set(userData, {
             merge: true
         }).then(() => {
-            console.log("ici 2")
-            return this.db.collection('users').doc(user.uid).valueChanges().pipe(
-                map((userdb: any) => {
-                    console.log("Saving user in database", userdb);
-                    localStorage.setItem('nexify.user', JSON.stringify(userdb));
-                }))
-
-        }).catch((e) => {
-            console.error(e);
+            this.getUser(user.uid).pipe(first()).subscribe(data => {
+                console.log("saving user in local storage", data)
+                localStorage.setItem('nexify.user', JSON.stringify(new User(data)));
+            })
         })
+
+
+
+        /*.then(() => {
+        console.log("ici 2")
+        return this.db.collection('users').doc(user.uid).valueChanges().pipe(
+            map((userdb: any) => {
+                console.log("Saving user in database", userdb);
+                localStorage.setItem('nexify.user', JSON.stringify(userdb));
+            }))
+
+        /*}).catch((e) => {
+            console.error(e);
+        })*/
+
+    }
+
+    getUser(uid: string) {
+        return this.db.collection<any>('users').doc(uid).valueChanges();
 
     }
 
