@@ -31,6 +31,11 @@ export class SidebarComponent {
 
   dashboardCategories = [
     {
+      url: 'home',
+      name: 'Home',
+      icon: 'fa-home'
+    },
+    {
       url: 'bookmarks',
       name: 'My bookmarks',
       icon: 'fa-bookmark'

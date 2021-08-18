@@ -1,51 +1,132 @@
 # Data model
 
+## Root level collections
+```mermaid
+graph TD
+root{ } --> courses & cod & users
+courses([courses]) --> ac([access]) & c([chapters])
+cod([codes])
+users([users])
+
+classDef collections fill:#0095ff,color:white;
+class courses,cod,users,ac,c collections;
+```
+
+## `courses` collection
+```mermaid
+graph TD
+root{ } --> c
+c([courses]) --> id
+c --> name
+c --> title
+c --> author
+c --> isPublic
+c --> published
+c --> obj[objectives] --- task
+c --> pre[prerequesite] --- task
+c --> hom[home] --- task
+c --> use([access])
+c --> cha([chapters])
+
+task[[Task]] --> id2[id]
+task --> title2[title]
+task --> content2[content] --> cc{ }
+cc --> type
+cc --> value
+
+use --> iduse[id] & typeuse[type]
+
+
+classDef ids fill:#00d68f,color:black;
+classDef string fill:#ffaa00,color:black;
+classDef collections fill:#0095ff,color:white;
+
+class c,cha,use collections;
+class id,id2,iduse ids;
+class name,title,title2,type,value,typeuse,author string;
+
+```
+
+```mermaid
+graph TD
+root{ } --> c([courses]) --> chapters([chapters])
+chapters --> id0[id]
+chapters --> nextChapterId
+chapters --> previousChapterId
+chapters --> order
+chapters --> title2[title]
+chapters --> tasks --> t{ }
+t --> id
+t --> title3[title]
+t --> content --> cc{ }
+cc --> type
+cc --> value
+
+classDef ids fill:#00d68f,color:black;
+classDef string fill:#ffaa00,color:black;
+classDef collections fill:#0095ff,color:white;
+
+class c,chapters collections;
+class id0,id,nextChapterId,previousChapterId ids;
+class order,title2,title3,type,value string;
+```
+
+
+
+
+
+
 ```mermaid
 graph TD
 
-users
+classDef ids fill:#00d68f,color:black;
+classDef string fill:#ffaa00,color:black;
+classDef collections fill:#0095ff,color:white;
 
-codes --> id3((id))
+class c,users collections;
+class id ids;
+class type string;
+```
+
+```mermaid
+graph TD
+root{ } --> u
+u([users]) --> id
+u --> displayName
+u --> email
+u --> emailVerified
+u --> uid
+u --> photoURL
+
+classDef ids fill:#00d68f,color:black;
+classDef string fill:#ffaa00,color:black;
+classDef collections fill:#0095ff,color:white;
+
+class u collections;
+class id,uid ids;
+class displayName,email,emailVerified,photoURL string;
+```
+
+```mermaid
+graph TD
+root{ } --> codes
+codes([codes]) --> id[id]
 codes --> content2[content]
-codes -- taskid --> id2
-content2 --array--> TabCode
+codes --> taskid
+content2 --> TabCode{ }
 
-TabCode --> id4((id))
+TabCode --> id2[id]
 TabCode --> name2[name]
 TabCode --> classname
 TabCode --> code
 
 
-courses --> id1((id))
-courses --> name
-courses --> title
-courses --> objectives --> Task
-courses --> prerequesite --> Task
-courses --> home --> Task
-courses --array--> chapters
-
-Task --> id2((id))
-Task --> title2[title]
-Task --> content --array--> TaskContent
-TaskContent --> type
-TaskContent --> value
-
-chapters --> tasks --array--> Task
-chapters --> nextChapterId
-chapters --> previousChapterId
-chapters --> order
-chapters --> title3[title]
-
-
-classDef green fill:#00d68f,color:black;
+classDef ids fill:#00d68f,color:black;
 classDef string fill:#ffaa00,color:black;
 classDef collections fill:#0095ff,color:white;
 
-class id1,id2,id3,id4,nextChapterId,previousChapterId green;
-class name,title,title2,title3,type,value string;
-class order string;
+class codes collections;
+class id2,id,taskid ids;
 class name2,classname,code string;
-
-class courses,chapters,codes collections;
 
 ```

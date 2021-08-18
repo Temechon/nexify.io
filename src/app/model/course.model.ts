@@ -1,6 +1,5 @@
 import * as _ from 'underscore';
 import { Task } from "./task.model";
-import { User } from "./user.model";
 
 export class Course {
     /** THe ID in Firestore */
@@ -8,22 +7,29 @@ export class Course {
     /** The url displayed at the top */
     name: string;
     title: string;
-    home: Task;
-    introduction: string;
-    prerequisite: Task;
+    /** dislpayName of the author */
+    author: string;
+    /** true if this course is public, false otherwise */
+    isPublic: boolean;
+    /** true if this course is published, false otherwise */
+    published: boolean;
+
+
     objectives: Task;
-    author: User;
+    prerequisite: Task;
+    home: Task;
 
     constructor(params: any) {
         this.id = params.id;
         this.name = params.name;
         this.title = params.title;
-        this.home = new Task(params.home);
+        this.author = params.author;
+        this.isPublic = params.isPublic;
+        this.published = params.published;
 
-        this.introduction = params.introduction;
+        this.home = new Task(params.home);
         this.prerequisite = new Task(params.prerequisite);
         this.objectives = new Task(params.objectives);
-        this.author = new User(params.author);
     }
 
     toObject() {

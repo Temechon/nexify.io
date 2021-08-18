@@ -4,10 +4,12 @@ import { FormsModule } from "@angular/forms";
 import { GuiModule } from "../gui/gui.module";
 import { DashboardRoutingModule } from "./dashboard-routing.module";
 import { DashboardComponent } from "./dashboard.component";
+import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component';
 
 @NgModule({
     declarations: [
-        DashboardComponent
+        DashboardComponent,
+        DashboardHomeComponent
     ],
     imports: [
         FormsModule,
