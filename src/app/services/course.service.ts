@@ -11,6 +11,7 @@ import { Code, CodeDb } from '../model/task.model';
 })
 export class CourseService {
 
+
     constructor(private db: AngularFirestore) {
     }
 
@@ -48,17 +49,18 @@ export class CourseService {
     }
 
     /**
-     * Returns all Courses
+     * Returns all chapters
      */
-    getAll(): Observable<Chapter[]> {
+    getAll(): Observable<Course[]> {
 
-        return this.db.collection<Chapter[]>(
-            'courses'
+        return this.db.collection<Course[]>(
+            'courses',
+            ref => ref.where('published', '==', true)
         )
             .snapshotChanges()
             .pipe(map(
                 changes =>
-                    changes.map(c => (new Chapter({ id: c.payload.doc.id, ...c.payload.doc.data() })))
+                    changes.map(c => (new Course({ id: c.payload.doc.id, ...c.payload.doc.data() })))
             ));
     }
 

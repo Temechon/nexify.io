@@ -12,7 +12,7 @@ import { Course } from 'src/app/model/course.model';
 export class SidebarComponent {
 
   constructor(
-    private route: ActivatedRoute
+    protected route: ActivatedRoute
   ) { }
 
 
@@ -29,7 +29,7 @@ export class SidebarComponent {
   @ViewChild('darkModeToggle', { static: true })
   darkModeToggle: ElementRef;
 
-  dashboardCategories = [
+  categories = [
     {
       url: 'home',
       name: 'Home',
@@ -70,7 +70,7 @@ export class SidebarComponent {
     localStorage.setItem('nexify.darkmode', `${isDark}`);
   }
 
-  private _setDark() {
+  protected _setDark() {
     const darkModeButton = this.darkModeToggle.nativeElement as HTMLDivElement;
     darkModeButton.classList.toggle('-translate-x-5');
     darkModeButton.classList.toggle('text-myblue')
