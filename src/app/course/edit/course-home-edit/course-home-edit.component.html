@@ -68,5 +68,14 @@
         <action-button text="Close" route="../" icon="fa-times" color="red"
             size="big">
         </action-button>
+
+        <action-button text="Publish" (onClick)="publish()"
+            *ngIf="!course.published" icon="fa-paper-plane" color="blue"
+            size="big">
+        </action-button>
+
+        <action-button text="Unpublish" (onClick)="unpublish()"
+            *ngIf="course.published" icon="fa-ban" color="blue" size="big">
+        </action-button>
     </div>
 </section>

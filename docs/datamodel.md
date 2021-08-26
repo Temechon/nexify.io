@@ -34,7 +34,7 @@ task --> content2[content] --> cc{ }
 cc --> type
 cc --> value
 
-use --> iduse[id] & typeuse[type]
+use --> iduse[id] & userid[uid] & typeuse[type]
 
 
 classDef ids fill:#00d68f,color:black;
@@ -42,7 +42,7 @@ classDef string fill:#ffaa00,color:black;
 classDef collections fill:#0095ff,color:white;
 
 class c,cha,use collections;
-class id,id2,iduse ids;
+class id,id2,iduse,userid ids;
 class name,title,title2,type,value,typeuse,author string;
 
 ```
@@ -71,22 +71,6 @@ class id0,id,nextChapterId,previousChapterId ids;
 class order,title2,title3,type,value string;
 ```
 
-
-
-
-
-
-```mermaid
-graph TD
-
-classDef ids fill:#00d68f,color:black;
-classDef string fill:#ffaa00,color:black;
-classDef collections fill:#0095ff,color:white;
-
-class c,users collections;
-class id ids;
-class type string;
-```
 
 ```mermaid
 graph TD

@@ -12,7 +12,7 @@ import { User } from '../model/user.model';
 // From https://www.positronx.io/full-angular-7-firebase-authentication-system/
 
 export class AuthService {
-    userData: any; // Save logged in user data
+    userData: User; // Save logged in user data
     uid: Observable<string>;
 
     constructor(
@@ -41,7 +41,7 @@ export class AuthService {
 
                 // JSON.parse(localStorage.getItem('user'));
             } else {
-                console.log("/!\\ remove user from local storage")
+                console.warn("Removing user from local storage")
                 localStorage.removeItem('nexify.user');
                 // JSON.parse(localStorage.getItem('user'));
             }
@@ -98,13 +98,11 @@ export class AuthService {
             emailVerified: user.emailVerified
         }
 
+        console.log("saving user in local storage", userData)
+        localStorage.setItem('nexify.user', JSON.stringify(new User(userData)));
+
         userRef.set(userData, {
             merge: true
-        }).then(() => {
-            this.getUser(user.uid).pipe(first()).subscribe(data => {
-                console.log("saving user in local storage", data)
-                localStorage.setItem('nexify.user', JSON.stringify(new User(data)));
-            })
         })
 
 

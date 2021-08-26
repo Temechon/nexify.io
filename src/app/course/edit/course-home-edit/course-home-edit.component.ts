@@ -65,6 +65,39 @@ export class CourseHomeEditComponent implements OnInit {
     this.courseService.save(this.course);
   }
 
+  publish() {
+
+    // Display modal "are you sure ?"
+    const dialogref = this.dialogService.openDialog(
+      ConfirmDialogComponent,
+      {
+        title: "Publish this course?",
+        content: "<span class='font-semibold'>Are you sure you want to publish this course?</span><br><br> After publishing, this course will be public and be visible by everyone.",
+        button1: {
+          text: 'Publish',
+          param: 'publish'
+        },
+        button2: {
+          text: 'Cancel',
+          param: 'cancel',
+          type: 'cancel'
+        }
+      }
+    );
+
+    dialogref.onClose.subscribe((data: string) => {
+      if (data === "publish") {
+        this.course.published = true;
+        this._save()
+      }
+    })
+  }
+
+  unpublish() {
+    this.course.published = false;
+    this._save()
+  }
+
   /**
    * Save directly all chapters in database
    */
@@ -112,6 +145,7 @@ export class CourseHomeEditComponent implements OnInit {
     const slugged = slug(this.course.title);
     nameField.value = slugged;
     this.course.name = slugged;
+    this.save();
   }
 
   deleteChapter(index: number) {

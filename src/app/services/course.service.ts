@@ -75,6 +75,12 @@ export class CourseService {
             ));
     }
 
+    update(data: any) {
+        return this.db.collection('courses').doc(data.id).set(data, {
+            merge: true
+        });
+    }
+
 
     save(course: Course) {
         // Save all codes in course.home
@@ -86,7 +92,19 @@ export class CourseService {
         this.db.collection('courses').doc(course.id).set(course.toObject());
     }
 
+    create(data: any) {
+        return this.db.collection('courses').add(data);
+    }
+
     delete(Courseid: string): Promise<void> {
         return this.db.collection('courses').doc(Courseid).delete();
+    }
+
+    addAccess(courseid: string, uid: string, accessType: string) {
+        return this.db.collection('courses').doc(courseid).collection('access').add({ uid: uid, type: accessType });
+    }
+
+    removeAccess(courseid: string, accessid: string) {
+        return this.db.collection('courses').doc(courseid).collection('access').doc(accessid).delete();
     }
 }
