@@ -3,13 +3,26 @@
 ## Root level collections
 ```mermaid
 graph TD
-root{ } --> courses & cod & users
-courses([courses]) --> ac([access]) & c([chapters])
+root{ } --> courses & cod & users & access([access])
+courses([courses]) --> c([chapters])
 cod([codes])
 users([users])
 
 classDef collections fill:#0095ff,color:white;
-class courses,cod,users,ac,c collections;
+class courses,cod,users,access,c collections;
+```
+## `access` collection
+```mermaid
+graph TD
+access([access]) --> iduse[id] & userid[uid] & courseid & type
+
+classDef ids fill:#00d68f,color:black;
+classDef string fill:#ffaa00,color:black;
+classDef collections fill:#0095ff,color:white;
+
+class access collections;
+class iduse,userid,courseid ids;
+class type string;
 ```
 
 ## `courses` collection
@@ -25,7 +38,6 @@ c --> published
 c --> obj[objectives] --- task
 c --> pre[prerequesite] --- task
 c --> hom[home] --- task
-c --> use([access])
 c --> cha([chapters])
 
 task[[Task]] --> id2[id]
@@ -33,8 +45,6 @@ task --> title2[title]
 task --> content2[content] --> cc{ }
 cc --> type
 cc --> value
-
-use --> iduse[id] & userid[uid] & typeuse[type]
 
 
 classDef ids fill:#00d68f,color:black;
@@ -46,6 +56,9 @@ class id,id2,iduse,userid ids;
 class name,title,title2,type,value,typeuse,author string;
 
 ```
+
+The subcollection **access** will link all users uid that can access to this course
+(authors for example).
 
 ```mermaid
 graph TD

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { first, map } from 'rxjs/operators';
 import { Course } from '../model/course.model';
+import { AuthService } from '../services/auth.service';
 import { CourseService } from '../services/course.service';
 
 @Component({
@@ -12,12 +14,19 @@ export class CoursesListComponent implements OnInit {
 
   allPublishedCourses: Observable<Course[]>;
 
-  constructor(private courseService: CourseService) { }
+  allDrafts: Observable<Course[]>;
+
+  constructor(
+    private courseService: CourseService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.allPublishedCourses = this.courseService.getAll();
-    this.allPublishedCourses.subscribe(data => console.log("icici", data));
+
+    this.authService.uid.pipe(first()).subscribe((uid: string) => {
+      this.allDrafts = this.courseService.getDrafts(uid);
+    })
 
   }
-
 }

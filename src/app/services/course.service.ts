@@ -1,7 +1,9 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, throwError } from 'rxjs';
+import { forkJoin, from, Observable, throwError } from 'rxjs';
 import { first, map, mergeMap, tap } from 'rxjs/operators';
+import { Access } from '../model/access.model';
 import { Chapter } from '../model/chapter.model';
 import { Course } from '../model/course.model';
 import { Code, CodeDb } from '../model/task.model';
@@ -15,13 +17,12 @@ export class CourseService {
     constructor(private db: AngularFirestore) {
     }
 
-    getCourse(courseid: string): Observable<any> {
+    getCourse(courseid: string): Observable<Course> {
 
-        return this.db.collection<Chapter>('courses', ref => ref.where('name', '==', courseid))
+        return this.db.collection<Course>('courses', ref => ref.where('name', '==', courseid))
             .snapshotChanges()
             .pipe(
                 map(changes => {
-                    console.log("changes here", changes);
                     if (changes.length !== 1) {
 
                         throw new Error('Too much results for course name:' + courseid);
@@ -29,7 +30,7 @@ export class CourseService {
                     const c = changes[0];
                     return new Course({ id: c.payload.doc.id, ...c.payload.doc.data() })
                 }),
-                tap(course => console.log("Course retrived from database", course)),
+                tap(course => console.log("Course retrieved from database", course)),
                 // map((courseDb: any) => {
                 //     const course = new Course(courseDb);
                 //     course.id = courseid;
@@ -48,8 +49,53 @@ export class CourseService {
             );
     }
 
+    getCourseById(courseid: string): Observable<Course> {
+        return this.db.collection<Course>('courses').doc(courseid)
+            .snapshotChanges()
+            .pipe(
+                // tap(c => console.log("---> Course service - Course by id", c.payload.data())),
+                map((c: any) => new Course({ id: c.payload.id, ...c.payload.data() }))
+            );
+    }
+
     /**
-     * Returns all chapters
+     * Check if the given courseid is published or not. Returns the course id if
+     */
+    isPublished(coursename: string): Observable<{ isPublished: boolean, courseid: string }> {
+        return this.db.collection<Course>('courses', ref => ref.where('name', '==', coursename))
+            .snapshotChanges()
+            .pipe(
+                map(changes => {
+                    // console.log("changes here", changes);
+                    if (changes.length !== 1) {
+                        throw new Error('Too much results for course name:' + coursename);
+                    }
+                    const c = changes[0].payload.doc.data();
+                    const courseid = changes[0].payload.doc.id;
+                    return {
+                        isPublished: c.published,
+                        courseid: courseid
+                    }
+                })
+            )
+    }
+
+    /**
+     * Return course information that can be accessed by the uid given in parameter
+     * @returns 
+     */
+    availableCourses(uid: string): Observable<Access[]> {
+        return this.db
+            .collection('access', ref => ref.where('uid', '==', uid))
+            .snapshotChanges()
+            .pipe(
+                map(availableCourses => availableCourses.map((access: any) => new Access({ id: access.payload.doc.id, ...access.payload.doc.data() }))),
+                tap(availableCourse => console.log("--> Course service - available courses for uid", availableCourse))
+            )
+    }
+
+    /**
+     * Returns all published course
      */
     getAll(): Observable<Course[]> {
 
@@ -62,6 +108,35 @@ export class CourseService {
                 changes =>
                     changes.map(c => (new Course({ id: c.payload.doc.id, ...c.payload.doc.data() })))
             ));
+    }
+
+    /**
+     * Returns all published course
+     */
+    getDrafts(uid: string): Observable<any> {
+
+        return this.availableCourses(uid).pipe(
+            tap(d => console.log("Access for uid", d)),
+            mergeMap((access: Access[]) => {
+                const checkCourse = access.map((acc: Access) => this.getCourseById(acc.courseid).pipe(first()));
+                return forkJoin(checkCourse);
+            }),
+            tap(drafts => console.log("Get all drafts", drafts)
+            )
+        )
+
+
+        // return this.db.collection<Course[]>(
+        //     'courses',
+        //     ref => ref.where('published', '==', false)
+        // )
+        //     .snapshotChanges()
+        //     .pipe(
+        //         tap(data => console.log("icici")),
+        //         map(
+        //             changes =>
+        //                 changes.map(c => (new Course({ id: c.payload.doc.id, ...c.payload.doc.data() })))
+        //         ));
     }
 
     getCode(codeid: string) {
@@ -101,10 +176,6 @@ export class CourseService {
     }
 
     addAccess(courseid: string, uid: string, accessType: string) {
-        return this.db.collection('courses').doc(courseid).collection('access').add({ uid: uid, type: accessType });
-    }
-
-    removeAccess(courseid: string, accessid: string) {
-        return this.db.collection('courses').doc(courseid).collection('access').doc(accessid).delete();
+        return this.db.collection('access').add({ uid: uid, type: accessType, courseid: courseid });
     }
 }

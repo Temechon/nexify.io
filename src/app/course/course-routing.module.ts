@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { CourseResolver } from '../resolvers/course.resolver';
-import { ChapterResolver } from '../resolvers/chapter.resolver';
-import { CourseHomeViewComponent } from './view/course-home-view/course-home-view.component';
-import { CourseComponent } from './course/course.component';
-import { CourseHomeEditComponent } from './edit/course-home-edit/course-home-edit.component';
-import { ChapterEditComponent } from './edit/chapter-edit/chapter-edit.component';
-import { ChapterViewComponent } from './view/chapter-view/chapter-view.component';
 import { canActivate, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import { RouterModule, Routes } from '@angular/router';
 import { CanAccessGuard } from '../guards/canAccess.guard';
+import { CanAccessCourseGuard } from '../guards/canAccessCourse.guard';
+import { ChapterResolver } from '../resolvers/chapter.resolver';
+import { CourseResolver } from '../resolvers/course.resolver';
+import { CourseComponent } from './course/course.component';
+import { ChapterEditComponent } from './edit/chapter-edit/chapter-edit.component';
+import { CourseHomeEditComponent } from './edit/course-home-edit/course-home-edit.component';
+import { ChapterViewComponent } from './view/chapter-view/chapter-view.component';
+import { CourseHomeViewComponent } from './view/course-home-view/course-home-view.component';
 
 const routes: Routes = [
 
@@ -23,6 +24,7 @@ const routes: Routes = [
             {
                 path: '',
                 component: CourseComponent,
+                canActivate: [CanAccessCourseGuard],
                 resolve: {
                     course: CourseResolver,
                 },
