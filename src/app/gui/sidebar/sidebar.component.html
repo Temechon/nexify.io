@@ -47,7 +47,7 @@
     <ng-template #dashboard>
 
         <div class="chapter w-full mt-4" *ngFor="let category of categories">
-            <a [routerLink]="['/dashboard', category.url]"
+            <a [routerLink]="[category.url]"
                 routerLinkActive="bg-mygreen text-green-900" class="block my-0.5 py-4 text-lg px-4 text-left transition-colors duration-150 truncate w-full cursor-pointer hover:bg-mygreen hover:text-green-900
                 focus:outline-none
             ">

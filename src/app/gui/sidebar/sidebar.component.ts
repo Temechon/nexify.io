@@ -35,11 +35,11 @@ export class SidebarComponent {
       name: 'Home',
       icon: 'fa-home'
     },
-    {
-      url: 'bookmarks',
-      name: 'My bookmarks',
-      icon: 'fa-bookmark'
-    },
+    // {
+    //   url: 'bookmarks',
+    //   name: 'My bookmarks',
+    //   icon: 'fa-bookmark'
+    // },
     {
       url: 'mycourses',
       name: 'My courses',

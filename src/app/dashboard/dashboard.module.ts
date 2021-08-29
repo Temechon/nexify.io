@@ -5,11 +5,13 @@ import { GuiModule } from "../gui/gui.module";
 import { DashboardRoutingModule } from "./dashboard-routing.module";
 import { DashboardComponent } from "./dashboard.component";
 import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component';
+import { DashboardMyCoursesComponent } from './dashboard-my-courses/dashboard-my-courses.component';
 
 @NgModule({
     declarations: [
         DashboardComponent,
-        DashboardHomeComponent
+        DashboardHomeComponent,
+        DashboardMyCoursesComponent
     ],
     imports: [
         FormsModule,

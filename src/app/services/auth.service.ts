@@ -31,10 +31,13 @@ export class AuthService {
         );
         /* Saving user data in localstorage when 
         logged in and setting up null when logged out */
+
+
         this.auth.authState.subscribe(user => {
-            console.log("authentication state updated", user);
+
+            this.auth.currentUser.then((data => console.log("ici", data)));
             if (user) {
-                console.log("retrieve user from local storage")
+                console.log("USer signing in!")
                 // this.userData = user;
                 this.userData = new User(JSON.parse(localStorage.getItem('nexify.user')));
                 console.log(this.userData);
