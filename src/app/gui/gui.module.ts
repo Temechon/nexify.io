@@ -5,6 +5,7 @@ import { ActionButtonComponent } from './action-button/action-button.component';
 import { SidebarCoursesComponent } from './sidebar/sidebar-courses.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { UserButtonComponent } from './user-button/user-button.component';
+import { LoaderComponent } from './loader/loader.component';
 
 
 
@@ -19,13 +20,15 @@ import { UserButtonComponent } from './user-button/user-button.component';
         ActionButtonComponent,
         UserButtonComponent,
         SidebarComponent,
-        SidebarCoursesComponent
+        SidebarCoursesComponent,
+        LoaderComponent
     ],
     exports: [
         ActionButtonComponent,
         UserButtonComponent,
         SidebarComponent,
-        SidebarCoursesComponent
+        SidebarCoursesComponent,
+        LoaderComponent
     ],
     entryComponents: [],
     providers: [],

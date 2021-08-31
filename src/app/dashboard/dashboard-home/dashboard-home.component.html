@@ -9,9 +9,12 @@
 
     <div class="flex items-center justify-center select-none -mt-8">
 
-        <action-button text="Create a new course" icon="fa-download"
-            (onClick)="createCourse()" color="green" size="small">
-        </action-button>
+        <div (click)="createCourse()"
+            class="group transition-colors duration-150 p-8 border border-gray-200 text-mygreen shadow-md rounded-lg bg-white flex flex-col items-center justify-center cursor-pointer hover:bg-mygreen hover:text-white">
+            <i class="fas fa-pencil-alt text-2xl mb-2"></i>
+            <div class="text-sm mt-2 text-black group-hover:text-white">Create a
+                new course</div>
+        </div>
 
     </div>
 
