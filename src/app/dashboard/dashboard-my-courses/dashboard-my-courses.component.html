@@ -8,26 +8,43 @@
 
 
 
-    <div *ngFor="let course of allDrafts | async"
-        [routerLink]="['/course', course.name]"
-        class="relative bg-white p-7 border shadow-md hover:shadow-lg transform hover:-translate-y-2 transition-all ease-in duration-75 cursor-pointer my-2">
-        <h2 class="text-lg font-bold p-0">{{course.title}}</h2>
-        <div class="italic text-gray-400">{{course.author}}</div>
+    <div *ngFor="let course of allDrafts | async">
+        <div class="relative">
+            <div [routerLink]="['/course', course.name]"
+                class="relative bg-white p-7 border shadow-md hover:shadow-lg transform hover:-translate-y-2 transition-all ease-in duration-75 cursor-pointer my-2">
 
-        <div *ngIf="course.published; else notpublished"
-            class="flex flex-col items-center absolute top-1/2 right-7 transform -translate-y-1/2">
-            <i class="fas fa-check-circle text-mygreen "></i>
-            <span class="text-mygreen/50 text-sm italic mt-2">Published!</span>
-        </div>
-        <ng-template #notpublished>
+                <h2 class="text-lg font-bold p-0">{{course.title}}</h2>
+                <div class="italic text-gray-400">{{course.author}}</div>
 
-            <div
-                class="flex flex-col items-center absolute top-1/2 right-7 transform -translate-y-1/2">
-                <i class="fas fa-user-edit text-myorange "></i>
-                <span class="text-myorange/50 text-sm italic mt-2">Still working
-                    on it</span>
+                <ng-template *ngIf="course.published; else notpublished">
+                    <div
+                        class="flex flex-col items-center absolute top-1/2 right-7 transform -translate-y-1/2">
+                        <i class="fas fa-check-circle text-mygreen "></i>
+                        <span
+                            class="text-mygreen/50 text-sm italic mt-2">Published!</span>
+                    </div>
+                </ng-template>
+
+                <ng-template #notpublished>
+
+                    <div
+                        class="flex flex-col items-center absolute top-1/2 right-7 transform -translate-y-1/2">
+                        <i class="fas fa-user-edit text-myorange "></i>
+                        <span class="text-myorange/50 text-sm italic mt-2">Still
+                            working
+                            on it</span>
+                    </div>
+                </ng-template>
+
             </div>
-        </ng-template>
+            <div
+                class="absolute -right-14 top-1/2 transform -translate-y-1/2 flex items-center justify-center w-10 h-10">
+                <div (click)="deleteCourse(course.id)"
+                    class="w-6 h-6 flex items-center justify-center red-grad rounded-lg cursor-pointer text-xs">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+        </div>
     </div>
 
     <loader></loader>

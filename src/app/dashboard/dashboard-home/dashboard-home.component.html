@@ -7,7 +7,7 @@
     </h1>
 
 
-    <div class="flex items-center justify-center select-none -mt-8">
+    <div class="flex items-center justify-center select-none mt-8">
 
         <div (click)="createCourse()"
             class="group transition-colors duration-150 p-8 border border-gray-200 text-mygreen shadow-md rounded-lg bg-white flex flex-col items-center justify-center cursor-pointer hover:bg-mygreen hover:text-white">
@@ -15,7 +15,10 @@
             <div class="text-sm mt-2 text-black group-hover:text-white">Create a
                 new course</div>
         </div>
+    </div>
 
+    <div class="mt-8">
+        <loader [hidden]="true"></loader>
     </div>
 
 </section>

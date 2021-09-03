@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { forkJoin, Observable, of } from 'rxjs';
-import { map, mergeMap, take } from 'rxjs/operators';
+import { defaultIfEmpty, map, mergeMap, take, tap } from 'rxjs/operators';
 import { Chapter } from '../model/chapter.model';
 import { Code, CodeDb, Task } from '../model/task.model';
 
@@ -98,5 +98,21 @@ export class ChapterService {
 
     deleteCodesForTask(taskid: string) {
         this.db.collection('codes', ref => ref.where('taskid', '==', taskid)).snapshotChanges().forEach(doc => doc.map(d => d.payload.doc.ref.delete()))
+    }
+
+    deleteForCourse(courseid: string): Observable<any> {
+        // Retrieve all chapter for this course...
+        return this.getAll(courseid).pipe(
+            tap(d => console.log("all chapter", d)),
+            // ... delete them and their code
+            mergeMap((chapters: Chapter[]) => {
+                if (chapters.length === 0) {
+                    return of([]);
+                }
+                const deleteChapter = chapters.map(chap => this.delete(courseid, chap));
+                return forkJoin(deleteChapter)
+            }),
+            tap(d => console.log("après le forjoin", d)),
+        )
     }
 }

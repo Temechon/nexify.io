@@ -24,9 +24,10 @@ export class CoursesListComponent implements OnInit {
   ngOnInit(): void {
     this.allPublishedCourses = this.courseService.getAll();
 
-    this.authService.uid.pipe(first()).subscribe((uid: string) => {
-      this.allDrafts = this.courseService.getDrafts(uid);
-    })
+    this.allDrafts = this.courseService.getDrafts(this.authService.uid);
+    // this.authService.uid.pipe(first()).subscribe((uid: string) => {
+    //   this.allDrafts = this.courseService.getDrafts(uid);
+    // })
 
   }
 }

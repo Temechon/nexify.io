@@ -1,7 +1,7 @@
 import { ThrowStmt } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { forkJoin, from, Observable, throwError } from 'rxjs';
+import { forkJoin, from, Observable, of, throwError } from 'rxjs';
 import { first, map, mergeMap, tap } from 'rxjs/operators';
 import { Access } from '../model/access.model';
 import { Chapter } from '../model/chapter.model';
@@ -118,6 +118,9 @@ export class CourseService {
         return this.availableCourses(uid).pipe(
             tap(d => console.log("Access for uid", d)),
             mergeMap((access: Access[]) => {
+                if (access.length === 0) {
+                    return of([]);
+                }
                 const checkCourse = access.map((acc: Access) => this.getCourseById(acc.courseid).pipe(first()));
                 return forkJoin(checkCourse);
             }),
@@ -171,11 +174,32 @@ export class CourseService {
         return this.db.collection('courses').add(data);
     }
 
-    delete(Courseid: string): Promise<void> {
-        return this.db.collection('courses').doc(Courseid).delete();
+    delete(courseid: string): Promise<void> {
+        return this.db.collection('courses').doc(courseid).delete();
     }
 
     addAccess(courseid: string, uid: string, accessType: string) {
         return this.db.collection('access').add({ uid: uid, type: accessType, courseid: courseid });
+    }
+
+    removeAccess(accessid: string) {
+        return this.db.collection('access').doc(accessid).delete();
+    }
+
+    getAccessForCourse(courseid: string): Observable<Access[]> {
+        return this.db.collection('access', ref => ref.where('courseid', '==', courseid)).snapshotChanges()
+            .pipe(map(
+                accesses => accesses.map((acc: any) => (new Access({ id: acc.payload.doc.id, ...acc.payload.doc.data() })))
+            ));
+    }
+
+    removeAllAccessForCourse(courseid: string): Observable<any> {
+        return this.getAccessForCourse(courseid).pipe(
+            map((allAccess: Access[]) => {
+                const removeAllAccess = allAccess.map(acc => this.removeAccess(acc.id));
+                return forkJoin(removeAllAccess);
+            }),
+            tap(x => console.log("All access for course removed!"))
+        )
     }
 }

@@ -13,7 +13,8 @@ export class LoaderComponent implements OnInit {
 
   constructor(private loaderService: LoaderService) { }
 
-  hidden = false;
+  @Input()
+  hidden: boolean = false;
 
   ngOnInit(): void {
     this.loaderService.loaderStatus$.subscribe((response: Loader) => {

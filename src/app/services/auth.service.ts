@@ -13,39 +13,39 @@ import { User } from '../model/user.model';
 
 export class AuthService {
     userData: User; // Save logged in user data
-    uid: Observable<string>;
+    uid: string = null;
 
     constructor(
         public db: AngularFirestore,
         public auth: AngularFireAuth,
         public router: Router
     ) {
-        this.uid = this.auth.authState.pipe(
-            map((authState) => {
-                if (!authState) {
-                    return null;
-                } else {
-                    return authState.uid;
-                }
-            })
-        );
+        // this.uid = this.auth.authState.pipe(
+        //     map((authState) => {
+        //         if (!authState) {
+        //             return null;
+        //         } else {
+        //             return authState.uid;
+        //         }
+        //     })
+        // );
         /* Saving user data in localstorage when 
         logged in and setting up null when logged out */
 
 
         this.auth.authState.subscribe(user => {
-
-            this.auth.currentUser.then((data => console.log("ici", data)));
             if (user) {
                 console.log("USer signing in!")
                 // this.userData = user;
                 this.userData = new User(JSON.parse(localStorage.getItem('nexify.user')));
                 console.log(this.userData);
+                this.uid = user.uid;
 
                 // JSON.parse(localStorage.getItem('user'));
             } else {
                 console.warn("Removing user from local storage")
                 localStorage.removeItem('nexify.user');
+                this.uid = null;
                 // JSON.parse(localStorage.getItem('user'));
             }
         })
@@ -79,10 +79,10 @@ export class AuthService {
     }
 
     isLoggedIn(): Observable<boolean> {
-        return this.uid.pipe(
-            map(uid => {
+        return this.auth.authState.pipe(
+            map(user => {
                 // console.log("USER", user)
-                return !!uid;
+                return !!user.uid;
             })
         );
     }
