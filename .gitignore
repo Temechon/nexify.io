@@ -45,4 +45,4 @@ testem.log
 Thumbs.db
 
 #firebase config
-src/environments/environments.prod.ts
+/src/environments/*.prod.ts
