@@ -1,27 +1,24 @@
-# nexify
+![](src/assets/1.png)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.1.
+# What is it?
+Nexify is a course platform for developers, where you can create your own course/tutorial, and make it visible for everyone.
 
-## Development server
+# Installation
+> npm i
+> npm start
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+# Documentation
+In /docs. Use [mermaid](https://mermaid-js.github.io/mermaid/#/) to read the diagram
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+# Roadmap
+* User subscription :heavy_check_mark:	
+  * Password forgotten :construction:
+* Creating private course and publish them :heavy_check_mark:
+* Private dashboard :construction:	
+  * Access rights for courses and users :construction:	
+  * List all drafts and published courses :heavy_check_mark:
+  * Delete course :heavy_check_mark:
+  * Statistics for all courses
+* Admin access
+* Add summary for a course
+* Paid courses
