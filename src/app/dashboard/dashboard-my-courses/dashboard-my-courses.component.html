@@ -6,24 +6,27 @@
         My courses
     </h1>
 
-
+    <div *ngIf="(allDrafts | async)?.length === 0">
+        <div class="text-gray-400 pt-12 text-center flex flex-col">
+            <i class="fas fa-frown text-4xl pb-5"></i>
+            No courses created yet!
+        </div>
+    </div>
 
     <div *ngFor="let course of allDrafts | async">
-        <div class="relative">
+        <div class="relative w-[calc(100%-56px)]">
             <div [routerLink]="['/course', course.name]"
                 class="relative bg-white p-7 border shadow-md hover:shadow-lg transform hover:-translate-y-2 transition-all ease-in duration-75 cursor-pointer my-2">
 
                 <h2 class="text-lg font-bold p-0">{{course.title}}</h2>
                 <div class="italic text-gray-400">{{course.author}}</div>
 
-                <ng-template *ngIf="course.published; else notpublished">
-                    <div
-                        class="flex flex-col items-center absolute top-1/2 right-7 transform -translate-y-1/2">
-                        <i class="fas fa-check-circle text-mygreen "></i>
-                        <span
-                            class="text-mygreen/50 text-sm italic mt-2">Published!</span>
-                    </div>
-                </ng-template>
+                <div *ngIf="course.published; else notpublished"
+                    class="flex flex-col items-center absolute top-1/2 right-7 transform -translate-y-1/2">
+                    <i class="fas fa-check-circle text-mygreen "></i>
+                    <span
+                        class="text-mygreen/50 text-sm italic mt-2">Published!</span>
+                </div>
 
                 <ng-template #notpublished>
 

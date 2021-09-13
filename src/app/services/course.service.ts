@@ -111,12 +111,12 @@ export class CourseService {
     }
 
     /**
-     * Returns all published course
+     * Returns all courses that are available for the given uid
      */
     getDrafts(uid: string): Observable<any> {
 
         return this.availableCourses(uid).pipe(
-            tap(d => console.log("Access for uid", d)),
+            // tap(d => console.log("Access for uid", d)),
             mergeMap((access: Access[]) => {
                 if (access.length === 0) {
                     return of([]);
@@ -124,22 +124,8 @@ export class CourseService {
                 const checkCourse = access.map((acc: Access) => this.getCourseById(acc.courseid).pipe(first()));
                 return forkJoin(checkCourse);
             }),
-            tap(drafts => console.log("Get all drafts", drafts)
-            )
+            // tap(drafts => console.log("Get all drafts", drafts))
         )
-
-
-        // return this.db.collection<Course[]>(
-        //     'courses',
-        //     ref => ref.where('published', '==', false)
-        // )
-        //     .snapshotChanges()
-        //     .pipe(
-        //         tap(data => console.log("icici")),
-        //         map(
-        //             changes =>
-        //                 changes.map(c => (new Course({ id: c.payload.doc.id, ...c.payload.doc.data() })))
-        //         ));
     }
 
     getCode(codeid: string) {
@@ -159,6 +145,18 @@ export class CourseService {
         });
     }
 
+    isUriUnique(uri: string) {
+        return this.db.collection<Course[]>(
+            'courses',
+            ref => ref.where('name', '==', uri)
+        )
+            .valueChanges()
+            .pipe(
+                map(values => values.length === 0),
+                first()
+            ).toPromise()
+
+    }
 
     save(course: Course) {
         // Save all codes in course.home

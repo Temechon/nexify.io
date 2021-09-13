@@ -23,7 +23,11 @@ export class CourseHomeEditComponent implements OnInit {
 
   saveCourseSub = new Subject();
   saveChapterSub = new Subject<number>();
+  isUriUniqueSub = new Subject<number>();
   toDestroy: Array<Subscription> = [];
+
+  uriUnique = false;
+  uriCheck = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,6 +43,11 @@ export class CourseHomeEditComponent implements OnInit {
     this.toDestroy.push(
       this.saveCourseSub.pipe(debounceTime(500)).subscribe(() => {
         this._save()
+      })
+    )
+    this.toDestroy.push(
+      this.isUriUniqueSub.pipe(debounceTime(500)).subscribe(() => {
+        this.isUriUnique()
       })
     )
 
@@ -145,7 +154,8 @@ export class CourseHomeEditComponent implements OnInit {
     const slugged = slug(this.course.title);
     nameField.value = slugged;
     this.course.name = slugged;
-    this.save();
+    this.checkCourseUri();
+    // this.save();
   }
 
   deleteChapter(index: number) {
@@ -183,6 +193,24 @@ export class CourseHomeEditComponent implements OnInit {
     setTimeout(() => {
       (document.querySelector('#chapter-' + newChap.id) as HTMLInputElement).focus();
     }, 50)
+  }
+
+  /**
+   * Check if this uri is unique or not
+   */
+  checkCourseUri() {
+    this.isUriUniqueSub.next()
+  }
+
+  isUriUnique() {
+    this.courseService.isUriUnique(this.course.name).then((uriUnique: any) => {
+      console.log("ici", uriUnique)
+      this.uriUnique = uriUnique;
+      this.uriCheck = true;
+      if (this.uriUnique) {
+        this.save();
+      }
+    })
   }
 
   ngOnDestroy() {

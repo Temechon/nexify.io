@@ -6,10 +6,16 @@
         (input)="save()" (blur)="updateName(name)"
         class="dark:bg-darkmode-300 dark:border-darkmode-800 dark:text-white w-full font-extrabold shadow-sm text-3xl mb-12 font-display p-4 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50">
 
+
     <div class="my-2 text-lg font-semibold dark:text-gray-200">Course URI</div>
-    <input #name type="text" [(ngModel)]="course.name"
-        placeholder="Course id..." (input)="save()"
-        class="dark:bg-darkmode-300 dark:border-darkmode-800 dark:text-white w-full font-normal shadow-sm text-base mb-12 font-display p-4 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50">
+
+    <div class="mb-12">
+        <input #name type="text" [(ngModel)]="course.name"
+            placeholder="Course id..." (input)="checkCourseUri()"
+            class="dark:bg-darkmode-300 dark:border-darkmode-800 dark:text-white w-full font-normal shadow-sm text-base font-display p-4 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50">
+        <div *ngIf="uriCheck && !uriUnique" class="text-red-500 mt-2">This
+            identifier already exists!</div>
+    </div>
 
     <div class="my-2 text-lg font-semibold dark:text-gray-200">Chapters</div>
     <div cdkDropList (cdkDropListDropped)="reorder($event)">
@@ -70,8 +76,8 @@
         </action-button>
 
         <action-button text="Publish" (onClick)="publish()"
-            *ngIf="!course.published" icon="fa-paper-plane" color="blue"
-            size="big">
+            *ngIf="!course.published && uriCheck && uriUnique"
+            icon="fa-paper-plane" color="blue" size="big">
         </action-button>
 
         <action-button text="Unpublish" (onClick)="unpublish()"

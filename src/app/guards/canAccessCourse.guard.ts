@@ -49,7 +49,8 @@ export class CanAccessCourseGuard implements CanActivate {
                         (access: any) => access.courseid === courseInfo.courseid
                     ).length > 0)
                 );
-            })
+            }),
+            catchError(err => this.router.navigate(['/']))
         )
     }
 }
