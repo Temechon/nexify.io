@@ -235,19 +235,20 @@ export class PDFService {
 
                 for (let taskContent of task.content) {
 
-                    if (Blocktype.isAction(taskContent)) {
-                        doc.setFont('jost', 'normal');
-                        let lines = doc.splitTextToSize(taskContent.value, docLength)
-                        doc.text(lines, margin, y);
-                        y += (lines.length / 2) * 12;
-                        doc.setFont('jost', 'light');
-                    }
-                    if (Blocktype.isItem(taskContent)) {
-                        let lines = doc.splitTextToSize(taskContent.value, docLength)
-                        doc.text(lines, margin, y);
-                        y += (lines.length / 2) * 12;
-                        // newLine();
-                    }
+                    // TODO refactor this with markdown
+                    // if (Blocktype.isAction(taskContent)) {
+                    //     doc.setFont('jost', 'normal');
+                    //     let lines = doc.splitTextToSize(taskContent.value, docLength)
+                    //     doc.text(lines, margin, y);
+                    //     y += (lines.length / 2) * 12;
+                    //     doc.setFont('jost', 'light');
+                    // }
+                    // if (Blocktype.isItem(taskContent)) {
+                    //     let lines = doc.splitTextToSize(taskContent.value, docLength)
+                    //     doc.text(lines, margin, y);
+                    //     y += (lines.length / 2) * 12;
+                    //     // newLine();
+                    // }
                     if (Blocktype.isImage(taskContent)) {
                         newLine();
                         const imgdata = taskContent.value;

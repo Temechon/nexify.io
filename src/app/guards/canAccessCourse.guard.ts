@@ -34,7 +34,7 @@ export class CanAccessCourseGuard implements CanActivate {
         return this.courseService.isPublished(name).pipe(
             first(),
             switchMap((courseInfo: { isPublished: boolean, courseid: string }) => {
-                console.log("--> Course guard", courseInfo, this.authService.uid)
+                // console.log("--> Course guard", courseInfo, this.authService.uid)
 
                 if (courseInfo.isPublished) {
                     console.log("--> Course guard - Course is published, give access");
@@ -42,13 +42,18 @@ export class CanAccessCourseGuard implements CanActivate {
                     return of(true);
                 }
                 console.log("--> Course guard - Course is not published, check access");
-                return this.courseService.availableCourses(this.authService.uid).pipe(
-                    first(),
-                    tap(d => console.log("--> Course guard - access", d, "Course id:", courseInfo.courseid)),
-                    map(allAccess => allAccess.filter(
-                        (access: any) => access.courseid === courseInfo.courseid
-                    ).length > 0)
-                );
+
+                return this.authService.uid().pipe(
+                    mergeMap((uid: string) => {
+                        return this.courseService.availableCourses(uid).pipe(
+                            first(),
+                            tap(d => console.log("--> Course guard - access", d, "Course id:", courseInfo.courseid)),
+                            map(allAccess => allAccess.filter(
+                                (access: any) => access.courseid === courseInfo.courseid
+                            ).length > 0)
+                        );
+                    })
+                )
             }),
             catchError(err => this.router.navigate(['/']))
         )

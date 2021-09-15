@@ -55,14 +55,14 @@
     <div class="my-2 text-lg font-semibold dark:text-gray-200">Prerequisite
     </div>
     <task-edit [task]="course.prerequisite" (onUpdate)="save()"
-        [showTitle]="false" [included]="['item']">
+        [showTitle]="false" [included]="['markdown']">
     </task-edit>
 
     <div class="my-2 text-lg font-semibold dark:text-gray-200">Objectives
     </div>
 
     <task-edit [task]="course.objectives" (onUpdate)="save()"
-        [showTitle]="false" [included]="['item']">
+        [showTitle]="false" [included]="['markdown']">
     </task-edit>
 
     <div class="my-2 text-lg font-semibold dark:text-gray-200">Homepage</div>

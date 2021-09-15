@@ -14,7 +14,7 @@
     }
 }
 
-.item {
+.line {
     @apply font-light;
     @apply text-lg;
     @apply relative;
@@ -31,7 +31,7 @@
     }
 }
 
-.action {
+.subtitle {
     @apply font-normal;
     @apply text-xl;
     @apply ml-4;

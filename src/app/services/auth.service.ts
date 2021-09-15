@@ -13,7 +13,7 @@ import { User } from '../model/user.model';
 
 export class AuthService {
     userData: User; // Save logged in user data
-    uid: string = null;
+    // uid: string = null;
 
     constructor(
         public db: AngularFirestore,
@@ -39,13 +39,13 @@ export class AuthService {
                 // this.userData = user;
                 this.userData = new User(JSON.parse(localStorage.getItem('nexify.user')));
                 console.log(this.userData);
-                this.uid = user.uid;
+                // this.uid = user.uid;
 
                 // JSON.parse(localStorage.getItem('user'));
             } else {
                 console.warn("Removing user from local storage")
                 localStorage.removeItem('nexify.user');
-                this.uid = null;
+                // this.uid = null;
                 // JSON.parse(localStorage.getItem('user'));
             }
         })
@@ -83,6 +83,15 @@ export class AuthService {
             map(user => {
                 // console.log("USER", user)
                 return !!user.uid;
+            })
+        );
+    }
+
+    uid() {
+        return this.auth.authState.pipe(
+            map(user => {
+                // console.log("USER", user)
+                return user.uid;
             })
         );
     }

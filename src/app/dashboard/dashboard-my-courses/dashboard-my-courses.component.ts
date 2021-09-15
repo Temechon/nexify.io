@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import { first, map, mergeMap } from 'rxjs/operators';
 import { ConfirmDialogComponent } from 'src/app/gui/dialog/confirm-dialog.component';
 import { Course } from 'src/app/model/course.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -28,11 +28,15 @@ export class DashboardMyCoursesComponent implements OnInit {
   ngOnInit(): void {
 
     // this.authService.uid.pipe(first()).subscribe((uid: string) => {
-    this.allDrafts = this.courseService.getDrafts(this.authService.uid).pipe(map(drafts => {
-      this.loaderService.hide();
-      return drafts;
-    }));
-    // })
+    this.allDrafts =
+      this.authService.uid().pipe(
+        mergeMap((uid: string) => {
+          return this.courseService.getDrafts(uid).pipe(
+            map(drafts => {
+              this.loaderService.hide();
+              return drafts;
+            }));
+        }))
   }
 
   deleteCourse(courseid: string) {

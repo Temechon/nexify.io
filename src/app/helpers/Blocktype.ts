@@ -8,16 +8,10 @@ export abstract class Blocktype {
     }
 
     /**
-     * Returns true if the given content is an item element
-     */
-    static isItem(test: TaskContent) {
-        return test.type === "item";
-    }
-    /**
      * Returns true if the given content is an action element
      */
-    static isAction(test: TaskContent) {
-        return test.type === "action";
+    static isMarkdown(test: TaskContent) {
+        return test.type === "markdown";
     }
 
     /**

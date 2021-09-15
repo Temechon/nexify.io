@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DocumentReference } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { first } from 'rxjs/operators';
+import { first, mergeMap } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 import { CourseService } from 'src/app/services/course.service';
 import { LoaderService } from 'src/app/services/loader.service';
@@ -44,16 +44,21 @@ export class DashboardHomeComponent implements OnInit {
 
       // Create an access for the connected user
       // return this.authService.uid.pipe(first()).toPromise()
-      //   .then((uid: string) => {
-      return this.courseService.addAccess(course.id, this.authService.uid, "author").then(() => {
-        // Update the course name
-        this.courseService.update({ id: course.id, name: course.id }).then(() => {
-          this.loaderService.hide()
-          this._creatingCourse = false;
-          this.router.navigate(['/course', course.id, 'editor']);
-        })
-      })
-    })
-  }
+      //   .then((uid: string) => {      
 
+      return this.authService.uid().pipe(
+        mergeMap((uid: string) => {
+          return this.courseService.addAccess(course.id, uid, "author").then(() => {
+            // Update the course name
+            this.courseService.update({ id: course.id, name: course.id }).then(() => {
+              this.loaderService.hide()
+              this._creatingCourse = false;
+              this.router.navigate(['/course', course.id, 'editor']);
+            })
+          })
+        })
+      );
+    })
+
+  }
 }

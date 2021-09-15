@@ -11,13 +11,16 @@
         <!-- Content -->
         <ul *ngIf="task.content">
             <ng-container *ngFor="let content of task.content">
-                <li *ngIf="blocktype.isAction(content)" [ngClass]="content.type"
+                <!-- <li *ngIf="blocktype.isAction(content)" [ngClass]="content.type"
                     [innerHTML]="content.value | markdown" class="mt-6 mb-4">
                 </li>
 
                 <li *ngIf="blocktype.isItem(content)" [ngClass]="content.type"
                     [innerHTML]="content.value | markdown">
-                </li>
+                </li> -->
+                <!-- TODO Add markdown view here -->
+                <div [innerHTML]="content.value | markdown">
+                </div>
 
                 <div *ngIf="blocktype.isLink(content)" class="my-4">
                     <link-view [link]="content.value"></link-view>

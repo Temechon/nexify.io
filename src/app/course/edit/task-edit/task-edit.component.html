@@ -9,11 +9,17 @@
         <div *ngIf="task.content.length === 0">
             <div class="flex items-center justify-center flex-wrap gap-2 mb-4">
 
-                <action-button *ngIf="canUse('action')" text="action"
-                    (click)="add('action', 0)" icon="fa-bolt" color="blue">
+                <!-- <action-button *ngIf="canUse('subtitle')" text="subtitle"
+                    (click)="add('subtitle', 0)" icon="fa-bolt" color="blue">
                 </action-button>
-                <action-button *ngIf="canUse('item')" text="text"
-                    (click)="add('item', 0)" icon="fa-pencil-alt" color="blue">
+
+                <action-button *ngIf="canUse('line')" text="line"
+                    (click)="add('line', 0)" icon="fa-pencil-alt" color="blue">
+                </action-button> -->
+
+                <action-button *ngIf="canUse('markdown')" text="markdown"
+                    (click)="add('markdown', 0)" icon="fa-align-left"
+                    color="blue">
                 </action-button>
 
                 <action-button *ngIf="canUse('link')" text="link"
@@ -45,7 +51,7 @@
                     <div class="w-full flex items-center ml-5">
 
                         <!-- Action  -->
-                        <input placeholder="New action..."
+                        <!-- <input placeholder="New action..."
                             class="action dark:bg-darkmode-400 dark:border-transparent dark:text-gray-200 action border-none font-light text-lg py-1 w-full pl-4 focus:outline-none focus:ring focus:border-blue-300 "
                             type="text" *ngIf="blocktype.isAction(content)"
                             [value]="content.value"
@@ -55,7 +61,13 @@
                             class="dark:bg-darkmode-400  dark:text-gray-200 item border-none font-light text-lg py-1 w-full pl-4 border focus:outline-none focus:ring focus:border-blue-300 "
                             type="text" *ngIf="blocktype.isItem(content)"
                             [value]="content.value"
+                            (input)="saveText($event.target, index)"> -->
+                        <textarea placeholder="Type your markdown here"
+                            class="action dark:bg-darkmode-400 dark:border-transparent dark:text-gray-200 action border-none font-light text-lg py-1 w-full pl-4 focus:outline-none focus:ring focus:border-blue-300 "
+                            type="text" *ngIf="blocktype.isMarkdown(content)"
+                            [value]="content.value"
                             (input)="saveText($event.target, index)">
+                        </textarea>
 
                         <!-- Code -->
                         <div *ngIf="blocktype.isCode(content)"
@@ -114,6 +126,12 @@
                     </action-button>
                     <action-button *ngIf="canUse('item')" text="text"
                         (click)="add('item', index)" icon="fa-pencil-alt"
+                        color="blue">
+                    </action-button>
+
+
+                    <action-button *ngIf="canUse('text')" text="text"
+                        (click)="add('text', 0)" icon="fa-align-left"
                         color="blue">
                     </action-button>
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import { first, map, mergeMap } from 'rxjs/operators';
 import { Course } from '../model/course.model';
 import { AuthService } from '../services/auth.service';
 import { CourseService } from '../services/course.service';
@@ -23,11 +23,5 @@ export class CoursesListComponent implements OnInit {
 
   ngOnInit(): void {
     this.allPublishedCourses = this.courseService.getAll();
-
-    this.allDrafts = this.courseService.getDrafts(this.authService.uid);
-    // this.authService.uid.pipe(first()).subscribe((uid: string) => {
-    //   this.allDrafts = this.courseService.getDrafts(uid);
-    // })
-
   }
 }

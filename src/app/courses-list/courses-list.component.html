@@ -21,17 +21,6 @@
                 <h2 class="text-lg font-bold p-0">{{course.title}}</h2>
                 <div class="italic text-gray-400">{{course.author}}</div>
             </div>
-
-            <h2>My drafts</h2>
-
-            <div *ngFor="let course of allDrafts | async"
-                [routerLink]="['/course', course.name]"
-                class="bg-white p-7 border shadow-md hover:shadow-lg transform hover:-translate-y-2 relative transition-all ease-in duration-75 cursor-pointer">
-                <h2 class="text-lg font-bold p-0">{{course.title}}</h2>
-                <div class="italic text-gray-400">{{course.author}}</div>
-            </div>
-
-
         </section>
     </div>
 
