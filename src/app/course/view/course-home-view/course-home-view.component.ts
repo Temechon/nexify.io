@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { forkJoin, Observable, Subscription } from 'rxjs';
-import { first, tap } from 'rxjs/operators';
+import { forkJoin, Observable, of, Subscription } from 'rxjs';
+import { catchError, first, tap } from 'rxjs/operators';
 import { Chapter } from 'src/app/model/chapter.model';
 import { Course } from 'src/app/model/course.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -18,7 +18,7 @@ export class CourseHomeViewComponent implements OnInit {
 
   course: Course;
   chapters: Observable<Chapter[]>;
-  allChapters: Array<Chapter>;
+  allChapters: Array<Chapter> = [];
 
   firstChapter: Chapter;
 
@@ -69,7 +69,13 @@ export class CourseHomeViewComponent implements OnInit {
     })
 
     forkJoin(getAllCodes)
-      .pipe(first())
+      .pipe(
+        first(),
+        catchError(err => {
+          console.error(err);
+          return of([])
+        })
+      )
       .subscribe(
         allChapters => PDFService.createPDF(this.course, allChapters)
       );

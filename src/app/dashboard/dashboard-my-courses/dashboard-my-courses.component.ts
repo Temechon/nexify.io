@@ -68,8 +68,6 @@ export class DashboardMyCoursesComponent implements OnInit {
           // remove course
           this.courseService.delete(courseid);
         })
-        // TODO delete chapters, codes and access
-        // this.courseService.delete(courseid);
       }
     })
 

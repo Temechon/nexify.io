@@ -84,16 +84,6 @@ export class PDFService {
         doc.addFont('Jost-Black.ttf', 'jost', 'bold');
         doc.addFont('Jost-Light.ttf', 'jost', 'light');
         doc.addFont('Inconsolata.ttf', 'inconsolata', 'normal');
-        // doc.addFont('arimo.regular-bold.ttf', 'arimo', 'bold');
-
-        // doc.addFont('jost-medium-normal.ttf', 'jost-medium', 'normal');
-
-        // Logo - Image
-        // doc.addImage(this.LOGO, 'JPEG', 112 - 30, 31 - 8, 44, 13);
-        // blue background
-        // doc.setFillColor(249, 250, 251);
-        // doc.setFillColor(0, 250, 251);
-        // doc.rect(0, 0, 210, 297, 'F');
 
 
         let y = margin;
@@ -116,6 +106,10 @@ export class PDFService {
                 .setTextColor('black');
             doc.text(title, margin + docLength / 2, y, { align: 'center' });
 
+            doc.setTextColor('black')
+                .setFontSize(12)
+                .setFont('jost', 'light')
+
             newLine();
             newLine();
         }
@@ -126,7 +120,10 @@ export class PDFService {
                 .setFont('jost', 'normal')
                 .setTextColor('#00d68f');
             doc.text(title, margin, y);
-            // doc.html("<p class='bg-red-500>COUCOU JCH</p>")
+
+            doc.setTextColor('black')
+                .setFontSize(12)
+                .setFont('jost', 'light')
             newLine();
         }
 
@@ -211,12 +208,59 @@ export class PDFService {
 
         doc.text(title, 210 / 2, margin * 3, { align: 'center' });
 
+        // Author
+        doc
+            .setFontSize(10)
+            .setFont('jost', 'light')
+            .setTextColor('black');
+
+        doc.text(`Created by ${course.author}`, 210 / 2, title.length / 2 * 12 + margin * 4, { align: 'center' });
+
         doc
             .setFontSize(12)
             .setFont('jost', 'light')
             .setTextColor('black');
 
         doc.textWithLink("Exported from nexify.io", 210 / 2, 297 - margin / 2, { align: 'center', url: "http://nexify.io" });
+
+
+        // Add prerequesite - a task with only markdown
+        if (course.prerequisite) {
+            doc.addPage();
+            addTask("Prerequisite");
+
+            for (let taskContent of course.prerequisite.content) {
+                // taskcontent is always a markdown type
+                // TODO refactor this and add style for markdown 
+                let lines = doc.splitTextToSize(taskContent.value, docLength)
+                doc.text(lines, margin, y);
+                y += (lines.length / 2) * 12;
+            }
+            newLine();
+            newLine();
+        }
+        if (course.objectives) {
+            if (!course.prerequisite) {
+                doc.addPage();
+            }
+            addTask("Objectives");
+
+            for (let taskContent of course.objectives.content) {
+                // taskcontent is always a markdown type
+                // TODO refactor this and add style for markdown 
+                let lines = doc.splitTextToSize(taskContent.value, docLength)
+                doc.text(lines, margin, y);
+                y += (lines.length / 2) * 12;
+            }
+            newLine();
+            newLine();
+        }
+        if (course.home) {
+            // TODO finish here
+            // addCompleteTask(course.home);
+        }
+
+        doc.addPage();
 
         for (const chap of chapters) {
 
@@ -225,6 +269,7 @@ export class PDFService {
             doc.addPage();
             addChapter(chap.title);
 
+            // TODO extract this into a new function
             for (let task of chap.tasks) {
 
                 addTask(task.title);
@@ -236,30 +281,12 @@ export class PDFService {
                 for (let taskContent of task.content) {
 
                     // TODO refactor this with markdown
-                    // if (Blocktype.isAction(taskContent)) {
-                    //     doc.setFont('jost', 'normal');
-                    //     let lines = doc.splitTextToSize(taskContent.value, docLength)
-                    //     doc.text(lines, margin, y);
-                    //     y += (lines.length / 2) * 12;
-                    //     doc.setFont('jost', 'light');
-                    // }
-                    // if (Blocktype.isItem(taskContent)) {
-                    //     let lines = doc.splitTextToSize(taskContent.value, docLength)
-                    //     doc.text(lines, margin, y);
-                    //     y += (lines.length / 2) * 12;
-                    //     // newLine();
-                    // }
+
                     if (Blocktype.isImage(taskContent)) {
                         newLine();
                         const imgdata = taskContent.value;
 
                         const realimg = _.find(images, i => i.imgid === imgdata);
-                        // let i = new Image();
-                        // let w = 0, h = 0
-                        // i.onload = function () {
-                        //     alert(i.width + ", " + i.height);
-                        // };
-                        // i.src = taskContent.value;
                         doc.addImage(realimg.imgid, 'JPEG', margin + docLength / 2 - realimg.w / 2, y, realimg.w, realimg.h)
                         y += realimg.h;
                         newLine();
