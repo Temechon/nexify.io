@@ -50,20 +50,8 @@
                     </div>
                     <div class="w-full flex items-center ml-5">
 
-                        <!-- Action  -->
-                        <!-- <input placeholder="New action..."
-                            class="action dark:bg-darkmode-400 dark:border-transparent dark:text-gray-200 action border-none font-light text-lg py-1 w-full pl-4 focus:outline-none focus:ring focus:border-blue-300 "
-                            type="text" *ngIf="blocktype.isAction(content)"
-                            [value]="content.value"
-                            (input)="saveText($event.target, index)">
-
-                        <input placeholder="New item..."
-                            class="dark:bg-darkmode-400  dark:text-gray-200 item border-none font-light text-lg py-1 w-full pl-4 border focus:outline-none focus:ring focus:border-blue-300 "
-                            type="text" *ngIf="blocktype.isItem(content)"
-                            [value]="content.value"
-                            (input)="saveText($event.target, index)"> -->
                         <textarea placeholder="Type your markdown here"
-                            class="action dark:bg-darkmode-400 dark:border-transparent dark:text-gray-200 action border-none font-light text-lg py-1 w-full pl-4 focus:outline-none focus:ring focus:border-blue-300 "
+                            class="relative min-h-[500px] dark:bg-darkmode-400 dark:border-transparent dark:text-gray-200 action border-none font-light text-lg py-1 w-full pl-4 focus:outline-none focus:ring focus:border-blue-300 "
                             type="text" *ngIf="blocktype.isMarkdown(content)"
                             [value]="content.value"
                             (input)="saveText($event.target, index)">
