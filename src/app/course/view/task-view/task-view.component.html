@@ -6,41 +6,40 @@
         {{task.title}}
     </div>
 
-    <div #taskContent class="px-6 pt-3 pb-3 dark:text-gray-200">
+    <div #taskContent class="px-6 pt-3 pb-3 dark:text-gray-200"
+        *ngIf="task.content">
 
         <!-- Content -->
-        <ul *ngIf="task.content">
-            <ng-container *ngFor="let content of task.content">
-                <!-- <li *ngIf="blocktype.isAction(content)" [ngClass]="content.type"
+        <ng-container *ngFor="let content of task.content">
+            <!-- <li *ngIf="blocktype.isAction(content)" [ngClass]="content.type"
                     [innerHTML]="content.value | markdown" class="mt-6 mb-4">
                 </li>
 
                 <li *ngIf="blocktype.isItem(content)" [ngClass]="content.type"
                     [innerHTML]="content.value | markdown">
                 </li> -->
-                <!-- TODO Add markdown view here -->
-                <div [innerHTML]="content.value | markdown">
-                </div>
+            <!-- TODO Add markdown view here -->
+            <div class="py-4 prose" [innerHTML]="getMarkdown(content.value)">
+            </div>
 
-                <div *ngIf="blocktype.isLink(content)" class="my-4">
-                    <link-view [link]="content.value"></link-view>
-                </div>
+            <div *ngIf="blocktype.isLink(content)" class="my-4">
+                <link-view [link]="content.value"></link-view>
+            </div>
 
-                <div *ngIf="blocktype.isCode(content)" class="my-4">
-                    <code-view [codes]="blocktype.getCode(task, content)">
-                    </code-view>
-                </div>
+            <div *ngIf="blocktype.isCode(content)" class="my-4">
+                <code-view [codes]="blocktype.getCode(task, content)">
+                </code-view>
+            </div>
 
-                <div *ngIf="blocktype.isImage(content)" class="my-4">
-                    <img-view [img]="content.value">
-                    </img-view>
-                </div>
+            <div *ngIf="blocktype.isImage(content)" class="my-4">
+                <img-view [img]="content.value">
+                </img-view>
+            </div>
 
-                <div *ngIf="blocktype.isTip(content)" class="my-4">
-                    <tip-view [tip]="content.value">
-                    </tip-view>
-                </div>
-            </ng-container>
-        </ul>
+            <div *ngIf="blocktype.isTip(content)" class="my-4">
+                <tip-view [tip]="content.value">
+                </tip-view>
+            </div>
+        </ng-container>
     </div>
 </div>
