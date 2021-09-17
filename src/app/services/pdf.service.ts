@@ -15,6 +15,8 @@ import 'prismjs/components/prism-markup';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-sass';
 import 'prismjs/components/prism-scss';
+import { TaskContent, Task } from '../model/task.model';
+import marked from 'marked';
 
 
 declare var Prism: any;
@@ -197,6 +199,106 @@ export class PDFService {
             }
         }
 
+        const addTaskContent = (task: Task, taskContent: TaskContent) => {
+            if (Blocktype.isImage(taskContent)) {
+                newLine();
+                const imgdata = taskContent.value;
+
+                const realimg = _.find(images, i => i.imgid === imgdata);
+                doc.addImage(realimg.imgid, 'JPEG', margin + docLength / 2 - realimg.w / 2, y, realimg.w, realimg.h)
+                y += realimg.h;
+                newLine();
+            }
+
+            // For a code, display all tabs and their content
+            if (Blocktype.isCode(taskContent)) {
+                // newLine();
+                const code = Blocktype.getCode(task, taskContent);
+
+                for (let tab of code.content) {
+                    if (tab.name) {
+
+                        newLine(6);
+                        doc.setFillColor(45, 63, 81);
+                        doc.rect(margin, y - 6, docLength, 9, 'F');
+
+                        doc.setTextColor('white').setFont('jost', 'normal');
+                        doc.text(tab.name, margin + 2, y);
+                        doc.setTextColor('black').setFont('jost', 'light');
+                        newLine(9);
+                    }
+
+                    let codeElement = document.createElement('code');
+                    codeElement.classList.add(tab.classname);
+                    codeElement.textContent = tab.code;
+                    Prism.highlightElement(codeElement);
+                    // console.log("after prism", codeElement);
+                    xx = margin;
+                    doc.setFont("inconsolata", "normal").setFontSize(10);
+                    displayCode(codeElement);
+                    newLine();
+                    doc.setFont('jost', 'light').setFontSize(12);
+                }
+            }
+
+            if (Blocktype.isLink(taskContent)) {
+                newLine(6);
+                let lines = doc.splitTextToSize(taskContent.value[0], docLength)
+                const linesH = lines.length / 2 * 12;
+
+                doc.textWithLink(lines, margin + 7, y, { url: taskContent.value[1] });
+
+                doc.setFillColor(0, 214, 143);
+                doc.rect(margin, y - 6, 3, linesH + 3, 'F');
+
+                y += linesH;
+
+                newLine(6);
+            }
+
+            if (Blocktype.isTip(taskContent)) {
+                newLine(6);
+                let lines = doc.splitTextToSize(taskContent.value, docLength - 7)
+                const linesH = lines.length / 2 * 12;
+
+                doc.setTextColor("#fbbf24").setFont('jost', 'normal');
+                doc.text(lines, margin + 7, y);
+                doc.setTextColor("black").setFont('jost', 'light');
+
+                doc.setFillColor(251, 191, 36);
+                doc.rect(margin, y - 6, 3, linesH + 3, 'F');
+
+                y += linesH;
+
+                newLine(6);
+            }
+
+            if (Blocktype.isMarkdown(taskContent)) {
+                let markdown = marked.lexer(taskContent.value);
+                console.log(markdown);
+
+                for (let token of markdown) {
+                    if (token.type === "heading") {
+                        let lines = doc.splitTextToSize(token.text, docLength)
+
+                        doc.setFontSize(17 - token.depth).setFont('jost', 'bold');
+                        doc.text(lines, margin, y);
+                        doc.setFontSize(12).setFont('jost', 'light');
+                        y += lines.length / 2 * 12;
+                    }
+
+                    if (token.type === "paragraph") {
+                        let lines = doc.splitTextToSize(token.text, docLength)
+                        doc.text(lines, margin, y);
+                        y += lines.length / 2 * 12;
+                    }
+                }
+
+            }
+
+            checkNewPage()
+        }
+
 
         // Course title
         doc
@@ -230,11 +332,7 @@ export class PDFService {
             addTask("Prerequisite");
 
             for (let taskContent of course.prerequisite.content) {
-                // taskcontent is always a markdown type
-                // TODO refactor this and add style for markdown 
-                let lines = doc.splitTextToSize(taskContent.value, docLength)
-                doc.text(lines, margin, y);
-                y += (lines.length / 2) * 12;
+                addTaskContent(course.prerequisite, taskContent)
             }
             newLine();
             newLine();
@@ -256,8 +354,9 @@ export class PDFService {
             newLine();
         }
         if (course.home) {
-            // TODO finish here
-            // addCompleteTask(course.home);
+            for (let taskContent of course.home.content) {
+                addTaskContent(course.home, taskContent);
+            }
         }
 
         doc.addPage();
@@ -280,97 +379,10 @@ export class PDFService {
 
                 for (let taskContent of task.content) {
 
-                    // TODO refactor this with markdown
-
-                    if (Blocktype.isImage(taskContent)) {
-                        newLine();
-                        const imgdata = taskContent.value;
-
-                        const realimg = _.find(images, i => i.imgid === imgdata);
-                        doc.addImage(realimg.imgid, 'JPEG', margin + docLength / 2 - realimg.w / 2, y, realimg.w, realimg.h)
-                        y += realimg.h;
-                        newLine();
-                    }
-
-                    // For a code, display all tabs and their content
-                    if (Blocktype.isCode(taskContent)) {
-                        // newLine();
-                        const code = Blocktype.getCode(task, taskContent);
-
-                        for (let tab of code.content) {
-                            if (tab.name) {
-
-                                newLine(6);
-                                doc.setFillColor(45, 63, 81);
-                                doc.rect(margin, y - 6, docLength, 9, 'F');
-
-                                doc.setTextColor('white').setFont('jost', 'normal');
-                                doc.text(tab.name, margin + 2, y);
-                                doc.setTextColor('black').setFont('jost', 'light');
-                                newLine(9);
-                            }
-
-                            let codeElement = document.createElement('code');
-                            codeElement.classList.add(tab.classname);
-                            codeElement.textContent = tab.code;
-                            Prism.highlightElement(codeElement);
-                            // console.log("after prism", codeElement);
-                            xx = margin;
-                            doc.setFont("inconsolata", "normal").setFontSize(10);
-                            displayCode(codeElement);
-                            newLine();
-                            doc.setFont('jost', 'light').setFontSize(12);
-
-                            // let str = Prism.highlight(tab.code, Prism.languages.javascript, "javascript");
-                            // console.log("hihglihted", str);
-
-
-                            // const realCode = tab.code.replace(regex, "");
-                            // let lines = doc.splitTextToSize(realCode, docLength)
-                            // doc.text(lines, margin, y);
-                            // y += (lines.length / 2 - 1) * 12;
-                        }
-                        // doc.text(taskContent.value, margin, y);
-                        // newLine();
-                    }
-
-                    if (Blocktype.isLink(taskContent)) {
-                        newLine(6);
-                        let lines = doc.splitTextToSize(taskContent.value[0], docLength)
-                        const linesH = lines.length / 2 * 12;
-
-                        doc.textWithLink(lines, margin + 7, y, { url: taskContent.value[1] });
-
-                        doc.setFillColor(0, 214, 143);
-                        doc.rect(margin, y - 6, 3, linesH + 3, 'F');
-
-                        y += linesH;
-
-                        newLine(6);
-                    }
-
-                    if (Blocktype.isTip(taskContent)) {
-                        newLine(6);
-                        let lines = doc.splitTextToSize(taskContent.value, docLength - 7)
-                        const linesH = lines.length / 2 * 12;
-
-                        doc.setTextColor("#fbbf24").setFont('jost', 'normal');
-                        doc.text(lines, margin + 7, y);
-                        doc.setTextColor("black").setFont('jost', 'light');
-
-                        doc.setFillColor(251, 191, 36);
-                        doc.rect(margin, y - 6, 3, linesH + 3, 'F');
-
-                        y += linesH;
-
-                        newLine(6);
-                    }
-                    checkNewPage()
+                    addTaskContent(task, taskContent);
                 }
                 newLine();
             }
-
-
         }
 
         // Add footer on all pages
