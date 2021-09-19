@@ -11,7 +11,8 @@
 
         <!-- Content -->
         <ng-container *ngFor="let content of task.content">
-            <div class="py-4 prose" [innerHTML]="getMarkdown(content.value)">
+            <div *ngIf="blocktype.isMarkdown(content)" class="py-4 prose"
+                [innerHTML]="getMarkdown(content.value)">
             </div>
 
             <div *ngIf="blocktype.isLink(content)" class="my-4">
