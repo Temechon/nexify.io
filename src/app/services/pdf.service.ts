@@ -409,7 +409,6 @@ export class PDFService {
             doc.addPage();
             addChapter(chap.title);
 
-            // TODO extract this into a new function
             for (let task of chap.tasks) {
 
                 addTask(task.title);
