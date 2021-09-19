@@ -11,7 +11,8 @@
 
         <!-- Content -->
         <ng-container *ngFor="let content of task.content">
-            <div *ngIf="blocktype.isMarkdown(content)" class="py-4 prose"
+            <div *ngIf="blocktype.isMarkdown(content)"
+                class="py-4 prose dark:prose-dark"
                 [innerHTML]="getMarkdown(content.value)">
             </div>
 
