@@ -3,7 +3,7 @@ import _ from 'underscore';
 import { Blocktype } from '../helpers/Blocktype';
 import { Chapter } from '../model/chapter.model';
 import { Course } from '../model/course.model';
-import { inconsolata, jostBlack, jostLight, jostMedium } from './pdf.customfonts';
+import { inconsolata, jostBlack, jostItalic, jostLight, jostMedium } from './pdf.customfonts';
 
 import 'prismjs';
 import 'prismjs/plugins/toolbar/prism-toolbar';
@@ -74,46 +74,50 @@ export class PDFService {
             format: 'a4'
         });
 
-        const margin = 30;
-        const docLength = 210 - margin * 2;
+        const caret = new Caret(doc);
+
+        // const margin = 30;
+        // const docLength = 210 - margin * 2;
 
         (doc as any).addFileToVFS('Jost-Medium.ttf', jostMedium);
         (doc as any).addFileToVFS('Jost-Black.ttf', jostBlack);
         (doc as any).addFileToVFS('Jost-Light.ttf', jostLight);
+        (doc as any).addFileToVFS('Jost-Italic.ttf', jostItalic);
         (doc as any).addFileToVFS('Inconsolata.ttf', inconsolata);
         // (doc as any).addFileToVFS('arimo.regular-bold.ttf', this.regularBold);
         doc.addFont('Jost-Medium.ttf', 'jost', 'normal');
         doc.addFont('Jost-Black.ttf', 'jost', 'bold');
         doc.addFont('Jost-Light.ttf', 'jost', 'light');
+        doc.addFont('Jost-Italic.ttf', 'jost', 'italic');
         doc.addFont('Inconsolata.ttf', 'inconsolata', 'normal');
 
 
-        let y = margin;
-        const newLine = (space: number = 12) => {
-            y += space;
-            checkNewPage()
-        };
+        // let y = margin;
+        // const newLine = (space: number = 12) => {
+        //     y += space;
+        //     checkNewPage()
+        // };
 
-        const checkNewPage = () => {
-            if (y > 297 - margin) {
-                doc.addPage();
-                y = margin;
-            }
-        }
+        // const checkNewPage = () => {
+        //     if (y > 297 - margin) {
+        //         doc.addPage();
+        //         y = margin;
+        //     }
+        // }
 
         const addChapter = (title: string) => {
             doc
                 .setFontSize(24)
                 .setFont('jost', 'bold')
                 .setTextColor('black');
-            doc.text(title, margin + docLength / 2, y, { align: 'center' });
+            doc.text(title, caret.margin + caret.docLength / 2, caret.y, { align: 'center' });
 
             doc.setTextColor('black')
                 .setFontSize(12)
                 .setFont('jost', 'light')
 
-            newLine();
-            newLine();
+            caret.newLine();
+            caret.newLine();
         }
 
         const addTask = (title: string) => {
@@ -121,17 +125,15 @@ export class PDFService {
                 .setFontSize(14)
                 .setFont('jost', 'normal')
                 .setTextColor('#00d68f');
-            doc.text(title, margin, y);
+            doc.text(title, caret.margin, caret.y);
 
             doc.setTextColor('black')
                 .setFontSize(12)
                 .setFont('jost', 'light')
-            newLine();
+            caret.newLine();
         }
 
         // The x coordinates where the next token should be written
-        let xx = margin;
-
         const displayCode = (codeElement: ChildNode, textColor?: string) => {
             if (!codeElement.hasChildNodes()) {
                 const codeText = codeElement.textContent;
@@ -140,31 +142,9 @@ export class PDFService {
                 }
 
                 doc.setTextColor(textColor);
-                const lines = doc.splitTextToSize(codeText, docLength, { textIndent: xx });
-
-                if (lines.length === 1) {
-                    doc.text(lines, xx, y);
-                    xx += doc.getTextWidth(lines);
-                    if (xx >= docLength + margin) {
-                        xx = margin;
-                        newLine(6);
-                    }
-                } else {
-                    doc.text(lines[0], xx, y);
-
-                    const startCut = lines[0].length + 1;
-                    const nextCodeText = codeText.substr(startCut, codeText.length);
-                    const nextLines = doc.splitTextToSize(nextCodeText, docLength);
-
-                    for (let l of nextLines) {
-                        newLine(6);
-                        doc.text(l, margin, y);
-                        xx = margin + doc.getTextWidth(l);
-                    }
-                }
+                caret.addText(codeText);
                 doc.setTextColor('black')
             } else {
-
 
                 const nodes = codeElement.childNodes;
                 const codeElementDom = codeElement as HTMLElement;
@@ -201,13 +181,13 @@ export class PDFService {
 
         const addTaskContent = (task: Task, taskContent: TaskContent) => {
             if (Blocktype.isImage(taskContent)) {
-                newLine();
+                caret.newLine();
                 const imgdata = taskContent.value;
 
                 const realimg = _.find(images, i => i.imgid === imgdata);
-                doc.addImage(realimg.imgid, 'JPEG', margin + docLength / 2 - realimg.w / 2, y, realimg.w, realimg.h)
-                y += realimg.h;
-                newLine();
+                doc.addImage(realimg.imgid, 'JPEG', caret.margin + caret.docLength / 2 - realimg.w / 2, caret.y, realimg.w, realimg.h)
+                caret.y += realimg.h;
+                caret.newLine();
             }
 
             // For a code, display all tabs and their content
@@ -218,14 +198,14 @@ export class PDFService {
                 for (let tab of code.content) {
                     if (tab.name) {
 
-                        newLine(6);
+                        caret.newLine(6);
                         doc.setFillColor(45, 63, 81);
-                        doc.rect(margin, y - 6, docLength, 9, 'F');
+                        doc.rect(caret.margin, caret.y - 6, caret.docLength, 9, 'F');
 
                         doc.setTextColor('white').setFont('jost', 'normal');
-                        doc.text(tab.name, margin + 2, y);
+                        doc.text(tab.name, caret.margin + 2, caret.y);
                         doc.setTextColor('black').setFont('jost', 'light');
-                        newLine(9);
+                        caret.newLine(9);
                     }
 
                     let codeElement = document.createElement('code');
@@ -233,44 +213,44 @@ export class PDFService {
                     codeElement.textContent = tab.code;
                     Prism.highlightElement(codeElement);
                     // console.log("after prism", codeElement);
-                    xx = margin;
+                    caret.x = caret.margin;
                     doc.setFont("inconsolata", "normal").setFontSize(10);
                     displayCode(codeElement);
-                    newLine();
+                    caret.newLine();
                     doc.setFont('jost', 'light').setFontSize(12);
                 }
             }
 
             if (Blocktype.isLink(taskContent)) {
-                newLine(6);
-                let lines = doc.splitTextToSize(taskContent.value[0], docLength)
+                caret.newLine(6);
+                let lines = doc.splitTextToSize(taskContent.value[0], caret.docLength)
                 const linesH = lines.length / 2 * 12;
 
-                doc.textWithLink(lines, margin + 7, y, { url: taskContent.value[1] });
+                doc.textWithLink(lines, caret.margin + 7, caret.y, { url: taskContent.value[1] });
 
                 doc.setFillColor(0, 214, 143);
-                doc.rect(margin, y - 6, 3, linesH + 3, 'F');
+                doc.rect(caret.margin, caret.y - 6, 3, linesH + 3, 'F');
 
-                y += linesH;
+                caret.y += linesH;
 
-                newLine(6);
+                caret.newLine(6);
             }
 
             if (Blocktype.isTip(taskContent)) {
-                newLine(6);
-                let lines = doc.splitTextToSize(taskContent.value, docLength - 7)
+                caret.newLine(6);
+                let lines = doc.splitTextToSize(taskContent.value, caret.docLength - 7)
                 const linesH = lines.length / 2 * 12;
 
                 doc.setTextColor("#fbbf24").setFont('jost', 'normal');
-                doc.text(lines, margin + 7, y);
+                doc.text(lines, caret.margin + 7, caret.y);
                 doc.setTextColor("black").setFont('jost', 'light');
 
                 doc.setFillColor(251, 191, 36);
-                doc.rect(margin, y - 6, 3, linesH + 3, 'F');
+                doc.rect(caret.margin, caret.y - 6, 3, linesH + 3, 'F');
 
-                y += linesH;
+                caret.y += linesH;
 
-                newLine(6);
+                caret.newLine(6);
             }
 
             if (Blocktype.isMarkdown(taskContent)) {
@@ -278,25 +258,89 @@ export class PDFService {
                 console.log(markdown);
 
                 for (let token of markdown) {
-                    if (token.type === "heading") {
-                        let lines = doc.splitTextToSize(token.text, docLength)
-
-                        doc.setFontSize(17 - token.depth).setFont('jost', 'bold');
-                        doc.text(lines, margin, y);
-                        doc.setFontSize(12).setFont('jost', 'light');
-                        y += lines.length / 2 * 12;
-                    }
-
-                    if (token.type === "paragraph") {
-                        let lines = doc.splitTextToSize(token.text, docLength)
-                        doc.text(lines, margin, y);
-                        y += lines.length / 2 * 12;
-                    }
+                    handleMdToken(token);
+                    caret.resetx();
                 }
+            }
+            caret.checkNewPage()
+        }
 
+        const handleMdToken = (mdtoken: any,) => {
+            if (mdtoken.type == "text" && !mdtoken.tokens) {
+                caret.addText(mdtoken.raw);
+            }
+            if (mdtoken.type == "text" && mdtoken.tokens) {
+                for (let tok of mdtoken.tokens) {
+                    handleMdToken(tok);
+                }
+            }
+            if (mdtoken.type == "paragraph") {
+                for (let tok of mdtoken.tokens) {
+                    handleMdToken(tok);
+                }
+                caret.newLine();
+            }
+            if (mdtoken.type == "space") {
+                // Nothing to do
             }
 
-            checkNewPage()
+            if (mdtoken.type == "em") {
+                doc.setFont("jost", "italic")
+                for (let tok of mdtoken.tokens) {
+                    handleMdToken(tok);
+                }
+                doc.setFont('jost', 'light');
+            }
+
+            if (mdtoken.type == "strong") {
+                doc.setFont("jost", "bold")
+                for (let tok of mdtoken.tokens) {
+                    handleMdToken(tok);
+                }
+                doc.setFont('jost', 'light');
+            }
+
+            if (mdtoken.type === "heading") {
+                doc.setFontSize(17 - mdtoken.depth).setFont('jost', 'bold');
+                for (let tok of mdtoken.tokens) {
+                    handleMdToken(tok);
+                }
+                doc.setFontSize(12).setFont('jost', 'light');
+                caret.newLine();
+            }
+
+            if (mdtoken.type == "list") {
+                let index = 0;
+                for (let listitem of mdtoken.items) {
+                    if (mdtoken.ordered) {
+                        caret.addText(`${mdtoken.start + index}. `)
+                    } else {
+                        caret.addText("- ");
+                    }
+                    for (let tok of listitem.tokens) {
+                        handleMdToken(tok);
+                    }
+                    caret.newLine(6);
+                    caret.resetx();
+                    index++;
+                }
+            }
+            if (mdtoken.type == "blockquote") {
+                caret.newLine(6);
+                let lines = doc.splitTextToSize(mdtoken.text.trim(), caret.docLength - 7)
+                const linesH = lines.length / 2 * 12;
+
+                doc.setFont('jost', 'normal');
+                doc.text(lines, caret.margin + 7, caret.y);
+                doc.setFont('jost', 'light');
+
+                doc.setFillColor(251, 191, 36);
+                doc.rect(caret.margin, caret.y - 6, 3, linesH + 3, 'F');
+
+                caret.y += linesH;
+
+                caret.newLine(6);
+            }
         }
 
 
@@ -306,9 +350,9 @@ export class PDFService {
             .setFont('jost', 'bold')
             .setTextColor('black');
 
-        let title = doc.splitTextToSize(course.title, docLength);
+        let title = doc.splitTextToSize(course.title, caret.docLength);
 
-        doc.text(title, 210 / 2, margin * 3, { align: 'center' });
+        doc.text(title, 210 / 2, caret.margin * 3, { align: 'center' });
 
         // Author
         doc
@@ -316,14 +360,14 @@ export class PDFService {
             .setFont('jost', 'light')
             .setTextColor('black');
 
-        doc.text(`Created by ${course.author}`, 210 / 2, title.length / 2 * 12 + margin * 4, { align: 'center' });
+        doc.text(`Created by ${course.author}`, 210 / 2, title.length / 2 * 12 + caret.margin * 4, { align: 'center' });
 
         doc
             .setFontSize(12)
             .setFont('jost', 'light')
             .setTextColor('black');
 
-        doc.textWithLink("Exported from nexify.io", 210 / 2, 297 - margin / 2, { align: 'center', url: "http://nexify.io" });
+        doc.textWithLink("Exported from nexify.io", 210 / 2, 297 - caret.margin / 2, { align: 'center', url: "http://nexify.io" });
 
 
         // Add prerequesite - a task with only markdown
@@ -334,8 +378,8 @@ export class PDFService {
             for (let taskContent of course.prerequisite.content) {
                 addTaskContent(course.prerequisite, taskContent)
             }
-            newLine();
-            newLine();
+            caret.newLine();
+            caret.newLine();
         }
         if (course.objectives) {
             if (!course.prerequisite) {
@@ -344,14 +388,11 @@ export class PDFService {
             addTask("Objectives");
 
             for (let taskContent of course.objectives.content) {
-                // taskcontent is always a markdown type
-                // TODO refactor this and add style for markdown 
-                let lines = doc.splitTextToSize(taskContent.value, docLength)
-                doc.text(lines, margin, y);
-                y += (lines.length / 2) * 12;
+
+                addTaskContent(course.objectives, taskContent)
             }
-            newLine();
-            newLine();
+            caret.newLine();
+            caret.newLine();
         }
         if (course.home) {
             for (let taskContent of course.home.content) {
@@ -363,7 +404,7 @@ export class PDFService {
 
         for (const chap of chapters) {
 
-            y = margin;
+            caret.y = caret.margin;
 
             doc.addPage();
             addChapter(chap.title);
@@ -381,13 +422,13 @@ export class PDFService {
 
                     addTaskContent(task, taskContent);
                 }
-                newLine();
+                caret.newLine();
             }
         }
 
         // Add footer on all pages
         const pageCount = doc.getNumberOfPages();
-        doc.setFont('helvetica', 'italic')
+        doc.setFont('jost', 'italic')
         doc.setFontSize(8)
         for (var i = 2; i <= pageCount; i++) {
             doc.setPage(i)
@@ -399,5 +440,75 @@ export class PDFService {
         // Saving document
         doc.save(`${course.title}.pdf`);
     }
+
+}
+
+class Caret {
+
+    /** The caret x poqsition */
+    public x = 0;
+    /** The caret y position */
+    public y = 0;
+
+    public docLength = 0;
+
+    constructor(private doc: jsPDF, public margin = 30) {
+        this.x = this.y = margin;
+        this.docLength = 210 - margin * 2;
+    }
+
+    resetx() {
+        this.x = this.margin;
+    }
+
+    /**
+     * Add the given text at the caret position.
+     * The caret is then moved at the end of the text
+     * @param text 
+     */
+    addText(text: string) {
+        const lines = this.doc.splitTextToSize(text, this.docLength, { textIndent: this.x });
+
+        if (lines.length === 1) {
+            this.doc.text(lines, this.x, this.y);
+            this.x += this.doc.getTextWidth(lines);
+            if (this.x >= this.docLength + this.margin) {
+                this.x = this.margin;
+                this.newLine(6);
+            }
+        } else {
+            this.doc.text(lines[0], this.x, this.y);
+
+            const startCut = lines[0].length + 1;
+            const nextCodeText = text.substr(startCut, text.length);
+            const nextLines = this.doc.splitTextToSize(nextCodeText, this.docLength);
+
+            for (let l of nextLines) {
+                this.newLine(6);
+                this.doc.text(l, this.margin, this.y);
+                this.x = this.margin + this.doc.getTextWidth(l);
+            }
+        }
+    }
+
+    /**
+     * Moves the caret to the next line
+     */
+    newLine(space: number = 12) {
+        this.y += space;
+        this.checkNewPage()
+    }
+
+    /**
+     * Moves this caret to the next page
+     */
+    checkNewPage() {
+        if (this.y > 297 - this.margin) {
+            this.doc.addPage();
+            this.y = this.margin;
+        }
+    }
+
+
 
 }
