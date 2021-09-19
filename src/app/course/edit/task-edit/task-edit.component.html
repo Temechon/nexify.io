@@ -9,14 +9,6 @@
         <div *ngIf="task.content.length === 0">
             <div class="flex items-center justify-center flex-wrap gap-2 mb-4">
 
-                <!-- <action-button *ngIf="canUse('subtitle')" text="subtitle"
-                    (click)="add('subtitle', 0)" icon="fa-bolt" color="blue">
-                </action-button>
-
-                <action-button *ngIf="canUse('line')" text="line"
-                    (click)="add('line', 0)" icon="fa-pencil-alt" color="blue">
-                </action-button> -->
-
                 <action-button *ngIf="canUse('markdown')" text="markdown"
                     (click)="add('markdown', 0)" icon="fa-align-left"
                     color="blue">
@@ -51,7 +43,7 @@
                     <div class="w-full flex items-center ml-5">
 
                         <textarea placeholder="Type your markdown here"
-                            class="relative min-h-[500px] dark:bg-darkmode-400 dark:border-transparent dark:text-gray-200 action border-none font-light text-lg py-1 w-full pl-4 focus:outline-none focus:ring focus:border-blue-300 "
+                            class="relative min-h-[250px] dark:bg-darkmode-400 dark:border-transparent dark:text-gray-200 action border-none font-light text-lg py-1 w-full pl-4 focus:outline-none focus:ring focus:border-blue-300 "
                             type="text" *ngIf="blocktype.isMarkdown(content)"
                             [value]="content.value"
                             (input)="saveText($event.target, index)">
@@ -108,18 +100,8 @@
                 <div #addLine
                     class="add-line hidden items-center justify-center flex-wrap gap-2 my-4">
 
-                    <action-button *ngIf="canUse('action')" text="action"
-                        (click)="add('action', index)" icon="fa-bolt"
-                        color="blue">
-                    </action-button>
-                    <action-button *ngIf="canUse('item')" text="text"
-                        (click)="add('item', index)" icon="fa-pencil-alt"
-                        color="blue">
-                    </action-button>
-
-
-                    <action-button *ngIf="canUse('text')" text="text"
-                        (click)="add('text', 0)" icon="fa-align-left"
+                    <action-button *ngIf="canUse('markdown')" text="text"
+                        (click)="add('markdown', index)" icon="fa-align-left"
                         color="blue">
                     </action-button>
 

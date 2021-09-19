@@ -185,8 +185,13 @@ export class PDFService {
                 const imgdata = taskContent.value;
 
                 const realimg = _.find(images, i => i.imgid === imgdata);
-                doc.addImage(realimg.imgid, 'JPEG', caret.margin + caret.docLength / 2 - realimg.w / 2, caret.y, realimg.w, realimg.h)
-                caret.y += realimg.h;
+                const maxW = caret.docLength / 1.5;
+                const imgRatio = realimg.w / realimg.h;
+                let imgW = realimg.w > maxW ? maxW : realimg.w;
+                let imgH = imgW / imgRatio;
+
+                doc.addImage(realimg.imgid, 'JPEG', caret.margin + caret.docLength / 2 - imgW / 2, caret.y, imgW, imgH)
+                caret.y += imgH;
                 caret.newLine();
             }
 
@@ -386,9 +391,7 @@ export class PDFService {
                 doc.addPage();
             }
             addTask("Objectives");
-
             for (let taskContent of course.objectives.content) {
-
                 addTaskContent(course.objectives, taskContent)
             }
             caret.newLine();
@@ -399,8 +402,6 @@ export class PDFService {
                 addTaskContent(course.home, taskContent);
             }
         }
-
-        doc.addPage();
 
         for (const chap of chapters) {
 
