@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-subscribe',
@@ -49,10 +49,5 @@ export class SubscribeComponent implements OnInit {
         this.loading = false;
         button.disabled = false;
       })
-  }
-
-  isFormFilled(login: string, email: string, password: string) {
-    console.log("jch", !!login && !!email && !!password)
-    return login && email && password;
   }
 }

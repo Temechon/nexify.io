@@ -8,10 +8,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GuiModule } from './gui/gui.module';
 import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './user-login/login/login.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
-import { SubscribeComponent } from './subscribe/subscribe.component';
+import { SubscribeComponent } from './user-login/subscribe/subscribe.component';
 import { CoursesListComponent } from './courses-list/courses-list.component';
+import { ResetPasswordComponent } from './user-login/reset-password/reset-password.component';
 
 
 
@@ -22,7 +23,8 @@ import { CoursesListComponent } from './courses-list/courses-list.component';
     LoginComponent,
     PrivacyPolicyComponent,
     SubscribeComponent,
-    CoursesListComponent
+    CoursesListComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

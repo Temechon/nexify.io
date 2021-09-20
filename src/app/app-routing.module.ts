@@ -3,9 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { CoursesListComponent } from './courses-list/courses-list.component';
 import { CanAccessGuard } from './guards/canAccess.guard';
 import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './user-login/login/login.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
-import { SubscribeComponent } from './subscribe/subscribe.component';
+import { ResetPasswordComponent } from './user-login/reset-password/reset-password.component';
+import { SubscribeComponent } from './user-login/subscribe/subscribe.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,11 @@ const routes: Routes = [
       {
         path: 'subscribe',
         component: SubscribeComponent
+      },
+
+      {
+        path: 'reset-password',
+        component: ResetPasswordComponent
       },
       {
         path: 'course',

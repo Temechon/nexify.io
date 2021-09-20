@@ -78,6 +78,10 @@ export class AuthService {
             })
     }
 
+    sendPasswordReset(email: string): Promise<void> {
+        return this.auth.sendPasswordResetEmail(email)
+    }
+
     isLoggedIn(): Observable<boolean> {
         return this.auth.authState.pipe(
             map(user => {
