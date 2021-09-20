@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from "@angular/router";
-import { Observable } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import { EMPTY, Observable } from 'rxjs';
+import { catchError, first, map } from 'rxjs/operators';
 import { User } from '../model/user.model';
 
 @Injectable({
@@ -89,10 +89,16 @@ export class AuthService {
 
     uid() {
         return this.auth.authState.pipe(
+            // first(),
+            // catchError(err => {
+            //     console.error(err);
+            //     return EMPTY;
+            // }),
             map(user => {
-                // console.log("USER", user)
+                console.log("USER", user)
                 return user.uid;
-            })
+            }
+            )
         );
     }
 
