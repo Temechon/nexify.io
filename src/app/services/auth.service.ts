@@ -86,7 +86,7 @@ export class AuthService {
         return this.auth.authState.pipe(
             map(user => {
                 // console.log("USER", user)
-                return !!user.uid;
+                return !!user?.uid;
             })
         );
     }

@@ -26,13 +26,24 @@
             role="listbox" aria-labelledby="listbox-label"
             aria-activedescendant="listbox-option-3">
 
-            <li class="option" role="option" (click)="dashboard()"
+            <li class="option" role="option" [routerLink]="['/dashboard']"
                 tabindex="-1">
                 <div class="flex items-center">
                     <i class="text-mygreen fas fa-id-card"></i>
                     <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
                     <span class="ml-3 block truncate">
                         Dashboard
+                    </span>
+                </div>
+            </li>
+
+            <li class="option" role="option" [routerLink]="['/courses']"
+                tabindex="-1">
+                <div class="flex items-center">
+                    <i class="text-mygreen fas fa-list"></i>
+                    <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
+                    <span class="ml-3 block truncate">
+                        Courses
                     </span>
                 </div>
             </li>

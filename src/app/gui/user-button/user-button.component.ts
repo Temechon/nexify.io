@@ -36,10 +36,4 @@ export class UserButtonComponent implements OnInit {
   toggleOptions() {
     this.options.nativeElement.classList.toggle('hidden');
   }
-
-
-  dashboard() {
-
-    this.router.navigate(['/dashboard']);
-  }
 }
