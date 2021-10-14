@@ -15,6 +15,8 @@ import 'prismjs/components/prism-markup';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-sass';
 import 'prismjs/components/prism-scss';
+import 'prismjs/components/prism-json';
+import 'prismjs/components/prism-bash';
 import { TaskContent, Task } from '../model/task.model';
 import marked from 'marked';
 
