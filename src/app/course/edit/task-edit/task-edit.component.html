@@ -1,7 +1,6 @@
 <div class="shadow-sm bg-white task rounded-md dark:bg-darkmode-300">
 
-    <input *ngIf="showTitle" type="text" [(ngModel)]="task.title"
-        placeholder="Task title..." (input)="save()"
+    <input *ngIf="showTitle" type="text" [(ngModel)]="task.title" placeholder="Task title..." (input)="save()"
         class="dark:bg-darkmode-300 dark:border-darkmode-800 dark:text-gray-200 w-full font-semibold shadow-sm text-2xl mb-6 p-3 border rounded-md focus:outline-none focus:ring focus:border-blue-300 border-indigo-50">
 
     <div class="px-6 py-3">
@@ -9,29 +8,26 @@
         <div *ngIf="task.content.length === 0">
             <div class="flex items-center justify-center flex-wrap gap-2 mb-4">
 
-                <action-button *ngIf="canUse('markdown')" text="markdown"
-                    (click)="add('markdown', 0)" icon="fa-align-left"
+                <action-button *ngIf="canUse('markdown')" text="markdown" (click)="add('markdown', 0)"
+                    icon="fa-align-left" color="blue">
+                </action-button>
+
+                <action-button *ngIf="canUse('link')" text="link" (click)="add('link', 0, [])" icon="fa-link"
                     color="blue">
                 </action-button>
 
-                <action-button *ngIf="canUse('link')" text="link"
-                    (click)="add('link', 0, [])" icon="fa-link" color="blue">
+                <action-button *ngIf="canUse('code')" text="code" (click)="addCode(0)" icon="fa-code" color="blue">
                 </action-button>
 
-                <action-button *ngIf="canUse('code')" text="code"
-                    (click)="addCode(0)" icon="fa-code" color="blue">
-                </action-button>
-
-                <action-button *ngIf="canUse('image')" text="image"
-                    (click)="add('image', 0)" icon="fa-image" color="blue">
+                <action-button *ngIf="canUse('image')" text="image" (click)="add('image', 0)" icon="fa-image"
+                    color="blue">
                 </action-button>
 
             </div>
 
         </div>
 
-        <div *ngIf="task.content" cdkDropList
-            (cdkDropListDropped)="reorder($event)">
+        <div *ngIf="task.content" cdkDropList (cdkDropListDropped)="reorder($event)">
             <ng-container *ngFor="let content of task.content; let index=index">
 
                 <div class="flex flex-row items-center rounded-md relative border border-gray-100 dark:bg-darkmode-400 dark:border-darkmode-400"
@@ -42,37 +38,31 @@
                     </div>
                     <div class="w-full flex items-center ml-5">
 
-                        <textarea placeholder="Type your markdown here"
-                            class="relative min-h-[250px] dark:bg-darkmode-400 dark:border-transparent dark:text-gray-200 action border-none font-light text-lg py-1 w-full pl-4 focus:outline-none focus:ring focus:border-blue-300 "
-                            type="text" *ngIf="blocktype.isMarkdown(content)"
-                            [value]="content.value"
+                        <textarea autosize placeholder="Type your markdown here"
+                            class="relative dark:bg-darkmode-400 dark:border-transparent dark:text-gray-200 action border-none font-light text-lg py-1 w-full pl-4 focus:outline-none focus:ring focus:border-blue-300 "
+                            type="text" *ngIf="blocktype.isMarkdown(content)" [value]="content.value"
                             (input)="saveText($event.target, index)">
                         </textarea>
 
                         <!-- Code -->
-                        <div *ngIf="blocktype.isCode(content)"
-                            class="w-full dark:bg-darkmode-400 ">
-                            <code-edit [codes]="getCode(content)"
-                                (onTabSaved)="save()">
+                        <div *ngIf="blocktype.isCode(content)" class="w-full dark:bg-darkmode-400 ">
+                            <code-edit [codes]="getCode(content)" (onTabSaved)="save()">
                             </code-edit>
                         </div>
 
                         <!-- Link -->
                         <div *ngIf="blocktype.isLink(content)" class="w-full">
-                            <link-edit [link]="content.value"
-                                (onUpdate)="save()">
+                            <link-edit [link]="content.value" (onUpdate)="save()">
                             </link-edit>
                         </div>
                         <!-- Image -->
                         <div *ngIf="blocktype.isImage(content)" class="w-full">
-                            <img-edit [img]="content.value"
-                                (onUpdate)="saveText($event, index)">
+                            <img-edit [img]="content.value" (onUpdate)="saveText($event, index)">
                             </img-edit>
                         </div>
                         <!-- Tip -->
                         <div *ngIf="blocktype.isTip(content)" class="w-full">
-                            <tip-edit [tip]="content.value"
-                                (onUpdate)="saveText($event, index)">
+                            <tip-edit [tip]="content.value" (onUpdate)="saveText($event, index)">
                             </tip-edit>
                         </div>
 
@@ -90,37 +80,31 @@
                     class="relative new-block-line flex items-center justify-center h-2 bg-opacity-5 bg-gray-400 hover:bg-myblue hover:bg-opacity-100 rounded-full cursor-pointer my-1">
                     <div
                         class="pointer-events-none plus-line hidden absolute z-10 top-1/2 transform -translate-y-1/2 w-10 h-6 items-center justify-center bg-myblue rounded-xl">
-                        <i
-                            class="pointer-events-none text-xs text-white fas fa-plus"></i>
+                        <i class="pointer-events-none text-xs text-white fas fa-plus"></i>
                     </div>
 
                 </div>
 
                 <!-- Displays all available blocks to add after the current block -->
-                <div #addLine
-                    class="add-line hidden items-center justify-center flex-wrap gap-2 my-4">
+                <div #addLine class="add-line hidden items-center justify-center flex-wrap gap-2 my-4">
 
-                    <action-button *ngIf="canUse('markdown')" text="text"
-                        (click)="add('markdown', index)" icon="fa-align-left"
+                    <action-button *ngIf="canUse('markdown')" text="text" (click)="add('markdown', index)"
+                        icon="fa-align-left" color="blue">
+                    </action-button>
+
+                    <action-button *ngIf="canUse('link')" text="link" (click)="add('link', index, [])" icon="fa-link"
                         color="blue">
                     </action-button>
 
-                    <action-button *ngIf="canUse('link')" text="link"
-                        (click)="add('link', index, [])" icon="fa-link"
+                    <action-button *ngIf="canUse('code')" text="code" (click)="addCode(index)" icon="fa-code"
                         color="blue">
                     </action-button>
 
-                    <action-button *ngIf="canUse('code')" text="code"
-                        (click)="addCode(index)" icon="fa-code" color="blue">
-                    </action-button>
-
-                    <action-button *ngIf="canUse('image')" text="image"
-                        (click)="add('image', index)" icon="fa-image"
+                    <action-button *ngIf="canUse('image')" text="image" (click)="add('image', index)" icon="fa-image"
                         color="blue">
                     </action-button>
 
-                    <action-button *ngIf="canUse('tip')" text="tip"
-                        (click)="add('tip', index)" icon="fa-lightbulb"
+                    <action-button *ngIf="canUse('tip')" text="tip" (click)="add('tip', index)" icon="fa-lightbulb"
                         color="blue">
                     </action-button>
                 </div>
