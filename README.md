@@ -13,12 +13,12 @@ npm start
 In /docs. Use [mermaid](https://mermaid-js.github.io/mermaid/#/) to read the diagram
 
 # Roadmap
-* User subscription	
-* Creating private course and publish them
-* Private dashboard
-  * Access rights for courses and users
-  * List all drafts and published courses
-  * Delete course
-  * Statistics for all courses
-* Add summary for a course
-* Replace items and actions by a markdown block
+* User subscription	- done
+* Creating private course and publish them - done
+* Private dashboard - done
+  * Access rights for courses and users - done
+  * List all drafts and published courses - done
+  * Delete course - done
+  * Statistics for all courses - TODO
+* Add summary for a course - TODO
+* Replace items and actions by a markdown block - done
